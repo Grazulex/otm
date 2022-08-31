@@ -6,7 +6,6 @@ use App\Models\Plate;
 use App\Enums\OriginEnums;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
-use App\Jobs\ProcessInsertNotification;
 
 class ImportEshopCommand extends Command
 {
@@ -56,9 +55,6 @@ class ImportEshopCommand extends Command
                ]);
                $inserted++;
             }
-         }
-         if ($inserted > 0) {
-            ProcessInsertNotification::dispatch('Import Eshop Done. Find ' . $inserted . ' orders');
          }
       } else {
          $this->error($response->status());

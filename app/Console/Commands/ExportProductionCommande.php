@@ -13,7 +13,6 @@ use App\Services\ProductionService;
 use App\Jobs\ProcessUpdateDateEshop;
 use Illuminate\Support\Facades\Mail;
 use App\Jobs\ProcessUpdateDateInMotiv;
-use App\Jobs\ProcessInsertNotification;
 use App\Mail\Production as MailProduction;
 use Str;
 
@@ -84,10 +83,6 @@ class ExportProductionCommande extends Command
          }
 
          $productionService->deleteCSV();
-
-         if (count($plates) > 0) {
-            ProcessInsertNotification::dispatch('Exportation CSV production Done. Find ' . count($plates) . ' plates');
-         }
       }
    }
 }

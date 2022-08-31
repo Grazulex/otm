@@ -49,17 +49,6 @@ class User extends Authenticatable implements FilamentUser
         'email_verified_at' => 'datetime',
     ];
 
-    /**
-     * 
-     * @return HasMany 
-     */
-    public function notifications(): HasMany
-    {
-        return $this->hasMany(
-            related: Notification::class,
-            foreignKey: 'user_id'
-        );
-    }
 
     public function initials()
     {

@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use App\Enums\OriginEnums;
-use App\Jobs\ProcessInsertNotification;
 use App\Models\Plate;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
@@ -98,9 +97,6 @@ class ImportInmotivCommand extends Command
                   $plate->update();
                   $inserted++;
                }
-            }
-            if ($inserted > 0) {
-               ProcessInsertNotification::dispatch('Import InMotiv Done. Find ' . $inserted . ' orders');
             }
          } else {
             $this->error($response->status());
