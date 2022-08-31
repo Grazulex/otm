@@ -4,6 +4,8 @@ namespace App\Console\Commands;
 
 use App\Models\Plate;
 use App\Enums\OriginEnums;
+use App\Models\User;
+use App\Notifications\ImportNotification;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 
@@ -55,6 +57,9 @@ class ImportEshopCommand extends Command
                ]);
                $inserted++;
             }
+         }
+         foreach (User::all() as $user) {
+            $user->notify(new ImportNotification(type: 'eshop', quantity: $inserted));
          }
       } else {
          $this->error($response->status());

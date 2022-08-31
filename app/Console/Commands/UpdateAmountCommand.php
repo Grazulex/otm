@@ -4,6 +4,8 @@ namespace App\Console\Commands;
 
 
 use App\Models\Plate;
+use App\Models\User;
+use App\Notifications\ImportNotification;
 use Illuminate\Console\Command;
 
 class UpdateAmountCommand extends Command
@@ -48,6 +50,9 @@ class UpdateAmountCommand extends Command
             }
             $plate->update();
          }
+      }
+      foreach (User::all() as $user) {
+         $user->notify(new ImportNotification(type: 'inmotiv', quantity: 999));
       }
    }
 }
