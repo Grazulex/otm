@@ -20,6 +20,7 @@ class PlateResource extends Resource
     protected static ?string $model = Plate::class;
 
     protected static ?string $navigationGroup = 'Plates';
+    protected static ?int $navigationSort = 4;
     protected static ?string $navigationIcon = 'heroicon-o-shopping-cart';
 
     public static function form(Form $form): Form

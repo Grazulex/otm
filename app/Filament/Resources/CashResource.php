@@ -19,6 +19,7 @@ class CashResource extends Resource
     protected static ?string $model = Cash::class;
 
     protected static ?string $navigationGroup = 'Cash ledgers';
+    protected static ?int $navigationSort = 1;
     protected static ?string $navigationIcon = 'heroicon-o-cash';
 
     public static function form(Form $form): Form

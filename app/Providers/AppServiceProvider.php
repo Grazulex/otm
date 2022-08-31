@@ -2,8 +2,9 @@
 
 namespace App\Providers;
 
-use App\Models\Cash;
-use App\Observers\CashObserver;
+
+use Filament\Facades\Filament;
+use Filament\Navigation\NavigationGroup;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,6 +26,23 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Filament::serving(function () {
+            Filament::registerNavigationGroups([
+                NavigationGroup::make()
+                    ->label('Cash ledgers')
+                    ->icon('heroicon-s-cash'),
+                NavigationGroup::make()
+                    ->label('Plates')
+                    ->icon('heroicon-s-shopping-cart'),
+                NavigationGroup::make()
+                    ->label('Customers')
+                    ->icon('heroicon-s-users')
+                    ->collapsed(false),
+                NavigationGroup::make()
+                    ->label('Admin')
+                    ->icon('heroicon-s-cog')
+                    ->collapsed(false),
+            ]);
+        });
     }
 }

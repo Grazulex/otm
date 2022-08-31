@@ -20,6 +20,7 @@ class ProductionResource extends Resource
     protected static ?string $model = Production::class;
 
     protected static ?string $navigationGroup = 'Plates';
+    protected static ?int $navigationSort = 5;
     protected static ?string $navigationIcon = 'heroicon-o-clipboard-list';
 
     public static function form(Form $form): Form

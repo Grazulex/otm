@@ -18,8 +18,14 @@ class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationGroup = 'Users';
+    protected static ?string $navigationGroup = 'Admin';
+    protected static ?int $navigationSort = 8;
     protected static ?string $navigationIcon = 'heroicon-o-user';
+
+    protected static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
 
     public static function form(Form $form): Form
     {

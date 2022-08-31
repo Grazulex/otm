@@ -18,6 +18,7 @@ class ReceptionResource extends Resource
     protected static ?string $model = Reception::class;
 
     protected static ?string $navigationGroup = 'Cash ledgers';
+    protected static ?int $navigationSort = 2;
 
     protected static ?string $navigationIcon = 'heroicon-o-truck';
 

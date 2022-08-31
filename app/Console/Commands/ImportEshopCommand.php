@@ -59,7 +59,7 @@ class ImportEshopCommand extends Command
             }
          }
          foreach (User::all() as $user) {
-            $user->notify(new ImportNotification(type: 'eshop', quantity: $inserted));
+            $user->notify(new ImportNotification(type: 'eshop', message: $inserted . ' order(s) imported'));
          }
       } else {
          $this->error($response->status());

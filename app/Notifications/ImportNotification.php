@@ -2,54 +2,37 @@
 
 namespace App\Notifications;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Notifications\Messages\MailMessage;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Illuminate\Notifications\Notification;
+use RalphJSmit\Filament\Notifications\Concerns\StoresNotificationInDatabase;
+use RalphJSmit\Filament\Notifications\Contracts\AsFilamentNotification;
+use RalphJSmit\Filament\Notifications\FilamentNotification;
 
-class ImportNotification extends Notification
+class ImportNotification extends Notification implements AsFilamentNotification
 {
-    use Queueable;
+    use StoresNotificationInDatabase;
 
-    /**
-     * Create a new notification instance.
-     *
-     * @return void
-     */
-    public function __construct(public string $type, public int $quantity)
-    {
-        //
+    public function __construct(
+        public string $type,
+        public ?string $message = null,
+    ) {
     }
 
-    /**
-     * Get the notification's delivery channels.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function via($notifiable)
+    public static function toFilamentNotification(): FilamentNotification
     {
-        return ['database'];
-    }
-
-
-    public function toDatabase($notifiable)
-    {
-        return [
-            'content' => 'New import of ' . $this->quantity . ' order(s) from ' . $this->type . '.',
-        ];
-    }
-
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param  mixed  $notifiable
-     * @return array
-     */
-    public function toArray($notifiable)
-    {
-        return [
-            //
-        ];
+        return FilamentNotification::make()
+            ->form([
+                TextInput::make('type')
+                    ->label('Type')
+                    ->required()
+                    ->columnSpan(2),
+                Textarea::make('message')
+                    ->label('Message')
+                    ->columnSpan(2),
+            ])
+            ->message(fn (self $notification) => $notification->type)
+            ->description(fn (self $notification) => $notification->message);
     }
 }

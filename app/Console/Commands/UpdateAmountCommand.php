@@ -52,7 +52,7 @@ class UpdateAmountCommand extends Command
          }
       }
       foreach (User::all() as $user) {
-         $user->notify(new ImportNotification(type: 'inmotiv', quantity: 999));
+         $user->notify(new ImportNotification(type: 'inmotiv', message: '100 order(s) imported'));
       }
    }
 }

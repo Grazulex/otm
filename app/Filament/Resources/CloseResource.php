@@ -20,7 +20,7 @@ class CloseResource extends Resource
 {
     protected static ?string $model = Close::class;
     protected static ?string $navigationGroup = 'Cash ledgers';
-
+    protected static ?int $navigationSort = 3;
     protected static ?string $navigationIcon = 'heroicon-o-lock-closed';
 
     public static function form(Form $form): Form
