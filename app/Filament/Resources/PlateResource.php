@@ -3,6 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Enums\OriginEnums;
+use App\Enums\TypeEnums;
 use App\Filament\Resources\PlateResource\Pages;
 use App\Filament\Resources\PlateResource\RelationManagers;
 use App\Models\Plate;
@@ -25,38 +26,47 @@ class PlateResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('production_id'),
-                Forms\Components\TextInput::make('incoming_id'),
-                Forms\Components\TextInput::make('reference')
-                    ->required()
-                    ->maxLength(25),
-                Forms\Components\TextInput::make('type')
-                    ->required()
-                    ->maxLength(25),
-                Forms\Components\TextInput::make('order_id')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('customer_key')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('customer')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('origin')
-                    ->required()
-                    ->maxLength(10),
-                Forms\Components\TextInput::make('amount'),
-                Forms\Components\Toggle::make('is_cod')
+                Forms\Components\Section::make('Main fields')
+                    ->schema([
+                    Forms\Components\DateTimePicker::make('created_at')
+                        ->required(),
+                    Forms\Components\TextInput::make('reference')
+                        ->required()
+                        ->maxLength(25),
+                    Forms\Components\Select::make('type')->required()->options(TypeEnums::class)->searchable(),
+                    Forms\Components\Select::make('origin')->required()->options(OriginEnums::class)->searchable(),
+                ])->columns(4),
+                Forms\Components\Section::make('Customer')
+                    ->schema([
+                    Forms\Components\TextInput::make('order_id')
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('customer_key')
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('customer')
+                        ->required()
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('amount')->prefix('€'),
+                ])->columns(4),                    
+                Forms\Components\Section::make('Configurations')
+                ->schema([
+                    Forms\Components\Toggle::make('is_cod')
+                        ->required(),
+                    Forms\Components\Toggle::make('is_rush')
+                        ->required(),
+                    Forms\Components\Toggle::make('is_incoming')
                     ->required(),
-                Forms\Components\Toggle::make('is_rush')
-                    ->required(),
-                Forms\Components\TextInput::make('datas'),
-                Forms\Components\Toggle::make('is_incoming')
-                    ->required(),
-                Forms\Components\TextInput::make('plate_type')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('product_type')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('client_code')
-                    ->maxLength(255),
+                    Forms\Components\TextInput::make('plate_type')
+                        ->maxLength(255),
+                    Forms\Components\TextInput::make('product_type')
+                        ->maxLength(255),
+                ])->columns(3),      
+                Forms\Components\Section::make('Datas')
+                ->schema([
+                    Forms\Components\KeyValue::make('datas')
+                        ->keyLabel('Type')
+                        ->valueLabel('Value')
+                        ->required(),
+                ])->columns(1),      
             ]);
     }
 
