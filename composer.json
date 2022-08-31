@@ -7,6 +7,12 @@
         "laravel"
     ],
     "license": "MIT",
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://filament-notifications-pro.composer.sh"
+        }
+    ],
     "require": {
         "php": "^8.0.2",
         "doctrine/dbal": "^3.4",
@@ -15,7 +21,8 @@
         "laravel/framework": "^9.19",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
-        "psr/simple-cache": "^1.0"
+        "psr/simple-cache": "^1.0",
+        "ralphjsmit/laravel-filament-notifications": "^1.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.7",
