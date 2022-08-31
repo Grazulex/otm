@@ -20,9 +20,9 @@ class CreateCash extends CreateRecord
     {
         $cashes = Cash::orderBy('created_at', 'asc')->get();
         $total = 0;
-        foreach( $cashes as $cash) {
+        foreach ($cashes as $cash) {
             $total = $total + $cash->amount;
-            $cash->total=$total;
+            $cash->total = $total;
             $cash->update();
         }
     }

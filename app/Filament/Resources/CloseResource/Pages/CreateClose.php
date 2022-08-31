@@ -24,24 +24,24 @@ class CreateClose extends CreateRecord
 
     protected function afterFill(): void
     {
-        $diff=0;
+        $diff = 0;
 
         $receptions = Reception::whereNull('close_id')->get();
         foreach ($receptions as $reception) {
-            $diff=$diff - $reception->amount_cash;
+            $diff = $diff - $reception->amount_cash;
         }
 
         $incomings = Incoming::whereNull('close_id')
-            ->withSum(['plates as cod_plates_sum'=> function ($query) {
+            ->withSum(['plates as cod_plates_sum' => function ($query) {
                 $query->where('is_cod', true);
             }], 'amount')
             ->get();
 
         foreach ($incomings as $incoming) {
-            $diff=$diff + $incoming->cod_plates_sum;
+            $diff = $diff + $incoming->cod_plates_sum;
         }
 
-        $this->data['diff']= $diff;
+        $this->data['diff'] = $diff;
     }
 
     protected function afterCreate(): void
@@ -78,5 +78,5 @@ class CreateClose extends CreateRecord
         return [
             CashOverview::class,
         ];
-    }    
+    }
 }

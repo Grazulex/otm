@@ -21,10 +21,10 @@ class PlateOverview extends BaseWidget
         return false;
     }
 
-    protected function isTablePaginationEnabled(): bool 
+    protected function isTablePaginationEnabled(): bool
     {
         return false;
-    } 
+    }
 
     protected function getTableQuery(): Builder
     {
@@ -34,7 +34,7 @@ class PlateOverview extends BaseWidget
             return Plate::whereNull('production_id')->orderBy('created_at', 'desc');
         }
     }
- 
+
     protected function getTableColumns(): array
     {
         return [
@@ -45,4 +45,3 @@ class PlateOverview extends BaseWidget
         ];
     }
 }
-

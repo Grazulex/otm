@@ -36,7 +36,7 @@ class ProductionResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime(),
-                Tables\Columns\BadgeColumn::make('plates_count')->counts('plates'),                    
+                Tables\Columns\BadgeColumn::make('plates_count')->counts('plates'),
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
@@ -59,22 +59,22 @@ class ProductionResource extends Resource
                 //
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
             'index' => Pages\ListProductions::route('/'),
             'view' => Pages\ViewProduction::route('/{record}')
         ];
-    }   
-    
+    }
+
     public static function getWidgets(): array
     {
         return [

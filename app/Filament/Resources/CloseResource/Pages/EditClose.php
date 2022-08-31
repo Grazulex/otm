@@ -37,5 +37,5 @@ class EditClose extends EditRecord
         return [
             CashOverview::class,
         ];
-    } 
+    }
 }

@@ -84,5 +84,4 @@ class Plate extends Model
     {
         return  strtoupper($this->attributes['reference']);
     }
-
 }

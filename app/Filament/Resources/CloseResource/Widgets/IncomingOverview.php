@@ -21,10 +21,10 @@ class IncomingOverview extends BaseWidget
         return false;
     }
 
-    protected function isTablePaginationEnabled(): bool 
+    protected function isTablePaginationEnabled(): bool
     {
         return false;
-    } 
+    }
 
     protected function getTableQuery(): Builder
     {
@@ -34,12 +34,12 @@ class IncomingOverview extends BaseWidget
             return Incoming::whereNull('close_id')->orderBy('created_at', 'desc');
         }
     }
- 
+
     protected function getTableColumns(): array
     {
         return [
             Tables\Columns\TextColumn::make('created_at')
-            ->dateTime(),
+                ->dateTime(),
             Tables\Columns\TextColumn::make('user.name'),
             Tables\Columns\TextColumn::make('amount')->money('eur', true),
         ];

@@ -20,10 +20,10 @@ class ItemsRelationManager extends RelationManager
         return $form
             ->schema([
                 Forms\Components\Select::make('item_id')
-                            ->options(Item::all()->pluck('name', 'id'))
-                            ->searchable()
-                            ->required(),
-                Forms\Components\TextInput::make('quantity'),                            
+                    ->options(Item::all()->pluck('name', 'id'))
+                    ->searchable()
+                    ->required(),
+                Forms\Components\TextInput::make('quantity'),
 
             ]);
     }
@@ -48,5 +48,5 @@ class ItemsRelationManager extends RelationManager
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
-    }    
+    }
 }

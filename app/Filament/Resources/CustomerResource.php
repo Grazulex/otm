@@ -31,46 +31,46 @@ class CustomerResource extends Resource
                 Forms\Components\Section::make('Name & ref')
                     ->schema([
 
-                Forms\Components\TextInput::make('name')
-                    ->required()
-                    ->maxLength(255),
-                    Forms\Components\TextInput::make('enum_ref')
-                    ->maxLength(255),
-            ])->columns(2),
-            Forms\Components\Section::make('Configuration')
+                        Forms\Components\TextInput::make('name')
+                            ->required()
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('enum_ref')
+                            ->maxLength(255),
+                    ])->columns(2),
+                Forms\Components\Section::make('Configuration')
                     ->schema([
                         Forms\Components\Select::make('delivery_type')->required()->options(DeliveryTypeEnums::class)->searchable(),
                         Forms\Components\Select::make('process_type')->required()->options(ProcessTypeEnums::class)->searchable(),
                         Forms\Components\Select::make('location_report_type')->required()->options(LocationReportTypeEnums::class)->searchable(),
                         Forms\Components\Toggle::make('is_delivery_grouped')
-                        ->required(),
-                    Forms\Components\Toggle::make('is_delivery_bpost')
-                        ->required(),
-                    Forms\Components\Toggle::make('is_inmotiv_customer')
-                        ->required(),
-    
-                        ])->columns(3),
-                        Forms\Components\Section::make('Delivery Location')
-                        ->schema([
-    
-                Forms\Components\TextInput::make('delivery_contact')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('delivery_street')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('delivery_number')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('delivery_box')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('delivery_zip')
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('delivery_city')
-                    ->maxLength(255),
+                            ->required(),
+                        Forms\Components\Toggle::make('is_delivery_bpost')
+                            ->required(),
+                        Forms\Components\Toggle::make('is_inmotiv_customer')
+                            ->required(),
+
+                    ])->columns(3),
+                Forms\Components\Section::make('Delivery Location')
+                    ->schema([
+
+                        Forms\Components\TextInput::make('delivery_contact')
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('delivery_street')
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('delivery_number')
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('delivery_box')
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('delivery_zip')
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('delivery_city')
+                            ->maxLength(255),
                     ])->columns(2),
-                    Forms\Components\Section::make('Documents')
+                Forms\Components\Section::make('Documents')
                     ->schema([
                         Forms\Components\FileUpload::make('process_file'),
 
-                        ])->columns(1),
+                    ])->columns(1),
 
             ]);
     }
@@ -85,7 +85,7 @@ class CustomerResource extends Resource
                 Tables\Columns\TextColumn::make('process_type'),
                 Tables\Columns\BadgeColumn::make('items_count')->counts('items'),
                 Tables\Columns\BadgeColumn::make('incomings_count')->counts('incomings'),
-                
+
             ])
             ->filters([
                 //
@@ -97,14 +97,14 @@ class CustomerResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             RelationManagers\ItemsRelationManager::class,
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -112,5 +112,5 @@ class CustomerResource extends Resource
             'create' => Pages\CreateCustomer::route('/create'),
             'edit' => Pages\EditCustomer::route('/{record}/edit'),
         ];
-    }    
+    }
 }

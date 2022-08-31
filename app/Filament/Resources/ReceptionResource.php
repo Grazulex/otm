@@ -53,14 +53,14 @@ class ReceptionResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -68,5 +68,5 @@ class ReceptionResource extends Resource
             'create' => Pages\CreateReception::route('/create'),
             'edit' => Pages\EditReception::route('/{record}/edit'),
         ];
-    }    
+    }
 }

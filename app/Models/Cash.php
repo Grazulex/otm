@@ -52,5 +52,4 @@ class Cash extends Model
     {
         return $this->attributes['amount'] / 100;
     }
-
 }

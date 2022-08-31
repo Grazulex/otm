@@ -28,5 +28,5 @@ class ViewProduction extends ViewRecord
         return [
             PlateOverview::class,
         ];
-    } 
+    }
 }

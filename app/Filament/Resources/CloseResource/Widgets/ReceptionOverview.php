@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 class ReceptionOverview extends BaseWidget
 {
     protected int | string | array $columnSpan = 'full';
-    
+
     public ?Model $record = null;
 
     public function isTableSearchable(): bool
@@ -20,10 +20,10 @@ class ReceptionOverview extends BaseWidget
         return false;
     }
 
-    protected function isTablePaginationEnabled(): bool 
+    protected function isTablePaginationEnabled(): bool
     {
         return false;
-    } 
+    }
 
     protected function getTableQuery(): Builder
     {
@@ -33,12 +33,12 @@ class ReceptionOverview extends BaseWidget
             return Reception::whereNull('close_id')->orderBy('created_at', 'desc');
         }
     }
- 
+
     protected function getTableColumns(): array
     {
         return [
             Tables\Columns\TextColumn::make('created_at')
-            ->dateTime(),
+                ->dateTime(),
             Tables\Columns\TextColumn::make('amount_cash')->money('eur', true),
             Tables\Columns\TextColumn::make('amount_bbc')->money('eur', true),
         ];

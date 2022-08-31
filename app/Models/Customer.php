@@ -57,7 +57,7 @@ class Customer extends Model
     public function items(): HasMany
     {
         return $this->hasMany(
-            related : CustomerItem::class
+            related: CustomerItem::class
         );
     }
 }

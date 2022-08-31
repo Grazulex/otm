@@ -26,9 +26,9 @@ class CashResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('user_id')
-                            ->options(User::all()->pluck('name', 'id'))
-                            ->searchable()
-                            ->required(),
+                    ->options(User::all()->pluck('name', 'id'))
+                    ->searchable()
+                    ->required(),
                 Forms\Components\TextInput::make('amount')->numeric()->prefix("€")
                     ->required(),
                 Forms\Components\Textarea::make('comment')
@@ -41,9 +41,9 @@ class CashResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('created_at')
-                ->dateTime()->sortable()->searchable(),
+                    ->dateTime()->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('user.name'),
-                Tables\Columns\TextColumn::make('amount')->money('eur',true),
+                Tables\Columns\TextColumn::make('amount')->money('eur', true),
                 Tables\Columns\TextColumn::make('comment')->searchable(),
                 Tables\Columns\TextColumn::make('total')->money('eur', true),
                 Tables\Columns\TextColumn::make('close.created_at')->dateTime()->sortable()->searchable(),
@@ -59,14 +59,14 @@ class CashResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -74,5 +74,5 @@ class CashResource extends Resource
             'create' => Pages\CreateCash::route('/create'),
             'edit' => Pages\EditCash::route('/{record}/edit'),
         ];
-    }    
+    }
 }

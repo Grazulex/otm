@@ -23,9 +23,9 @@ class EditCash extends EditRecord
             Actions\DeleteAction::make()->after(function () {
                 $cashes = Cash::orderBy('created_at', 'asc')->get();
                 $total = 0;
-                foreach( $cashes as $cash) {
+                foreach ($cashes as $cash) {
                     $total = $total + $cash->amount;
-                    $cash->total=$total;
+                    $cash->total = $total;
                     $cash->update();
                 }
             }),
@@ -36,11 +36,10 @@ class EditCash extends EditRecord
     {
         $cashes = Cash::orderBy('created_at', 'asc')->get();
         $total = 0;
-        foreach( $cashes as $cash) {
+        foreach ($cashes as $cash) {
             $total = $total + $cash->amount;
-            $cash->total=$total;
+            $cash->total = $total;
             $cash->update();
         }
     }
-
 }

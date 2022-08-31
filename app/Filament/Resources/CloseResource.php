@@ -54,14 +54,14 @@ class CloseResource extends Resource
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             //
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -69,7 +69,7 @@ class CloseResource extends Resource
             'create' => Pages\CreateClose::route('/create'),
             'edit' => Pages\EditClose::route('/{record}/edit'),
         ];
-    }   
+    }
 
     public static function getWidgets(): array
     {
@@ -79,5 +79,4 @@ class CloseResource extends Resource
             IncomingOverview::class,
         ];
     }
-    
 }
