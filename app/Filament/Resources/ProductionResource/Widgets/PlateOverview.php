@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\ProductionResource\Widgets;
 
+use App\Enums\OriginEnums;
 use App\Models\Plate;
 use Closure;
 use Filament\Tables;
@@ -16,16 +17,6 @@ class PlateOverview extends BaseWidget
     public ?Model $record = null;
 
 
-    public function isTableSearchable(): bool
-    {
-        return false;
-    }
-
-    protected function isTablePaginationEnabled(): bool
-    {
-        return false;
-    }
-
     protected function getTableQuery(): Builder
     {
         if ($this->record) {
@@ -38,10 +29,20 @@ class PlateOverview extends BaseWidget
     protected function getTableColumns(): array
     {
         return [
-            Tables\Columns\TextColumn::make('reference'),
-            Tables\Columns\TextColumn::make('type'),
-            Tables\Columns\TextColumn::make('origin'),
-            Tables\Columns\TextColumn::make('customer'),
+            Tables\Columns\TextColumn::make('created_at')
+                ->dateTime()->searchable()->sortable(),
+            Tables\Columns\TextColumn::make('reference')
+                ->searchable()
+                ->sortable()
+                ->url(fn (Plate $record): string => route('filament.resources.plates.edit', ['record' => $record])),
+            Tables\Columns\BadgeColumn::make('origin')
+                ->colors([
+                    'danger' => OriginEnums::ESHOP->value,
+                    'success' => OriginEnums::INMOTIV->value,
+                ])->searchable()->sortable(),
+            Tables\Columns\TextColumn::make('type')->searchable()->sortable(),
+            Tables\Columns\TextColumn::make('order_id')->searchable()->sortable(),
+            Tables\Columns\TextColumn::make('customer')->searchable()->sortable(),
         ];
     }
 }

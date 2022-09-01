@@ -36,7 +36,7 @@ class ProductionResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime(),
+                    ->dateTime()->sortable()->searchable(),
                 Tables\Columns\BadgeColumn::make('plates_count')->counts('plates'),
             ])
             ->defaultSort('created_at', 'desc')
