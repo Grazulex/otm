@@ -1,0 +1,95 @@
+image: lorisleiva/laravel-docker:latest
+#include:
+#  - template: Security/SAST.gitlab-ci.yml
+#  - template: Security/Dependency-Scanning.gitlab-ci.yml
+variables:
+  XDEBUG_MODE: coverage
+composer:
+  stage: build
+  cache:
+    key: "${CI_COMMIT_REF_SLUG}-composer"
+    paths:
+      - vendor/
+  script:
+    - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
+    - cp .env.gitlab .env
+    - php artisan key:generate
+  artifacts:
+    expire_in: 1 month
+    paths:
+      - vendor/
+      - ".env"
+npm:
+  stage: build
+  cache:
+    key: "${CI_COMMIT_REF_SLUG}-npm"
+    paths:
+      - node_modules/
+  script:
+    - npm install
+    - npm run production
+  artifacts:
+    expire_in: 1 month
+    paths:
+      - node_modules/
+      - public/css/
+      - public/js/
+codestyle:
+  stage: test
+  dependencies: []
+  script:
+    - phpcs --standard=PSR2 --extensions=php --ignore=app/Support/helpers.php app
+  allow_failure: true
+quality:
+  dependencies:
+    - composer
+  script:
+    - php artisan insights --no-interaction --min-quality=85 --min-complexity=85 --min-architecture=95
+      --min-style=90
+  allow_failure: true
+insights:
+  dependencies:
+    - composer
+  script:
+    - php artisan insights -n --ansi --format=codeclimate > codeclimate-report.json
+  artifacts:
+    reports:
+      codequality: codeclimate-report.json
+  allow_failure: true
+phpunit:
+  stage: test
+  dependencies:
+    - composer
+  script:
+    - touch db.sqlite
+    - php artisan migrate
+    - phpunit --configuration phpunit.xml --coverage-text --coverage-cobertura=coverage.cobertura.xml
+      --colors=never
+  coverage: "/^\\s*Lines:\\s*\\d+.\\d+\\%/"
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage.cobertura.xml
+#deploy_dev:
+#  only:
+#  - dev
+#  stage: deploy
+#  script:
+#  - curl https://forge.laravel.com/servers/546270/sites/1649800/deploy/http?token=tq2teE20KbRGisNsdemgp0oCfmr7u0fjv1yRAmdl
+#  - exit 0
+#  environment:
+#    name: development
+#    url: https://dev.apifulldoc.com
+deploy_prod:
+  dependencies:
+    - npm
+  stage: deploy
+  script:
+    - curl https://forge.laravel.com/servers/546270/sites/1736158/deploy/http?token=PbGwJcKjYzxlZ8VmidWOyJkOMhLLB1Xi1EYMh96w
+    - exit 0
+  only:
+    - master
+  environment:
+    name: production
+    url: https://frontplate.jnkconsult.be

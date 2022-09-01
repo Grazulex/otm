@@ -3,6 +3,7 @@
 namespace App\Filament\Widgets;
 
 use App\Enums\OriginEnums;
+use App\Enums\TypeEnums;
 use App\Models\Plate;
 use App\Models\Production;
 use Filament\Widgets\LineChartWidget;
@@ -17,7 +18,7 @@ class ProductionWeekChart extends LineChartWidget
 
     protected function getData(): array
     {
-        $dataTotal = Trend::model(Plate::class)
+        $dataTotal = Trend::query(Plate::whereIn('type', TypeEnums::cases()))
             ->between(
                 start: now()->startOfMonth(),
                 end: now()->endOfMonth(),
@@ -25,7 +26,7 @@ class ProductionWeekChart extends LineChartWidget
             ->perDay()
             ->count('*');
 
-        $dataEshop = Trend::query(Plate::where('origin', OriginEnums::ESHOP->value))
+        $dataEshop = Trend::query(Plate::where('origin', OriginEnums::ESHOP->value)->whereIn('type', TypeEnums::cases()))
             ->between(
                 start: now()->startOfMonth(),
                 end: now()->endOfMonth(),
@@ -33,7 +34,7 @@ class ProductionWeekChart extends LineChartWidget
             ->perDay()
             ->count('*');
 
-        $dataInmotiv = Trend::query(Plate::where('origin', OriginEnums::INMOTIV->value))
+        $dataInmotiv = Trend::query(Plate::where('origin', OriginEnums::INMOTIV->value)->whereIn('type', TypeEnums::cases()))
             ->between(
                 start: now()->startOfMonth(),
                 end: now()->endOfMonth(),

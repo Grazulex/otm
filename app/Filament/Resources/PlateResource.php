@@ -25,6 +25,11 @@ class PlateResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-shopping-cart';
 
 
+    protected static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::whereNull('production_id')->whereIn('type', TypeEnums::cases())->count();
+    }
+
     public static function form(Form $form): Form
     {
         return $form

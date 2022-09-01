@@ -25,7 +25,6 @@ class StatsOverview extends BaseWidget
                     ->whereHas('production', function ($query) {
                         $query->where('created_at', '>', Carbon::now()->subDays(1));
                     })
-                    ->whereNotNull('production_id')
                     ->whereIn('type', TypeEnums::cases())
                     ->count()
             ),
@@ -35,7 +34,6 @@ class StatsOverview extends BaseWidget
                     ->whereHas('production', function ($query) {
                         $query->where('created_at', '>', Carbon::now()->subDays(7));
                     })
-                    ->whereNotNull('production_id')
                     ->whereIn('type', TypeEnums::cases())
                     ->count()
             ),
