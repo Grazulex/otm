@@ -27,7 +27,7 @@ npm:
       - node_modules/
   script:
     - npm install
-    - npm run production
+    - npm vite build
   artifacts:
     expire_in: 1 month
     paths:
