@@ -3,12 +3,11 @@
 namespace App\Filament\Resources\IncomingResource\Pages;
 
 use App\Filament\Resources\IncomingResource;
+use App\Filament\Resources\IncomingResource\Widgets\PlateOverview;
 use App\Models\Customer;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\CreateRecord;
-use Filament\Forms\Components\MarkdownEditor;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Wizard\Step;
 use Str;
@@ -62,6 +61,14 @@ class CreateIncoming extends CreateRecord
                         ->label('COD barcode (up)')
                         ->columnSpan('1/2')
                 ]),
+        ];
+    }
+
+
+    protected function getFooterWidgets(): array
+    {
+        return [
+            PlateOverview::class,
         ];
     }
 }
