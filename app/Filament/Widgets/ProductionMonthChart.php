@@ -40,6 +40,13 @@ class ProductionMonthChart extends LineChartWidget
             )
             ->perMonth()
             ->count('*');
+        $dataOther = Trend::query(Plate::where('origin', OriginEnums::OTHER->value))
+            ->between(
+                start: now()->startOfYear(),
+                end: now()->endOfYear(),
+            )
+            ->perMonth()
+            ->count('*');
 
         return [
             'datasets' => [
@@ -57,6 +64,11 @@ class ProductionMonthChart extends LineChartWidget
                     'label' => 'Inmotiv',
                     'borderColor' => '#E7A73E',
                     'data' => $dataInmotiv->map(fn (TrendValue $value) => $value->aggregate),
+                ],
+                [
+                    'label' => 'Inmotiv',
+                    'borderColor' => '#E73E88',
+                    'data' => $dataOther->map(fn (TrendValue $value) => $value->aggregate),
                 ],
             ],
             'labels' => $dataTotal->map(fn (TrendValue $value) => $value->date),

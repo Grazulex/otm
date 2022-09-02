@@ -13,6 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Filters\Layout;
+use Filament\Tables\Filters\Filter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
@@ -23,6 +24,11 @@ class PlateResource extends Resource
     protected static ?string $navigationGroup = 'Plates';
     protected static ?int $navigationSort = 4;
     protected static ?string $navigationIcon = 'heroicon-o-shopping-cart';
+
+    protected function getTableFiltersLayout(): ?string
+    {
+        return Layout::AboveContent;
+    }
 
 
     protected static function getNavigationBadge(): ?string
@@ -99,7 +105,13 @@ class PlateResource extends Resource
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
-                //
+                Filter::make('is_producted')
+                    ->label('Waiting for production')
+                    ->default()
+                    ->query(fn (Builder $query): Builder => $query->whereNull('production_id')),
+                Filter::make('is_incoming')
+                    ->label('Waiting for Bpost')
+                    ->query(fn (Builder $query): Builder => $query->where('is_incoming', true)->whereNull('incoming_id'))
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),

@@ -42,6 +42,14 @@ class ProductionWeekChart extends LineChartWidget
             ->perDay()
             ->count('*');
 
+        $dataOther = Trend::query(Plate::where('origin', OriginEnums::OTHER->value)->whereIn('type', TypeEnums::cases()))
+            ->between(
+                start: now()->startOfMonth(),
+                end: now()->endOfMonth(),
+            )
+            ->perDay()
+            ->count('*');
+
         return [
             'datasets' => [
                 [
@@ -58,6 +66,11 @@ class ProductionWeekChart extends LineChartWidget
                     'label' => 'Inmotiv',
                     'borderColor' => '#E7A73E',
                     'data' => $dataInmotiv->map(fn (TrendValue $value) => $value->aggregate),
+                ],
+                [
+                    'label' => 'Other',
+                    'borderColor' => '#E73E88',
+                    'data' => $dataOther->map(fn (TrendValue $value) => $value->aggregate),
                 ],
             ],
             'labels' => $dataTotal->map(fn (TrendValue $value) => $value->date),
