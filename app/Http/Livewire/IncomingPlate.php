@@ -69,6 +69,10 @@ class IncomingPlate extends Component  implements Tables\Contracts\HasTable
                 ->seconds(2)
                 ->send();
         } else {
+            if ($this->type == 'cod' || $this->type == 'rush') {
+                $this->cod_is_disable = false;
+                $this->emit('focusCod');
+            }
             if ($this->type != 'cod' && $this->type != 'rush') {
                 $plate = Plate::create([
                     'reference' => $this->datamatrix,
@@ -85,9 +89,6 @@ class IncomingPlate extends Component  implements Tables\Contracts\HasTable
                     ->seconds(2)
                     ->send();
                 $this->datamatrix = '';
-            }
-            if ($this->type == 'cod' || $this->type == 'rush') {
-                $this->cod_is_disable = false;
             }
         }
     }
@@ -125,7 +126,7 @@ class IncomingPlate extends Component  implements Tables\Contracts\HasTable
         $this->cod_is_disable = true;
         $this->datamatrix = '';
         $this->cod = '';
-        //dd($this->cod);
+        $this->emit('focusDatamatrix');
     }
 
 
@@ -136,7 +137,7 @@ class IncomingPlate extends Component  implements Tables\Contracts\HasTable
 
     protected function getTableQuery(): Builder
     {
-        return Plate::where('incoming_id', $this->incoming->id);
+        return Plate::where('incoming_id', $this->incoming->id)->OrderBy('created_at', 'desc');
     }
 
     protected function getTableColumns(): array
