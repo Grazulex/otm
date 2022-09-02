@@ -7,6 +7,7 @@ use App\Enums\TypeEnums;
 use App\Models\Incoming;
 use App\Models\Plate;
 use Closure;
+use Filament\Notifications\Notification;
 use Livewire\Component;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
@@ -59,6 +60,11 @@ class IncomingPlate extends Component  implements Tables\Contracts\HasTable
         if ($plate) {
             $plate->incoming_id = $this->incoming->id;
             $plate->save();
+            Notification::make()
+                ->title('Plate finded and saved successfully')
+                ->success()
+                ->seconds(2)
+                ->send();
         } else {
             if ($this->type != 'cod' && $this->type != 'rush') {
                 $plate = Plate::create([
@@ -70,6 +76,12 @@ class IncomingPlate extends Component  implements Tables\Contracts\HasTable
                     'customer' => '',
                     'origin' => OriginEnums::OTHER->value,
                 ]);
+                Notification::make()
+                    ->title('Plate created and saved successfully')
+                    ->warning()
+                    ->seconds(2)
+                    ->send();
+                $this->datamatrix = '';
             }
             if ($this->type == 'cod' || $this->type == 'rush') {
                 $this->cod_is_disable = false;
@@ -102,6 +114,11 @@ class IncomingPlate extends Component  implements Tables\Contracts\HasTable
                 'origin' => OriginEnums::OTHER->value,
             ]);
         }
+        Notification::make()
+            ->title('Plate created and saved successfully')
+            ->warning()
+            ->seconds(2)
+            ->send();
         $this->cod_is_disable = true;
         $this->datamatrix = '';
         $this->cod = '';
