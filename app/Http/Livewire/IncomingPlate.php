@@ -41,18 +41,21 @@ class IncomingPlate extends Component  implements Tables\Contracts\HasTable
         if ($this->type == 'cod') {
             $plate = Plate::where('reference', $this->datamatrix)
                 ->whereNull('incoming_id')
+                ->whereIn('type', TypeEnums::cases())
                 ->where('is_cod', true)
                 ->where('is_rush', false)
                 ->first();
         } elseif ($this->type == 'rush') {
             $plate = Plate::where('reference', $this->datamatrix)
                 ->whereNull('incoming_id')
+                ->whereIn('type', TypeEnums::cases())
                 ->where('is_cod', false)
                 ->where('is_rush', true)
                 ->first();
         } else {
             $plate = Plate::where('reference', $this->datamatrix)
                 ->whereNull('incoming_id')
+                ->whereIn('type', TypeEnums::cases())
                 ->where('is_cod', false)
                 ->where('is_rush', false)
                 ->first();
