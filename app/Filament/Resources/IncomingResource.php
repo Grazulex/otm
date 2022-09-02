@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\IncomingResource\Pages;
 use App\Filament\Resources\IncomingResource\RelationManagers;
+use App\Models\Customer;
 use App\Models\Incoming;
 use Filament\Forms;
 use Filament\Resources\Form;
@@ -25,7 +26,10 @@ class IncomingResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\Select::make('customer_id')
+                    ->options(Customer::all()->pluck('name', 'id'))
+                    ->searchable()
+                    ->required(),
             ]);
     }
 
@@ -44,18 +48,11 @@ class IncomingResource extends Resource
                 //
             ])
             ->actions([
-                //Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
     }
 
     public static function getPages(): array
@@ -63,7 +60,7 @@ class IncomingResource extends Resource
         return [
             'index' => Pages\ListIncomings::route('/'),
             'create' => Pages\CreateIncoming::route('/create'),
-            'view' => Pages\ViewIncoming::route('/{record}')
+            'edit' => Pages\EditIncoming::route('/{record}/edit'),
         ];
     }
 }
