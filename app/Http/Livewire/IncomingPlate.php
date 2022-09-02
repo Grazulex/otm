@@ -2,6 +2,8 @@
 
 namespace App\Http\Livewire;
 
+use App\Enums\OriginEnums;
+use App\Enums\TypeEnums;
 use App\Models\Incoming;
 use App\Models\Plate;
 use Closure;
@@ -58,7 +60,17 @@ class IncomingPlate extends Component  implements Tables\Contracts\HasTable
             $plate->incoming_id = $this->incoming->id;
             $plate->save();
         } else {
-            //create
+            if ($this->type != 'cod' && $this->type != 'rush') {
+                $plate = Plate::create([
+                    'reference' => $this->datamatrix,
+                    'is_cod' => false,
+                    'is_rush' => false,
+                    'type' => TypeEnums::N1FS->value,
+                    'incoming_id' => $this->incoming->id,
+                    'customer' => '',
+                    'origin' => OriginEnums::OTHER->value,
+                ]);
+            }
             if ($this->type == 'cod' || $this->type == 'rush') {
                 $this->cod_is_disable = false;
             }
@@ -67,6 +79,29 @@ class IncomingPlate extends Component  implements Tables\Contracts\HasTable
 
     public function searchCod()
     {
+        if ($this->type == 'cod') {
+            $plate = Plate::create([
+                'reference' => $this->datamatrix,
+                'is_cod' => true,
+                'is_rush' => false,
+                'amount' => (int)$this->cod,
+                'type' => TypeEnums::N1FS->value,
+                'incoming_id' => $this->incoming->id,
+                'customer' => '',
+                'origin' => OriginEnums::OTHER->value,
+            ]);
+        } else {
+            $plate = Plate::create([
+                'reference' => $this->datamatrix,
+                'is_cod' => false,
+                'is_rush' => true,
+                'amount' => (int)$this->cod,
+                'type' => TypeEnums::N1FS->value,
+                'incoming_id' => $this->incoming->id,
+                'customer' => '',
+                'origin' => OriginEnums::OTHER->value,
+            ]);
+        }
         $this->cod_is_disable = true;
         $this->datamatrix = '';
         $this->cod = '';

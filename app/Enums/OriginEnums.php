@@ -6,4 +6,5 @@ enum OriginEnums: string
 {
     case ESHOP = 'eshop';
     case INMOTIV = 'inmotiv';
+    case OTHER = 'other';
 }

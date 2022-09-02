@@ -89,6 +89,7 @@ class PlateResource extends Resource
                     ->colors([
                         'danger' => OriginEnums::ESHOP->value,
                         'success' => OriginEnums::INMOTIV->value,
+                        'warning' => OriginEnums::OTHER->value,
                     ])->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('type')->searchable()->sortable(),
                 Tables\Columns\TextColumn::make('order_id')->searchable()->sortable(),
