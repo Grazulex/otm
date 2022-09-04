@@ -3,7 +3,6 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CashResource\Pages;
-use App\Filament\Resources\CashResource\RelationManagers;
 use App\Models\Cash;
 use App\Models\User;
 use Filament\Forms;
@@ -11,8 +10,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+
 
 class CashResource extends Resource
 {
@@ -65,6 +63,7 @@ class CashResource extends Resource
     {
         return [
             //
+
         ];
     }
 
