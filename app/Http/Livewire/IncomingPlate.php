@@ -16,6 +16,11 @@ use Illuminate\Database\Eloquent\Model;
 class IncomingPlate extends Component  implements Tables\Contracts\HasTable
 {
 
+
+    //plate = plate.slice(0,9).replace(/[^\w\s]|_/g, "").replace(/\n/g, " ").replace(/\s+/g, " ");
+    //cod = (cod.slice(0,-4).slice(4))/100;
+
+
     use Tables\Concerns\InteractsWithTable;
 
     public Incoming $incoming;
@@ -38,22 +43,23 @@ class IncomingPlate extends Component  implements Tables\Contracts\HasTable
 
     public function searchDatamatrix()
     {
+        $datamatrix = preg_replace('/[^a-z0-9]+/i', '', substr(trim($this->datamatrix), 0, 9));
         if ($this->type == 'cod') {
-            $plate = Plate::where('reference', $this->datamatrix)
+            $plate = Plate::where('reference', $datamatrix)
                 ->whereNull('incoming_id')
                 ->whereIn('type', TypeEnums::cases())
                 ->where('is_cod', true)
                 ->where('is_rush', false)
                 ->first();
         } elseif ($this->type == 'rush') {
-            $plate = Plate::where('reference', $this->datamatrix)
+            $plate = Plate::where('reference', $datamatrix)
                 ->whereNull('incoming_id')
                 ->whereIn('type', TypeEnums::cases())
                 ->where('is_cod', false)
                 ->where('is_rush', true)
                 ->first();
         } else {
-            $plate = Plate::where('reference', $this->datamatrix)
+            $plate = Plate::where('reference', $datamatrix)
                 ->whereNull('incoming_id')
                 ->whereIn('type', TypeEnums::cases())
                 ->where('is_cod', false)
@@ -75,7 +81,7 @@ class IncomingPlate extends Component  implements Tables\Contracts\HasTable
             }
             if ($this->type != 'cod' && $this->type != 'rush') {
                 $plate = Plate::create([
-                    'reference' => $this->datamatrix,
+                    'reference' => $datamatrix,
                     'is_cod' => false,
                     'is_rush' => false,
                     'type' => TypeEnums::N1FS->value,
@@ -95,12 +101,14 @@ class IncomingPlate extends Component  implements Tables\Contracts\HasTable
 
     public function searchCod()
     {
+        $datamatrix = preg_replace('/[^a-z0-9]+/i', '', substr(trim($this->datamatrix), 0, 9));
+        $cod = (int)substr(trim($this->cod), 4, 6) / 100;
         if ($this->type == 'cod') {
             $plate = Plate::create([
-                'reference' => $this->datamatrix,
+                'reference' => $datamatrix,
                 'is_cod' => true,
                 'is_rush' => false,
-                'amount' => (int)$this->cod,
+                'amount' => (int)$cod,
                 'type' => TypeEnums::N1FS->value,
                 'incoming_id' => $this->incoming->id,
                 'customer' => '',
@@ -108,10 +116,10 @@ class IncomingPlate extends Component  implements Tables\Contracts\HasTable
             ]);
         } else {
             $plate = Plate::create([
-                'reference' => $this->datamatrix,
+                'reference' => $datamatrix,
                 'is_cod' => false,
                 'is_rush' => true,
-                'amount' => (int)$this->cod,
+                'amount' => (int)$cod,
                 'type' => TypeEnums::N1FS->value,
                 'incoming_id' => $this->incoming->id,
                 'customer' => '',
