@@ -100,8 +100,10 @@ class ImportInmotivCommand extends Command
                   $inserted++;
                }
             }
-            foreach (User::all() as $user) {
-               $user->notify(new ImportNotification(type: 'inmotiv', message: $inserted . ' order(s) imported'));
+            if ($inserted > 0) {
+               foreach (User::all() as $user) {
+                  $user->notify(new ImportNotification(type: 'inmotiv', message: $inserted . ' order(s) imported'));
+               }
             }
          } else {
             $this->error($response->status());
