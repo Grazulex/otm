@@ -48,8 +48,7 @@ class Plate extends Model
     public function production(): BelongsTo
     {
         return $this->belongsTo(
-            related: Production::class,
-            foreignKey: 'production_id'
+            related: Production::class
         );
     }
 
@@ -60,8 +59,7 @@ class Plate extends Model
     public function incoming(): BelongsTo
     {
         return $this->belongsTo(
-            related: Incoming::class,
-            foreignKey: 'incoming_id'
+            related: Incoming::class
         );
     }
 
