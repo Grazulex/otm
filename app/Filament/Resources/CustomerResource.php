@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Enums\DeliveryTypeEnums;
 use App\Enums\LocationReportTypeEnums;
 use App\Enums\ProcessTypeEnums;
+use App\Enums\TypeEnums;
 use App\Filament\Resources\CustomerResource\Pages;
 use App\Filament\Resources\CustomerResource\RelationManagers;
 use App\Models\Customer;
@@ -47,6 +48,7 @@ class CustomerResource extends Resource
                         Forms\Components\Select::make('delivery_type')->required()->options(DeliveryTypeEnums::class)->searchable(),
                         Forms\Components\Select::make('process_type')->required()->options(ProcessTypeEnums::class)->searchable(),
                         Forms\Components\Select::make('location_report_type')->required()->options(LocationReportTypeEnums::class)->searchable(),
+                        Forms\Components\Select::make('plate_type')->required()->options(TypeEnums::class)->searchable(),
                         Forms\Components\Toggle::make('is_delivery_grouped')
                             ->required(),
                         Forms\Components\Toggle::make('is_delivery_bpost')
@@ -54,7 +56,7 @@ class CustomerResource extends Resource
                         Forms\Components\Toggle::make('is_inmotiv_customer')
                             ->required(),
 
-                    ])->columns(3),
+                    ])->columns(4),
                 Forms\Components\Section::make('Delivery Location')
                     ->schema([
                         Forms\Components\TextInput::make('delivery_key')

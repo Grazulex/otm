@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\DeliveryTypeEnums;
 use App\Enums\LocationReportTypeEnums;
 use App\Enums\ProcessTypeEnums;
+use App\Enums\TypeEnums;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -31,12 +32,14 @@ class Customer extends Model
         'process_file',
         'location_report_type',
         'enum_ref',
+        'plate_type'
     ];
 
     protected $casts = [
         'delivery_type'    => DeliveryTypeEnums::class,
         'process_type'  => ProcessTypeEnums::class,
         'location_report_type' => LocationReportTypeEnums::class,
+        'plate_type' => TypeEnums::class,
         'is_delivery_grouped'     => 'boolean',
         'is_delivery_bpost'     => 'boolean',
         'is_inmotiv_customer'     => 'boolean',
