@@ -2,23 +2,26 @@
 
 namespace App\Services;
 
+use App\Models\Plate;
 use App\Models\Production;
 
 class ProductionService
 {
 
    public $production;
+   public $plates;
 
    public function __construct(Production $production)
    {
       $this->production = $production;
+      $this->plates = Plate::where('production_id', $production->id)->OrderBy('incoming_id', 'desc')->OrderBy('origin', 'desc')->OrderBy('order_id', 'asc')->get();
    }
 
    public function makeCsvAttach()
    {
       $fp = fopen('prod_' . $this->production->id . '.csv', 'w');
       fputcsv($fp, array('Plate nr.', 'Ref plaque', 'Order date', 'OwnerID', 'Nom Client', 'Rue Client', 'Nr. Client', 'Boite ClIENT', 'Commune', 'Code postal'), ";");
-      foreach ($this->production->plates as $plate) {
+      foreach ($this->plates as $plate) {
          //$datas = $plate->datas;
          fputcsv($fp, array($plate->reference, $plate->type, $plate->created_at, $plate->order_id, $plate->customer, $plate->datas['destination_street'], $plate->datas['destination_house_number'], $plate->datas['destination_bus'], $plate->datas['destination_city'], $plate->datas['destination_postal_code']), ";");
       }
@@ -28,7 +31,7 @@ class ProductionService
    public function makeCsv()
    {
       $content[] = array('Plate nr.', 'Ref plaque', 'Order date', 'OwnerID', 'Nom Client', 'Rue Client', 'Nr. Client', 'Boite ClIENT', 'Commune', 'Code postal');
-      foreach ($this->production->plates as $plate) {
+      foreach ($this->plates as $plate) {
          //$datas = $plate->datas;
          $content[] =  array($plate->reference, $plate->type, $plate->created_at, $plate->order_id, $plate->customer, $plate->datas['destination_street'], $plate->datas['destination_house_number'], $plate->datas['destination_bus'], $plate->datas['destination_city'], $plate->datas['destination_postal_code']);
       }

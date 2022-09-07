@@ -20,9 +20,9 @@ class PlateOverview extends BaseWidget
     protected function getTableQuery(): Builder
     {
         if ($this->record) {
-            return Plate::where('production_id', $this->record->id)->orderBy('created_at', 'desc');
+            return Plate::where('production_id', $this->record->id)->OrderBy('incoming_id', 'desc')->OrderBy('origin', 'desc')->OrderBy('order_id', 'asc');
         } else {
-            return Plate::whereNull('production_id')->orderBy('created_at', 'desc');
+            return Plate::whereNull('production_id')->OrderBy('incoming_id', 'desc')->OrderBy('origin', 'desc')->OrderBy('order_id', 'asc');
         }
     }
 
