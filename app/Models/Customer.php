@@ -17,6 +17,7 @@ class Customer extends Model
     protected $fillable = [
         'name',
         'delivery_type',
+        'delivery_key',
         'delivery_contact',
         'delivery_street',
         'delivery_number',

@@ -57,7 +57,8 @@ class CustomerResource extends Resource
                     ])->columns(3),
                 Forms\Components\Section::make('Delivery Location')
                     ->schema([
-
+                        Forms\Components\TextInput::make('delivery_key')
+                            ->maxLength(255),
                         Forms\Components\TextInput::make('delivery_contact')
                             ->maxLength(255),
                         Forms\Components\TextInput::make('delivery_street')
