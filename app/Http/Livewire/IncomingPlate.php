@@ -48,27 +48,21 @@ class IncomingPlate extends Component  implements Tables\Contracts\HasTable
     {
         $datamatrix = preg_replace('/[^a-z0-9]+/i', '', substr(trim($this->datamatrix), 0, 10));
         if ($this->type == 'cod') {
-            $plate = Plate::where('reference', $datamatrix)
-                ->whereNull('incoming_id')
-                ->whereIn('type', TypeEnums::cases())
-                ->where('is_cod', true)
-                ->where('is_rush', false)
-                ->first();
+            $is_cod = true;
+            $is_rush = false;
         } elseif ($this->type == 'rush') {
-            $plate = Plate::where('reference', $datamatrix)
-                ->whereNull('incoming_id')
-                ->whereIn('type', TypeEnums::cases())
-                ->where('is_cod', false)
-                ->where('is_rush', true)
-                ->first();
+            $is_cod = false;
+            $is_rush = true;
         } else {
-            $plate = Plate::where('reference', $datamatrix)
-                ->whereNull('incoming_id')
-                ->whereIn('type', TypeEnums::cases())
-                ->where('is_cod', false)
-                ->where('is_rush', false)
-                ->first();
+            $is_cod = false;
+            $is_rush = false;
         }
+        $plate = Plate::where('reference', $datamatrix)
+            ->whereNull('incoming_id')
+            ->whereIn('type', TypeEnums::cases())
+            ->where('is_cod', $is_cod)
+            ->where('is_rush', $is_rush)
+            ->first();
         if ($plate) {
             $plate->incoming_id = $this->incoming->id;
             $plate->save();
@@ -78,12 +72,12 @@ class IncomingPlate extends Component  implements Tables\Contracts\HasTable
                 ->seconds(2)
                 ->send();
         } else {
-            if ($this->type == 'cod' || $this->type == 'rush') {
+            if ($is_cod || $is_rush) {
                 $this->cod_is_disable = false;
                 $this->emit('focusCod');
             }
-            if ($this->type != 'cod' && $this->type != 'rush') {
-                $this->createPlate(customer: $this->incoming->customer, reference: $datamatrix, is_cod: false, is_rush: false);
+            if (!$is_cod && !$is_rush) {
+                $this->createPlate(customer: $this->incoming->customer, reference: $datamatrix);
                 Notification::make()
                     ->title('Plate created and saved successfully')
                     ->warning()
