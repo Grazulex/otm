@@ -41,7 +41,7 @@ class CreateClose extends CreateRecord
             $diff = $diff + $incoming->cod_plates_sum;
         }
 
-        $this->data['diff'] = $diff;
+        $this->data['diff'] = $diff / 100;
     }
 
     protected function afterCreate(): void
