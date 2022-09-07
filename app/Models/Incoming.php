@@ -52,4 +52,9 @@ class Incoming extends Model
             foreignKey: 'incoming_id'
         );
     }
+
+    public function getAmountAttribute(): int|float
+    {
+        return $this->plates()->sum('amount') / 100;
+    }
 }

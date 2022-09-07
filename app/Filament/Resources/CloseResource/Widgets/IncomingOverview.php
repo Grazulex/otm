@@ -29,9 +29,9 @@ class IncomingOverview extends BaseWidget
     protected function getTableQuery(): Builder
     {
         if ($this->record) {
-            return Incoming::where('close_id', $this->record->id)->orderBy('created_at', 'desc');
+            return Incoming::where('close_id', $this->record->id)->with('plates')->orderBy('created_at', 'desc');
         } else {
-            return Incoming::whereNull('close_id')->orderBy('created_at', 'desc');
+            return Incoming::whereNull('close_id')->with('plates')->orderBy('created_at', 'desc');
         }
     }
 
@@ -40,7 +40,7 @@ class IncomingOverview extends BaseWidget
         return [
             Tables\Columns\TextColumn::make('created_at')
                 ->dateTime(),
-            Tables\Columns\TextColumn::make('user.name'),
+            Tables\Columns\TextColumn::make('customer.name'),
             Tables\Columns\TextColumn::make('amount')->money('eur', true),
         ];
     }
