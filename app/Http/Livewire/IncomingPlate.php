@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Enums\DeliveryTypeEnums;
 use App\Enums\OriginEnums;
 use App\Enums\TypeEnums;
 use App\Models\Incoming;
@@ -80,15 +81,42 @@ class IncomingPlate extends Component  implements Tables\Contracts\HasTable
                 $this->emit('focusCod');
             }
             if ($this->type != 'cod' && $this->type != 'rush') {
-                $plate = Plate::create([
-                    'reference' => $datamatrix,
-                    'is_cod' => false,
-                    'is_rush' => false,
-                    'type' => TypeEnums::N1FS->value,
-                    'incoming_id' => $this->incoming->id,
-                    'customer' => '',
-                    'origin' => OriginEnums::OTHER->value,
-                ]);
+                if ($this->incoming->customer->is_delivery_bpost && $this->incoming->customer->is_delivery_grouped) {
+                    $plate = Plate::create([
+                        'reference' => $datamatrix,
+                        'is_cod' => false,
+                        'is_rush' => false,
+                        'plate_type' => TypeEnums::N1FS->value,
+                        'product_type' => 'plates',
+                        'type' => TypeEnums::N1FS->value,
+                        'incoming_id' => $this->incoming->id,
+                        'customer' => $this->incoming->customer->delivery_contact,
+                        'customer_key' => $this->incoming->customer->delivery_key,
+                        'origin' => OriginEnums::OTHER->value,
+                        'datas' => json_encode([
+                            'destination_name' => $this->incoming->customer->delivery_contact,
+                            'destination_key' => $this->incoming->customer->delivery_key,
+                            'destination_street' => $this->incoming->customer->delivery_street,
+                            'destination_house_number' => $this->incoming->customer->delivery_number,
+                            'destination_bus' => $this->incoming->customer->delivery_box,
+                            'destination_postal_code' => $this->incoming->customer->delivery_zip,
+                            'destination_city' => $this->incoming->customer->delivery_city,
+
+                        ])
+                    ]);
+                } else {
+                    $plate = Plate::create([
+                        'reference' => $datamatrix,
+                        'is_cod' => false,
+                        'is_rush' => false,
+                        'plate_type' => TypeEnums::N1FS->value,
+                        'product_type' => 'plates',
+                        'type' => TypeEnums::N1FS->value,
+                        'incoming_id' => $this->incoming->id,
+                        'customer' => '',
+                        'origin' => OriginEnums::OTHER->value,
+                    ]);
+                }
                 Notification::make()
                     ->title('Plate created and saved successfully')
                     ->warning()
@@ -104,27 +132,83 @@ class IncomingPlate extends Component  implements Tables\Contracts\HasTable
         $datamatrix = preg_replace('/[^a-z0-9]+/i', '', substr(trim($this->datamatrix), 0, 10));
         $cod = (int)substr(trim($this->cod), 4, 6) / 100;
         if ($this->type == 'cod') {
-            $plate = Plate::create([
-                'reference' => $datamatrix,
-                'is_cod' => true,
-                'is_rush' => false,
-                'amount' => (int)$cod,
-                'type' => TypeEnums::N1FS->value,
-                'incoming_id' => $this->incoming->id,
-                'customer' => '',
-                'origin' => OriginEnums::OTHER->value,
-            ]);
+            if ($this->incoming->customer->is_delivery_bpost && $this->incoming->customer->is_delivery_grouped) {
+                $plate = Plate::create([
+                    'reference' => $datamatrix,
+                    'is_cod' => true,
+                    'is_rush' => false,
+                    'amount' => (int)$cod,
+                    'plate_type' => TypeEnums::N1FS->value,
+                    'product_type' => 'plates',
+                    'type' => TypeEnums::N1FS->value,
+                    'incoming_id' => $this->incoming->id,
+                    'customer' => $this->incoming->customer->delivery_contact,
+                    'customer_key' => $this->incoming->customer->delivery_key,
+                    'origin' => OriginEnums::OTHER->value,
+                    'datas' => [
+                        'destination_name' => $this->incoming->customer->delivery_contact,
+                        'destination_key' => $this->incoming->customer->delivery_key,
+                        'destination_street' => $this->incoming->customer->delivery_street,
+                        'destination_house_number' => $this->incoming->customer->delivery_number,
+                        'destination_bus' => $this->incoming->customer->delivery_box,
+                        'destination_postal_code' => $this->incoming->customer->delivery_zip,
+                        'destination_city' => $this->incoming->customer->delivery_city,
+
+                    ]
+                ]);
+            } else {
+                $plate = Plate::create([
+                    'reference' => $datamatrix,
+                    'is_cod' => true,
+                    'is_rush' => false,
+                    'amount' => (int)$cod,
+                    'plate_type' => TypeEnums::N1FS->value,
+                    'product_type' => 'plates',
+                    'type' => TypeEnums::N1FS->value,
+                    'incoming_id' => $this->incoming->id,
+                    'customer' => '',
+                    'origin' => OriginEnums::OTHER->value,
+                ]);
+            }
         } else {
-            $plate = Plate::create([
-                'reference' => $datamatrix,
-                'is_cod' => false,
-                'is_rush' => true,
-                'amount' => (int)$cod,
-                'type' => TypeEnums::N1FS->value,
-                'incoming_id' => $this->incoming->id,
-                'customer' => '',
-                'origin' => OriginEnums::OTHER->value,
-            ]);
+            if ($this->incoming->customer->is_delivery_bpost && $this->incoming->customer->is_delivery_grouped) {
+                $plate = Plate::create([
+                    'reference' => $datamatrix,
+                    'is_cod' => false,
+                    'is_rush' => true,
+                    'amount' => (int)$cod,
+                    'plate_type' => TypeEnums::N1FS->value,
+                    'product_type' => 'plates',
+                    'type' => TypeEnums::N1FS->value,
+                    'incoming_id' => $this->incoming->id,
+                    'customer' => $this->incoming->customer->delivery_contact,
+                    'customer_key' => $this->incoming->customer->delivery_key,
+                    'origin' => OriginEnums::OTHER->value,
+                    'datas' => [
+                        'destination_name' => $this->incoming->customer->delivery_contact,
+                        'destination_key' => $this->incoming->customer->delivery_key,
+                        'destination_street' => $this->incoming->customer->delivery_street,
+                        'destination_house_number' => $this->incoming->customer->delivery_number,
+                        'destination_bus' => $this->incoming->customer->delivery_box,
+                        'destination_postal_code' => $this->incoming->customer->delivery_zip,
+                        'destination_city' => $this->incoming->customer->delivery_city,
+
+                    ]
+                ]);
+            } else {
+                $plate = Plate::create([
+                    'reference' => $datamatrix,
+                    'is_cod' => false,
+                    'is_rush' => true,
+                    'amount' => (int)$cod,
+                    'plate_type' => TypeEnums::N1FS->value,
+                    'product_type' => 'plates',
+                    'type' => TypeEnums::N1FS->value,
+                    'incoming_id' => $this->incoming->id,
+                    'customer' => '',
+                    'origin' => OriginEnums::OTHER->value,
+                ]);
+            }
         }
         Notification::make()
             ->title('Plate created and saved successfully')
