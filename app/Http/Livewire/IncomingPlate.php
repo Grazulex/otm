@@ -43,7 +43,7 @@ class IncomingPlate extends Component  implements Tables\Contracts\HasTable
 
     public function searchDatamatrix()
     {
-        $datamatrix = preg_replace('/[^a-z0-9]+/i', '', substr(trim($this->datamatrix), 0, 9));
+        $datamatrix = preg_replace('/[^a-z0-9]+/i', '', substr(trim($this->datamatrix), 0, 10));
         if ($this->type == 'cod') {
             $plate = Plate::where('reference', $datamatrix)
                 ->whereNull('incoming_id')
@@ -101,7 +101,7 @@ class IncomingPlate extends Component  implements Tables\Contracts\HasTable
 
     public function searchCod()
     {
-        $datamatrix = preg_replace('/[^a-z0-9]+/i', '', substr(trim($this->datamatrix), 0, 9));
+        $datamatrix = preg_replace('/[^a-z0-9]+/i', '', substr(trim($this->datamatrix), 0, 10));
         $cod = (int)substr(trim($this->cod), 4, 6) / 100;
         if ($this->type == 'cod') {
             $plate = Plate::create([
