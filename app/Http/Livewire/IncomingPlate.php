@@ -20,10 +20,6 @@ class IncomingPlate extends Component  implements Tables\Contracts\HasTable
 {
 
 
-    //plate = plate.slice(0,9).replace(/[^\w\s]|_/g, "").replace(/\n/g, " ").replace(/\s+/g, " ");
-    //cod = (cod.slice(0,-4).slice(4))/100;
-
-
     use Tables\Concerns\InteractsWithTable;
 
     public Incoming $incoming;
@@ -59,6 +55,7 @@ class IncomingPlate extends Component  implements Tables\Contracts\HasTable
         }
         $plate = Plate::where('reference', $datamatrix)
             ->whereNull('incoming_id')
+            ->whereNull('production_id')
             ->whereIn('type', TypeEnums::cases())
             ->where('is_cod', $is_cod)
             ->where('is_rush', $is_rush)
