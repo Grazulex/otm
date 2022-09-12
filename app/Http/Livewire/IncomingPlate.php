@@ -46,7 +46,7 @@ class IncomingPlate extends Component  implements Tables\Contracts\HasTable
 
     public function searchDatamatrix()
     {
-        $datamatrix = preg_replace('/[^a-z0-9]+/i', '', substr(trim($this->datamatrix), 0, 10));
+        $datamatrix = strtoupper(trim(preg_replace('/[^a-z0-9]+/i', '', substr(trim($this->datamatrix), 0, 10))));
         if ($this->type == 'cod') {
             $is_cod = true;
             $is_rush = false;
@@ -71,6 +71,10 @@ class IncomingPlate extends Component  implements Tables\Contracts\HasTable
                 ->success()
                 ->seconds(2)
                 ->send();
+            $this->cod_is_disable = true;
+            $this->datamatrix = '';
+            $this->cod = '';
+            $this->emit('focusDatamatrix');
         } else {
             if ($is_cod || $is_rush) {
                 $this->cod_is_disable = false;
@@ -83,7 +87,10 @@ class IncomingPlate extends Component  implements Tables\Contracts\HasTable
                     ->warning()
                     ->seconds(2)
                     ->send();
+                $this->cod_is_disable = true;
                 $this->datamatrix = '';
+                $this->cod = '';
+                $this->emit('focusDatamatrix');
             }
         }
     }
