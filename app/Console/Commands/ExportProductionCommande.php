@@ -14,6 +14,8 @@ use App\Jobs\ProcessUpdateDateEshop;
 use Illuminate\Support\Facades\Mail;
 use App\Jobs\ProcessUpdateDateInMotiv;
 use App\Mail\Production as MailProduction;
+use App\Models\User;
+use App\Notifications\ExportNotification;
 use Str;
 
 class ExportProductionCommande extends Command
@@ -57,6 +59,8 @@ class ExportProductionCommande extends Command
          })->get();
       if ($plates->count() > 0) {
          $production = Production::create();
+         $updateInMotiv = 0;
+         $updateEshop = 0;
          foreach ($plates as $plate) {
             $plate->production_id = $production->id;
             $plate->forceFill([
@@ -66,12 +70,26 @@ class ExportProductionCommande extends Command
             if ($plate->origin === OriginEnums::INMOTIV) {
                $datas = ['production_date' => Carbon::now()->format('Y-m-d\TH:i:s')];
                ProcessUpdateDateInMotiv::dispatch($plate, $datas);
+               $updateInMotiv++;
             }
             if ($plate->origin === OriginEnums::ESHOP) {
                $datas = ['SEND_DATE' => Carbon::now()->format('Y-m-d\TH:i:s')];
                //ProcessUpdateDateEshop::dispatch($plate, $datas);
+               //$updateEshop++;
             }
          }
+         if ($updateInMotiv > 0) {
+            foreach (User::all() as $user) {
+               $user->notify(new ExportNotification(type: 'inmotiv', message: $updateInMotiv . ' order(s) updated (production date) in Motiv'));
+            }
+         }
+         if ($updateEshop > 0) {
+            foreach (User::all() as $user) {
+               $user->notify(new ExportNotification(type: 'eshop', message: $updateEshop . ' order(s) updated (production date) in Eshop'));
+            }
+         }
+
+
 
          $productionService = new ProductionService($production);
          $productionService->makeCsvAttach();

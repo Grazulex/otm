@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use App\Notifications\ExportNotification;
 use App\Notifications\ImportNotification;
 use RalphJSmit\Filament\Notifications\Filament\Pages\Notifications;
 use RalphJSmit\Filament\Notifications\Filament\Resources\NotificationResource;
@@ -10,6 +11,7 @@ return [
     'notifications' => [
         // Add the notification classes that your users are allowed to send.
         ImportNotification::class,
+        ExportNotification::class,
     ],
 
     'notifiables' => [
