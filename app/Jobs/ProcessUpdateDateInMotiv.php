@@ -10,7 +10,6 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 
 class ProcessUpdateDateInMotiv implements ShouldQueue
 {
@@ -53,28 +52,15 @@ class ProcessUpdateDateInMotiv implements ShouldQueue
          $token = $response->json('access_token');
          try {
 
-            Log::debug(env('OTM_INMOTIV_ENDPOINT_API') . '/webdiv/orders/1.0/' . $this->plate->order_id);
-            Log::debug($this->datas);
-
             $responseDatas = Http::withHeaders([
                'Accept' => 'application/json',
                'Content-Type' => 'application/json',
                'Authorization' => 'Bearer ' . $token
             ])->patch(env('OTM_INMOTIV_ENDPOINT_API') . '/webdiv/orders/1.0/' . $this->plate->order_id, $this->datas);
 
-            Log::debug("API: ok");
-            Log::debug($responseDatas->body());
-            Log::debug($responseDatas->headers());
             if (!$responseDatas->successful()) {
-               Log::debug("API: not successful");
-               Log::debug($responseDatas->status());
             }
          } catch (\Exception $e) {
-            Log::debug("API: nok");
-            Log::debug($responseDatas->body());
-            Log::debug($responseDatas->headers());
-            Log::debug($e->getCode());
-            Log::debug($e->getMessage());
          }
       }
    }
