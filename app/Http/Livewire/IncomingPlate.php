@@ -97,9 +97,32 @@ class IncomingPlate extends Component  implements Tables\Contracts\HasTable
         $datamatrix = preg_replace('/[^a-z0-9]+/i', '', substr(trim($this->datamatrix), 0, 10));
         $cod = (int)substr(trim($this->cod), 4, 6) / 100;
         if ($this->type == 'cod') {
-            $this->createPlate(customer: $this->incoming->customer, reference: $datamatrix, amount: (int)$cod, is_cod: true, is_rush: false);
+            $is_cod = true;
+            $is_rush = false;
+        } elseif ($this->type == 'rush') {
+            $is_cod = false;
+            $is_rush = true;
         } else {
-            $this->createPlate(customer: $this->incoming->customer, reference: $datamatrix, amount: (int)$cod, is_cod: false, is_rush: true);
+            $is_cod = false;
+            $is_rush = false;
+        }
+        $plate = Plate::where('reference', $datamatrix)
+            ->whereNull('incoming_id')
+            ->whereNull('production_id')
+            ->whereIn('type', TypeEnums::cases())
+            ->first();
+        if ($plate) {
+            $plate->incoming_id = $this->incoming->id;
+            $plate->is_cod = $is_cod;
+            $plate->is_rush = $is_rush;
+            $plate->amount = (int)$cod;
+            $plate->save();
+        } else {
+            if ($this->type == 'cod') {
+                $this->createPlate(customer: $this->incoming->customer, reference: $datamatrix, amount: (int)$cod, is_cod: true, is_rush: false);
+            } else {
+                $this->createPlate(customer: $this->incoming->customer, reference: $datamatrix, amount: (int)$cod, is_cod: false, is_rush: true);
+            }
         }
         Notification::make()
             ->title('Plate created and saved successfully')
