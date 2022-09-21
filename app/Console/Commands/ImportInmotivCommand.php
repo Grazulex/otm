@@ -50,7 +50,7 @@ class ImportInmotivCommand extends Command
             'Accept' => 'application/json',
             'Content-Type' => 'application/json',
             'Authorization' => 'Bearer ' . $token
-         ])->get(env('OTM_INMOTIV_ENDPOINT_API') . '/webdiv/orders/1.0'); //?start=2022-09-18T00:00:00&end=2022-09-21T22:00:00
+         ])->get(env('OTM_INMOTIV_ENDPOINT_API') . '/webdiv/orders/1.0?start=2022-09-18T00:00:00&end=2022-09-21T22:00:00'); //
          if ($responseDatas->successful()) {
             $orders = $responseDatas->json('orders');
             //$orders = $orders['orders'];
@@ -102,7 +102,7 @@ class ImportInmotivCommand extends Command
             }
             if ($inserted > 0) {
                foreach (User::all() as $user) {
-                  $user->notify(new ImportNotification(type: 'inmotiv', message: $inserted . ' order(s) imported'));
+                  $user->notify(new ImportNotification(type: 'inmotiv', message: $inserted . ' order(s) imported (back)'));
                }
             }
          } else {
