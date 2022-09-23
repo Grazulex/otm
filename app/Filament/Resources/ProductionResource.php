@@ -46,8 +46,8 @@ class ProductionResource extends Resource
             ->actions([
                 Tables\Actions\Action::make('exportAsJson')
                     ->label(__('Export'))
-                    ->action(function ($record, ProductionService $productionService) {
-                        return response()->streamDownload(function () use ($record, $productionService) {
+                    ->action(function ($record) {
+                        return response()->streamDownload(function () use ($record) {
                             $productionService = new ProductionService($record);
                             echo $productionService->makeCsv();
                         }, 'production.csv');

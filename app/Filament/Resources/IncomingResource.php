@@ -6,6 +6,7 @@ use App\Filament\Resources\IncomingResource\Pages;
 use App\Filament\Resources\IncomingResource\RelationManagers;
 use App\Models\Customer;
 use App\Models\Incoming;
+use App\Services\IncomingService;
 use Filament\Forms;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -49,6 +50,17 @@ class IncomingResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('printLabelPdf')
+                    ->label(__('Print Label'))
+                    ->action(function ($record) {
+                        return response()->streamDownload(function () use ($record) {
+                            $incomingService = new IncomingService($record);
+                            echo $incomingService->makeLabel();
+                        }, 'production.csv');
+                    })
+                    ->tooltip(__('Print'))
+                    ->icon('heroicon-s-printer')
+                    ->color('primary'),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),

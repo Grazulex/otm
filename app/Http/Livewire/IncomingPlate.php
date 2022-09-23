@@ -55,41 +55,59 @@ class IncomingPlate extends Component  implements Tables\Contracts\HasTable
             $is_rush = false;
         }
         $plate = Plate::where('reference', $datamatrix)
-            ->whereNull('incoming_id')
-            ->whereNull('production_id')
+            ->where('incoming_id', $this->incoming->id)
             ->whereIn('type', TypeEnums::cases())
             ->where('is_cod', $is_cod)
             ->where('is_rush', $is_rush)
             ->first();
-        if ($plate) {
-            $plate->incoming_id = $this->incoming->id;
-            $plate->save();
-            Notification::make()
-                ->title('Plate finded and saved successfully')
-                ->success()
-                ->seconds(2)
-                ->send();
-            $this->cod_is_disable = true;
-            $this->datamatrix = '';
-            $this->cod = '';
-            $this->emit('focusDatamatrix');
-        } else {
-            if ($is_cod || $is_rush) {
-                $this->cod_is_disable = false;
-                $this->emit('focusCod');
-            }
-            if (!$is_cod && !$is_rush) {
-                $this->createPlate(customer: $this->incoming->customer, reference: $datamatrix);
+        if (!$plate) {
+            $plate = Plate::where('reference', $datamatrix)
+                ->whereNull('incoming_id')
+                ->whereNull('production_id')
+                ->whereIn('type', TypeEnums::cases())
+                ->where('is_cod', $is_cod)
+                ->where('is_rush', $is_rush)
+                ->first();
+            if ($plate) {
+                $plate->incoming_id = $this->incoming->id;
+                $plate->save();
                 Notification::make()
-                    ->title('Plate created and saved successfully')
-                    ->warning()
+                    ->title('Plate finded and saved successfully')
+                    ->success()
                     ->seconds(2)
                     ->send();
                 $this->cod_is_disable = true;
                 $this->datamatrix = '';
                 $this->cod = '';
                 $this->emit('focusDatamatrix');
+            } else {
+                if ($is_cod || $is_rush) {
+                    $this->cod_is_disable = false;
+                    $this->emit('focusCod');
+                }
+                if (!$is_cod && !$is_rush) {
+                    $this->createPlate(customer: $this->incoming->customer, reference: $datamatrix);
+                    Notification::make()
+                        ->title('Plate created and saved successfully')
+                        ->warning()
+                        ->seconds(2)
+                        ->send();
+                    $this->cod_is_disable = true;
+                    $this->datamatrix = '';
+                    $this->cod = '';
+                    $this->emit('focusDatamatrix');
+                }
             }
+        } else {
+            Notification::make()
+                ->title('Plate is already in this incoming!')
+                ->error()
+                ->seconds(2)
+                ->send();
+            $this->cod_is_disable = true;
+            $this->datamatrix = '';
+            $this->cod = '';
+            $this->emit('focusDatamatrix');
         }
     }
 
