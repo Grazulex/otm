@@ -14,6 +14,7 @@ use Livewire\Component;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
+use PhpParser\Node\Stmt\Label;
 use Str;
 
 class IncomingPlate extends Component  implements Tables\Contracts\HasTable
@@ -200,6 +201,7 @@ class IncomingPlate extends Component  implements Tables\Contracts\HasTable
             Tables\Columns\BooleanColumn::make('is_rush'),
             Tables\Columns\TextColumn::make('amount')->money('eur', true),
             Tables\Columns\TextColumn::make('customer')->searchable()->sortable(),
+            Tables\Columns\TextColumn::make('datas.owner_language')->label('Language'),
         ];
     }
 
