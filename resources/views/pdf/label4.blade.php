@@ -44,6 +44,9 @@
         <div class="column">
             <div class="label">
                 {{ $plate->reference }}
+                <br />
+                <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($plate->reference, 'C39') }}" height="30"
+                    width="180" />
             </div>
         </div>
         @if ($loop->even)

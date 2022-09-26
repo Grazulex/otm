@@ -17172,7 +17172,355 @@
      
 }
 
-        namespace Barryvdh\Debugbar\Facades { 
+        namespace Barryvdh\DomPDF\Facade { 
+            /**
+     * 
+     *
+     * @method static \Barryvdh\DomPDF\PDF setPaper($paper, $orientation = 'portrait')
+     * @method static \Barryvdh\DomPDF\PDF setBaseHost(string $baseHost)
+     * @method static \Barryvdh\DomPDF\PDF setProtocol(string $protocol)
+     * @method static \Barryvdh\DomPDF\PDF setHttpContext($httpContext)
+     * @method static \Barryvdh\DomPDF\PDF setCallbacks(array $callbacks)
+     */ 
+        class Pdf {
+                    /**
+         * Get the DomPDF instance
+         *
+         * @return \Dompdf\Dompdf 
+         * @static 
+         */ 
+        public static function getDomPDF()
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->getDomPDF();
+        }
+                    /**
+         * Show or hide warnings
+         *
+         * @static 
+         */ 
+        public static function setWarnings($warnings)
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->setWarnings($warnings);
+        }
+                    /**
+         * Load a HTML string
+         *
+         * @param string|null $encoding Not used yet
+         * @static 
+         */ 
+        public static function loadHTML($string, $encoding = null)
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->loadHTML($string, $encoding);
+        }
+                    /**
+         * Load a HTML file
+         *
+         * @static 
+         */ 
+        public static function loadFile($file)
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->loadFile($file);
+        }
+                    /**
+         * Add metadata info
+         *
+         * @param \Barryvdh\DomPDF\array<string,  string> $info
+         * @return static 
+         * @static 
+         */ 
+        public static function addInfo($info)
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->addInfo($info);
+        }
+                    /**
+         * Load a View and convert to HTML
+         *
+         * @param \Barryvdh\DomPDF\array<string,  mixed> $data
+         * @param \Barryvdh\DomPDF\array<string,  mixed> $mergeData
+         * @param string|null $encoding Not used yet
+         * @static 
+         */ 
+        public static function loadView($view, $data = [], $mergeData = [], $encoding = null)
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->loadView($view, $data, $mergeData, $encoding);
+        }
+                    /**
+         * Set/Change an option (or array of options) in Dompdf
+         *
+         * @param \Barryvdh\DomPDF\array<string,  mixed>|string $attribute
+         * @param null|mixed $value
+         * @return \Barryvdh\DomPDF\PDF 
+         * @static 
+         */ 
+        public static function setOption($attribute, $value = null)
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->setOption($attribute, $value);
+        }
+                    /**
+         * Replace all the Options from DomPDF
+         *
+         * @deprecated Use setOption to override individual options.
+         * @param \Barryvdh\DomPDF\array<string,  mixed> $options
+         * @static 
+         */ 
+        public static function setOptions($options)
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->setOptions($options);
+        }
+                    /**
+         * Output the PDF as a string.
+         * 
+         * The options parameter controls the output. Accepted options are:
+         * 
+         * 'compress' = > 1 or 0 - apply content stream compression, this is
+         *    on (1) by default
+         *
+         * @param \Barryvdh\DomPDF\array<string,  int> $options
+         * @return string The rendered PDF as string
+         * @static 
+         */ 
+        public static function output($options = [])
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->output($options);
+        }
+                    /**
+         * Save the PDF to a file
+         *
+         * @static 
+         */ 
+        public static function save($filename)
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->save($filename);
+        }
+                    /**
+         * Make the PDF downloadable by the user
+         *
+         * @static 
+         */ 
+        public static function download($filename = 'document.pdf')
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->download($filename);
+        }
+                    /**
+         * Return a response with the PDF to show in the browser
+         *
+         * @static 
+         */ 
+        public static function stream($filename = 'document.pdf')
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->stream($filename);
+        }
+                    /**
+         * Render the PDF
+         *
+         * @static 
+         */ 
+        public static function render()
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->render();
+        }
+                    /**
+         * 
+         *
+         * @param \Barryvdh\DomPDF\array<string> $pc
+         * @static 
+         */ 
+        public static function setEncryption($password, $ownerpassword = '', $pc = [])
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->setEncryption($password, $ownerpassword, $pc);
+        }
+         
+    }
+            /**
+     * 
+     *
+     * @method static \Barryvdh\DomPDF\PDF setPaper($paper, $orientation = 'portrait')
+     * @method static \Barryvdh\DomPDF\PDF setBaseHost(string $baseHost)
+     * @method static \Barryvdh\DomPDF\PDF setProtocol(string $protocol)
+     * @method static \Barryvdh\DomPDF\PDF setHttpContext($httpContext)
+     * @method static \Barryvdh\DomPDF\PDF setCallbacks(array $callbacks)
+     */ 
+        class Pdf {
+                    /**
+         * Get the DomPDF instance
+         *
+         * @return \Dompdf\Dompdf 
+         * @static 
+         */ 
+        public static function getDomPDF()
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->getDomPDF();
+        }
+                    /**
+         * Show or hide warnings
+         *
+         * @static 
+         */ 
+        public static function setWarnings($warnings)
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->setWarnings($warnings);
+        }
+                    /**
+         * Load a HTML string
+         *
+         * @param string|null $encoding Not used yet
+         * @static 
+         */ 
+        public static function loadHTML($string, $encoding = null)
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->loadHTML($string, $encoding);
+        }
+                    /**
+         * Load a HTML file
+         *
+         * @static 
+         */ 
+        public static function loadFile($file)
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->loadFile($file);
+        }
+                    /**
+         * Add metadata info
+         *
+         * @param \Barryvdh\DomPDF\array<string,  string> $info
+         * @return static 
+         * @static 
+         */ 
+        public static function addInfo($info)
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->addInfo($info);
+        }
+                    /**
+         * Load a View and convert to HTML
+         *
+         * @param \Barryvdh\DomPDF\array<string,  mixed> $data
+         * @param \Barryvdh\DomPDF\array<string,  mixed> $mergeData
+         * @param string|null $encoding Not used yet
+         * @static 
+         */ 
+        public static function loadView($view, $data = [], $mergeData = [], $encoding = null)
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->loadView($view, $data, $mergeData, $encoding);
+        }
+                    /**
+         * Set/Change an option (or array of options) in Dompdf
+         *
+         * @param \Barryvdh\DomPDF\array<string,  mixed>|string $attribute
+         * @param null|mixed $value
+         * @return \Barryvdh\DomPDF\PDF 
+         * @static 
+         */ 
+        public static function setOption($attribute, $value = null)
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->setOption($attribute, $value);
+        }
+                    /**
+         * Replace all the Options from DomPDF
+         *
+         * @deprecated Use setOption to override individual options.
+         * @param \Barryvdh\DomPDF\array<string,  mixed> $options
+         * @static 
+         */ 
+        public static function setOptions($options)
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->setOptions($options);
+        }
+                    /**
+         * Output the PDF as a string.
+         * 
+         * The options parameter controls the output. Accepted options are:
+         * 
+         * 'compress' = > 1 or 0 - apply content stream compression, this is
+         *    on (1) by default
+         *
+         * @param \Barryvdh\DomPDF\array<string,  int> $options
+         * @return string The rendered PDF as string
+         * @static 
+         */ 
+        public static function output($options = [])
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->output($options);
+        }
+                    /**
+         * Save the PDF to a file
+         *
+         * @static 
+         */ 
+        public static function save($filename)
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->save($filename);
+        }
+                    /**
+         * Make the PDF downloadable by the user
+         *
+         * @static 
+         */ 
+        public static function download($filename = 'document.pdf')
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->download($filename);
+        }
+                    /**
+         * Return a response with the PDF to show in the browser
+         *
+         * @static 
+         */ 
+        public static function stream($filename = 'document.pdf')
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->stream($filename);
+        }
+                    /**
+         * Render the PDF
+         *
+         * @static 
+         */ 
+        public static function render()
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->render();
+        }
+                    /**
+         * 
+         *
+         * @param \Barryvdh\DomPDF\array<string> $pc
+         * @static 
+         */ 
+        public static function setEncryption($password, $ownerpassword = '', $pc = [])
+        {
+                        /** @var \Barryvdh\DomPDF\PDF $instance */
+                        return $instance->setEncryption($password, $ownerpassword, $pc);
+        }
+         
+    }
+     
+}
+
+    namespace Barryvdh\Debugbar\Facades { 
             /**
      * 
      *
@@ -17709,354 +18057,6 @@
      
 }
 
-    namespace Barryvdh\DomPDF\Facade { 
-            /**
-     * 
-     *
-     * @method static \Barryvdh\DomPDF\PDF setPaper($paper, $orientation = 'portrait')
-     * @method static \Barryvdh\DomPDF\PDF setBaseHost(string $baseHost)
-     * @method static \Barryvdh\DomPDF\PDF setProtocol(string $protocol)
-     * @method static \Barryvdh\DomPDF\PDF setHttpContext($httpContext)
-     * @method static \Barryvdh\DomPDF\PDF setCallbacks(array $callbacks)
-     */ 
-        class Pdf {
-                    /**
-         * Get the DomPDF instance
-         *
-         * @return \Dompdf\Dompdf 
-         * @static 
-         */ 
-        public static function getDomPDF()
-        {
-                        /** @var \Barryvdh\DomPDF\PDF $instance */
-                        return $instance->getDomPDF();
-        }
-                    /**
-         * Show or hide warnings
-         *
-         * @static 
-         */ 
-        public static function setWarnings($warnings)
-        {
-                        /** @var \Barryvdh\DomPDF\PDF $instance */
-                        return $instance->setWarnings($warnings);
-        }
-                    /**
-         * Load a HTML string
-         *
-         * @param string|null $encoding Not used yet
-         * @static 
-         */ 
-        public static function loadHTML($string, $encoding = null)
-        {
-                        /** @var \Barryvdh\DomPDF\PDF $instance */
-                        return $instance->loadHTML($string, $encoding);
-        }
-                    /**
-         * Load a HTML file
-         *
-         * @static 
-         */ 
-        public static function loadFile($file)
-        {
-                        /** @var \Barryvdh\DomPDF\PDF $instance */
-                        return $instance->loadFile($file);
-        }
-                    /**
-         * Add metadata info
-         *
-         * @param \Barryvdh\DomPDF\array<string,  string> $info
-         * @return static 
-         * @static 
-         */ 
-        public static function addInfo($info)
-        {
-                        /** @var \Barryvdh\DomPDF\PDF $instance */
-                        return $instance->addInfo($info);
-        }
-                    /**
-         * Load a View and convert to HTML
-         *
-         * @param \Barryvdh\DomPDF\array<string,  mixed> $data
-         * @param \Barryvdh\DomPDF\array<string,  mixed> $mergeData
-         * @param string|null $encoding Not used yet
-         * @static 
-         */ 
-        public static function loadView($view, $data = [], $mergeData = [], $encoding = null)
-        {
-                        /** @var \Barryvdh\DomPDF\PDF $instance */
-                        return $instance->loadView($view, $data, $mergeData, $encoding);
-        }
-                    /**
-         * Set/Change an option (or array of options) in Dompdf
-         *
-         * @param \Barryvdh\DomPDF\array<string,  mixed>|string $attribute
-         * @param null|mixed $value
-         * @return \Barryvdh\DomPDF\PDF 
-         * @static 
-         */ 
-        public static function setOption($attribute, $value = null)
-        {
-                        /** @var \Barryvdh\DomPDF\PDF $instance */
-                        return $instance->setOption($attribute, $value);
-        }
-                    /**
-         * Replace all the Options from DomPDF
-         *
-         * @deprecated Use setOption to override individual options.
-         * @param \Barryvdh\DomPDF\array<string,  mixed> $options
-         * @static 
-         */ 
-        public static function setOptions($options)
-        {
-                        /** @var \Barryvdh\DomPDF\PDF $instance */
-                        return $instance->setOptions($options);
-        }
-                    /**
-         * Output the PDF as a string.
-         * 
-         * The options parameter controls the output. Accepted options are:
-         * 
-         * 'compress' = > 1 or 0 - apply content stream compression, this is
-         *    on (1) by default
-         *
-         * @param \Barryvdh\DomPDF\array<string,  int> $options
-         * @return string The rendered PDF as string
-         * @static 
-         */ 
-        public static function output($options = [])
-        {
-                        /** @var \Barryvdh\DomPDF\PDF $instance */
-                        return $instance->output($options);
-        }
-                    /**
-         * Save the PDF to a file
-         *
-         * @static 
-         */ 
-        public static function save($filename)
-        {
-                        /** @var \Barryvdh\DomPDF\PDF $instance */
-                        return $instance->save($filename);
-        }
-                    /**
-         * Make the PDF downloadable by the user
-         *
-         * @static 
-         */ 
-        public static function download($filename = 'document.pdf')
-        {
-                        /** @var \Barryvdh\DomPDF\PDF $instance */
-                        return $instance->download($filename);
-        }
-                    /**
-         * Return a response with the PDF to show in the browser
-         *
-         * @static 
-         */ 
-        public static function stream($filename = 'document.pdf')
-        {
-                        /** @var \Barryvdh\DomPDF\PDF $instance */
-                        return $instance->stream($filename);
-        }
-                    /**
-         * Render the PDF
-         *
-         * @static 
-         */ 
-        public static function render()
-        {
-                        /** @var \Barryvdh\DomPDF\PDF $instance */
-                        return $instance->render();
-        }
-                    /**
-         * 
-         *
-         * @param \Barryvdh\DomPDF\array<string> $pc
-         * @static 
-         */ 
-        public static function setEncryption($password, $ownerpassword = '', $pc = [])
-        {
-                        /** @var \Barryvdh\DomPDF\PDF $instance */
-                        return $instance->setEncryption($password, $ownerpassword, $pc);
-        }
-         
-    }
-            /**
-     * 
-     *
-     * @method static \Barryvdh\DomPDF\PDF setPaper($paper, $orientation = 'portrait')
-     * @method static \Barryvdh\DomPDF\PDF setBaseHost(string $baseHost)
-     * @method static \Barryvdh\DomPDF\PDF setProtocol(string $protocol)
-     * @method static \Barryvdh\DomPDF\PDF setHttpContext($httpContext)
-     * @method static \Barryvdh\DomPDF\PDF setCallbacks(array $callbacks)
-     */ 
-        class Pdf {
-                    /**
-         * Get the DomPDF instance
-         *
-         * @return \Dompdf\Dompdf 
-         * @static 
-         */ 
-        public static function getDomPDF()
-        {
-                        /** @var \Barryvdh\DomPDF\PDF $instance */
-                        return $instance->getDomPDF();
-        }
-                    /**
-         * Show or hide warnings
-         *
-         * @static 
-         */ 
-        public static function setWarnings($warnings)
-        {
-                        /** @var \Barryvdh\DomPDF\PDF $instance */
-                        return $instance->setWarnings($warnings);
-        }
-                    /**
-         * Load a HTML string
-         *
-         * @param string|null $encoding Not used yet
-         * @static 
-         */ 
-        public static function loadHTML($string, $encoding = null)
-        {
-                        /** @var \Barryvdh\DomPDF\PDF $instance */
-                        return $instance->loadHTML($string, $encoding);
-        }
-                    /**
-         * Load a HTML file
-         *
-         * @static 
-         */ 
-        public static function loadFile($file)
-        {
-                        /** @var \Barryvdh\DomPDF\PDF $instance */
-                        return $instance->loadFile($file);
-        }
-                    /**
-         * Add metadata info
-         *
-         * @param \Barryvdh\DomPDF\array<string,  string> $info
-         * @return static 
-         * @static 
-         */ 
-        public static function addInfo($info)
-        {
-                        /** @var \Barryvdh\DomPDF\PDF $instance */
-                        return $instance->addInfo($info);
-        }
-                    /**
-         * Load a View and convert to HTML
-         *
-         * @param \Barryvdh\DomPDF\array<string,  mixed> $data
-         * @param \Barryvdh\DomPDF\array<string,  mixed> $mergeData
-         * @param string|null $encoding Not used yet
-         * @static 
-         */ 
-        public static function loadView($view, $data = [], $mergeData = [], $encoding = null)
-        {
-                        /** @var \Barryvdh\DomPDF\PDF $instance */
-                        return $instance->loadView($view, $data, $mergeData, $encoding);
-        }
-                    /**
-         * Set/Change an option (or array of options) in Dompdf
-         *
-         * @param \Barryvdh\DomPDF\array<string,  mixed>|string $attribute
-         * @param null|mixed $value
-         * @return \Barryvdh\DomPDF\PDF 
-         * @static 
-         */ 
-        public static function setOption($attribute, $value = null)
-        {
-                        /** @var \Barryvdh\DomPDF\PDF $instance */
-                        return $instance->setOption($attribute, $value);
-        }
-                    /**
-         * Replace all the Options from DomPDF
-         *
-         * @deprecated Use setOption to override individual options.
-         * @param \Barryvdh\DomPDF\array<string,  mixed> $options
-         * @static 
-         */ 
-        public static function setOptions($options)
-        {
-                        /** @var \Barryvdh\DomPDF\PDF $instance */
-                        return $instance->setOptions($options);
-        }
-                    /**
-         * Output the PDF as a string.
-         * 
-         * The options parameter controls the output. Accepted options are:
-         * 
-         * 'compress' = > 1 or 0 - apply content stream compression, this is
-         *    on (1) by default
-         *
-         * @param \Barryvdh\DomPDF\array<string,  int> $options
-         * @return string The rendered PDF as string
-         * @static 
-         */ 
-        public static function output($options = [])
-        {
-                        /** @var \Barryvdh\DomPDF\PDF $instance */
-                        return $instance->output($options);
-        }
-                    /**
-         * Save the PDF to a file
-         *
-         * @static 
-         */ 
-        public static function save($filename)
-        {
-                        /** @var \Barryvdh\DomPDF\PDF $instance */
-                        return $instance->save($filename);
-        }
-                    /**
-         * Make the PDF downloadable by the user
-         *
-         * @static 
-         */ 
-        public static function download($filename = 'document.pdf')
-        {
-                        /** @var \Barryvdh\DomPDF\PDF $instance */
-                        return $instance->download($filename);
-        }
-                    /**
-         * Return a response with the PDF to show in the browser
-         *
-         * @static 
-         */ 
-        public static function stream($filename = 'document.pdf')
-        {
-                        /** @var \Barryvdh\DomPDF\PDF $instance */
-                        return $instance->stream($filename);
-        }
-                    /**
-         * Render the PDF
-         *
-         * @static 
-         */ 
-        public static function render()
-        {
-                        /** @var \Barryvdh\DomPDF\PDF $instance */
-                        return $instance->render();
-        }
-                    /**
-         * 
-         *
-         * @param \Barryvdh\DomPDF\array<string> $pc
-         * @static 
-         */ 
-        public static function setEncryption($password, $ownerpassword = '', $pc = [])
-        {
-                        /** @var \Barryvdh\DomPDF\PDF $instance */
-                        return $instance->setEncryption($password, $ownerpassword, $pc);
-        }
-         
-    }
-     
-}
-
     namespace Honeybadger\HoneybadgerLaravel\Facades { 
             /**
      * 
@@ -18542,6 +18542,110 @@
         {
                         /** @var \Livewire\LivewireManager $instance */
                         return $instance->flushState();
+        }
+         
+    }
+     
+}
+
+    namespace Milon\Barcode\Facades { 
+            /**
+     * 
+     *
+     */ 
+        class DNS1DFacade {
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function setStorPath($path)
+        {
+                        /** @var \Milon\Barcode\DNS1D $instance */
+                        return $instance->setStorPath($path);
+        }
+         
+    }
+            /**
+     * 
+     *
+     */ 
+        class DNS2DFacade {
+                    /**
+         * Return a SVG string representation of barcode.
+         * 
+         * <li>$arrcode['code'] code to be printed on text label</li>
+         * <li>$arrcode['num_rows'] required number of rows</li>
+         * <li>$arrcode['num_cols'] required number of columns</li>
+         * <li>$arrcode['bcode'][$r][$c] value of the cell is $r row and $c column (0 = transparent, 1 = black)</li></ul>
+         *
+         * @param $code (string) code to print
+         * @param $type (string) type of barcode: <ul><li>DATAMATRIX : Datamatrix (ISO/IEC 16022)</li><li>PDF417 : PDF417 (ISO/IEC 15438:2006)</li><li>PDF417,a,e,t,s,f,o0,o1,o2,o3,o4,o5,o6 : PDF417 with parameters: a = aspect ratio (width/height); e = error correction level (0-8); t = total number of macro segments; s = macro segment index (0-99998); f = file ID; o0 = File Name (text); o1 = Segment Count (numeric); o2 = Time Stamp (numeric); o3 = Sender (text); o4 = Addressee (text); o5 = File Size (numeric); o6 = Checksum (numeric). NOTES: Parameters t, s and f are required for a Macro Control Block, all other parametrs are optional. To use a comma character ',' on text options, replace it with the character 255: "\xff".</li><li>QRCODE : QRcode Low error correction</li><li>QRCODE,L : QRcode Low error correction</li><li>QRCODE,M : QRcode Medium error correction</li><li>QRCODE,Q : QRcode Better error correction</li><li>QRCODE,H : QR-CODE Best error correction</li><li>RAW: raw mode - comma-separad list of array rows</li><li>RAW2: raw mode - array rows are surrounded by square parenthesis.</li><li>TEST : Test matrix</li></ul>
+         * @param $w (int) Width of a single rectangle element in user units.
+         * @param $h (int) Height of a single rectangle element in user units.
+         * @param $color (string) Foreground color (in SVG format) for bar elements (background is transparent).
+         * @return string SVG code.
+         * @protected 
+         * @static 
+         */ 
+        public static function getBarcodeSVG($code, $type, $w = 3, $h = 3, $color = 'black')
+        {
+                        /** @var \Milon\Barcode\DNS2D $instance */
+                        return $instance->getBarcodeSVG($code, $type, $w, $h, $color);
+        }
+                    /**
+         * Return an HTML representation of barcode.
+         * 
+         * <li>$arrcode['code'] code to be printed on text label</li>
+         * <li>$arrcode['num_rows'] required number of rows</li>
+         * <li>$arrcode['num_cols'] required number of columns</li>
+         * <li>$arrcode['bcode'][$r][$c] value of the cell is $r row and $c column (0 = transparent, 1 = black)</li></ul>
+         *
+         * @param $code (string) code to print
+         * @param $type (string) type of barcode: <ul><li>DATAMATRIX : Datamatrix (ISO/IEC 16022)</li><li>PDF417 : PDF417 (ISO/IEC 15438:2006)</li><li>PDF417,a,e,t,s,f,o0,o1,o2,o3,o4,o5,o6 : PDF417 with parameters: a = aspect ratio (width/height); e = error correction level (0-8); t = total number of macro segments; s = macro segment index (0-99998); f = file ID; o0 = File Name (text); o1 = Segment Count (numeric); o2 = Time Stamp (numeric); o3 = Sender (text); o4 = Addressee (text); o5 = File Size (numeric); o6 = Checksum (numeric). NOTES: Parameters t, s and f are required for a Macro Control Block, all other parametrs are optional. To use a comma character ',' on text options, replace it with the character 255: "\xff".</li><li>QRCODE : QRcode Low error correction</li><li>QRCODE,L : QRcode Low error correction</li><li>QRCODE,M : QRcode Medium error correction</li><li>QRCODE,Q : QRcode Better error correction</li><li>QRCODE,H : QR-CODE Best error correction</li><li>RAW: raw mode - comma-separad list of array rows</li><li>RAW2: raw mode - array rows are surrounded by square parenthesis.</li><li>TEST : Test matrix</li></ul>
+         * @param $w (int) Width of a single rectangle element in pixels.
+         * @param $h (int) Height of a single rectangle element in pixels.
+         * @param $color (string) Foreground color for bar elements (background is transparent).
+         * @return string HTML code.
+         * @protected 
+         * @static 
+         */ 
+        public static function getBarcodeHTML($code, $type, $w = 10, $h = 10, $color = 'black')
+        {
+                        /** @var \Milon\Barcode\DNS2D $instance */
+                        return $instance->getBarcodeHTML($code, $type, $w, $h, $color);
+        }
+                    /**
+         * Return a PNG image representation of barcode (requires GD or Imagick library).
+         * 
+         * <li>$arrcode['code'] code to be printed on text label</li>
+         * <li>$arrcode['num_rows'] required number of rows</li>
+         * <li>$arrcode['num_cols'] required number of columns</li>
+         * <li>$arrcode['bcode'][$r][$c] value of the cell is $r row and $c column (0 = transparent, 1 = black)</li></ul>
+         *
+         * @param $code (string) code to print
+         * @param $type (string) type of barcode: <ul><li>DATAMATRIX : Datamatrix (ISO/IEC 16022)</li><li>PDF417 : PDF417 (ISO/IEC 15438:2006)</li><li>PDF417,a,e,t,s,f,o0,o1,o2,o3,o4,o5,o6 : PDF417 with parameters: a = aspect ratio (width/height); e = error correction level (0-8); t = total number of macro segments; s = macro segment index (0-99998); f = file ID; o0 = File Name (text); o1 = Segment Count (numeric); o2 = Time Stamp (numeric); o3 = Sender (text); o4 = Addressee (text); o5 = File Size (numeric); o6 = Checksum (numeric). NOTES: Parameters t, s and f are required for a Macro Control Block, all other parametrs are optional. To use a comma character ',' on text options, replace it with the character 255: "\xff".</li><li>QRCODE : QRcode Low error correction</li><li>QRCODE,L : QRcode Low error correction</li><li>QRCODE,M : QRcode Medium error correction</li><li>QRCODE,Q : QRcode Better error correction</li><li>QRCODE,H : QR-CODE Best error correction</li><li>RAW: raw mode - comma-separad list of array rows</li><li>RAW2: raw mode - array rows are surrounded by square parenthesis.</li><li>TEST : Test matrix</li></ul>
+         * @param $w (int) Width of a single rectangle element in pixels.
+         * @param $h (int) Height of a single rectangle element in pixels.
+         * @param $color (array) RGB (0-255) foreground color for bar elements (background is transparent).
+         * @return \Milon\Barcode\path or false in case of error.
+         * @protected 
+         * @static 
+         */ 
+        public static function getBarcodePNG($code, $type, $w = 3, $h = 3, $color = [])
+        {
+                        /** @var \Milon\Barcode\DNS2D $instance */
+                        return $instance->getBarcodePNG($code, $type, $w, $h, $color);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function setStorPath($path)
+        {
+                        /** @var \Milon\Barcode\DNS2D $instance */
+                        return $instance->setStorPath($path);
         }
          
     }
@@ -24189,11 +24293,13 @@ namespace  {
             class Validator extends \Illuminate\Support\Facades\Validator {}
             class View extends \Illuminate\Support\Facades\View {}
             class Vite extends \Illuminate\Support\Facades\Vite {}
+            class PDF extends \Barryvdh\DomPDF\Facade\Pdf {}
             class Debugbar extends \Barryvdh\Debugbar\Facades\Debugbar {}
             class Pdf extends \Barryvdh\DomPDF\Facade\Pdf {}
-            class PDF extends \Barryvdh\DomPDF\Facade\Pdf {}
             class Honeybadger extends \Honeybadger\HoneybadgerLaravel\Facades\Honeybadger {}
             class Livewire extends \Livewire\Livewire {}
+            class DNS1D extends \Milon\Barcode\Facades\DNS1DFacade {}
+            class DNS2D extends \Milon\Barcode\Facades\DNS2DFacade {}
             class Flare extends \Spatie\LaravelIgnition\Facades\Flare {}
      
 }
