@@ -21,7 +21,7 @@ class IncomingService
    public function makeLabel()
    {
       $plates = $this->plates;
-      $pdf = Pdf::loadView('pdf/label4', compact('plates'));
+      $pdf = Pdf::loadView('pdf/label4', compact('plates'))->setPaper('a4', 'landscape');
 
       return $pdf->download('label.pdf');
    }

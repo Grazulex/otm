@@ -101,7 +101,7 @@ class IncomingPlate extends Component  implements Tables\Contracts\HasTable
         } else {
             Notification::make()
                 ->title('Plate is already in this incoming!')
-                ->error()
+                ->danger()
                 ->seconds(2)
                 ->send();
             $this->cod_is_disable = true;
