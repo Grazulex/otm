@@ -46,6 +46,14 @@ class Customer extends Model
     ];
 
 
+    protected $attributes = [
+        'delivery_type' => DeliveryTypeEnums::BPOST,
+        'process_type' => ProcessTypeEnums::DEFAULT,
+        'location_report_type' => LocationReportTypeEnums::API,
+        'plate_type' => TypeEnums::N1FR,
+    ];
+
+
     /**
      *
      * @return HasMany

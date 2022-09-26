@@ -40,6 +40,10 @@ class Plate extends Model
         'is_incoming'   => 'boolean'
     ];
 
+    protected $attributes = [
+        'origin' => OriginEnums::ESHOP,
+    ];
+
 
     /**
      *
