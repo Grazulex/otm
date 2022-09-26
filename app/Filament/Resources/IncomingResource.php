@@ -51,15 +51,26 @@ class IncomingResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\Action::make('printLabelPdf')
-                    ->label(__('Print Label'))
+                    ->label(__('Label'))
                     ->action(function ($record) {
                         return response()->streamDownload(function () use ($record) {
                             $incomingService = new IncomingService($record);
                             echo $incomingService->makeLabel();
-                        }, 'production.csv');
+                        }, 'label.pdf');
                     })
                     ->tooltip(__('Print'))
                     ->icon('heroicon-s-printer')
+                    ->color('primary'),
+                Tables\Actions\Action::make('downloadBposFile')
+                    ->label(__('BPOST File'))
+                    ->action(function ($record) {
+                        return response()->streamDownload(function () use ($record) {
+                            $incomingService = new IncomingService($record);
+                            echo $incomingService->makeBpostFile();
+                        }, 'bpost.csv');
+                    })
+                    ->tooltip(__('Download'))
+                    ->icon('heroicon-o-truck')
                     ->color('primary'),
             ])
             ->bulkActions([

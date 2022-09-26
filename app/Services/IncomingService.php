@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Incoming;
 use App\Models\Plate;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class IncomingService
 {
@@ -19,15 +20,23 @@ class IncomingService
 
    public function makeLabel()
    {
+      $plates = $this->plates;
+      $pdf = Pdf::loadView('pdf/label4', compact('plates'));
+
+      return $pdf->download('label.pdf');
+   }
+
+   public function makeBpostFile()
+   {
       $content[] = array('Plate nr.', 'Ref plaque', 'Order date', 'OwnerID', 'Nom Client', 'Rue Client', 'Nr. Client', 'Boite ClIENT', 'Commune', 'Code postal');
       foreach ($this->plates as $plate) {
          //$datas = $plate->datas;
-         $content[] =  array($plate->reference, $plate->type, $plate->created_at, $plate->order_id, $plate->customer, $plate->datas['destination_street'], $plate->datas['destination_house_number'], $plate->datas['destination_bus'], $plate->datas['destination_city'], $plate->datas['destination_postal_code']);
+         $content[] =  array($plate->reference);
       }
-      return $this->array2pdf($content);
+      return $this->array2csv($content);
    }
 
-   function array2pdf($data, $delimiter = ',', $enclosure = '"', $escape_char = "\\")
+   function array2csv($data, $delimiter = ',', $enclosure = '"', $escape_char = "\\")
    {
       $f = fopen('php://memory', 'r+');
       foreach ($data as $item) {
