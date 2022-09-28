@@ -6,10 +6,8 @@ use App\Enums\OriginEnums;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Str;
 
-class Plate extends Model
-{
+class Plate extends Model {
     use HasFactory;
 
     protected $fillable = [
@@ -29,61 +27,50 @@ class Plate extends Model
         'datas',
         'plate_type',
         'product_type',
-        'client_code'
+        'client_code',
     ];
 
     protected $casts = [
-        'origin'    => OriginEnums::class,
-        'datas'     => 'array',
-        'is_cod'    => 'boolean',
-        'is_rush'   => 'boolean',
-        'is_incoming'   => 'boolean'
+        'origin' => OriginEnums::class,
+        'datas' => 'array',
+        'is_cod' => 'boolean',
+        'is_rush' => 'boolean',
+        'is_incoming' => 'boolean',
     ];
 
     protected $attributes = [
         'origin' => OriginEnums::ESHOP,
     ];
 
-
     /**
      *
      * @return BelongsTo
      */
-    public function production(): BelongsTo
-    {
-        return $this->belongsTo(
-            related: Production::class
-        );
+    public function production(): BelongsTo {
+        return $this->belongsTo(related: Production::class);
     }
 
     /**
      *
      * @return BelongsTo
      */
-    public function incoming(): BelongsTo
-    {
-        return $this->belongsTo(
-            related: Incoming::class
-        );
+    public function incoming(): BelongsTo {
+        return $this->belongsTo(related: Incoming::class);
     }
 
-    public function setAmountAttribute($price): void
-    {
+    public function setAmountAttribute($price): void {
         $this->attributes['amount'] = $price * 100;
     }
 
-    public function getAmountAttribute(): int|float
-    {
+    public function getAmountAttribute(): int|float {
         return $this->attributes['amount'] / 100;
     }
 
-    public function setReferenceAttribute($reference): void
-    {
+    public function setReferenceAttribute($reference): void {
         $this->attributes['reference'] = strtoupper($reference);
     }
 
-    public function getReferenceAttribute(): string
-    {
-        return  strtoupper($this->attributes['reference']);
+    public function getReferenceAttribute(): string {
+        return strtoupper($this->attributes['reference']);
     }
 }

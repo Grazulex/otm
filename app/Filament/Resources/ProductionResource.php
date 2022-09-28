@@ -11,75 +11,69 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 
-class ProductionResource extends Resource
-{
+class ProductionResource extends Resource {
     protected static ?string $model = Production::class;
 
-    protected static ?string $navigationGroup = "Plates";
+    protected static ?string $navigationGroup = 'Plates';
     protected static ?int $navigationSort = 5;
-    protected static ?string $navigationIcon = "heroicon-o-clipboard-list";
+    protected static ?string $navigationIcon = 'heroicon-o-clipboard-list';
 
-    public static function form(Form $form): Form
-    {
+    public static function form(Form $form): Form {
         return $form->schema([
             //
         ]);
     }
 
-    public static function table(Table $table): Table
-    {
+    public static function table(Table $table): Table {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make("created_at")
+                Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->searchable(),
-                Tables\Columns\BadgeColumn::make("plates_count")->counts(
-                    "plates"
+                Tables\Columns\BadgeColumn::make('plates_count')->counts(
+                    'plates',
                 ),
             ])
-            ->defaultSort("created_at", "desc")
+            ->defaultSort('created_at', 'desc')
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\Action::make("exportAsJson")
-                    ->label(__("Export"))
+                Tables\Actions\Action::make('exportAsJson')
+                    ->label(__('Export'))
                     ->action(function ($record) {
                         return response()->streamDownload(function () use (
-                            $record
+                            $record,
                         ) {
                             $productionService = new ProductionService($record);
                             echo $productionService->makeCsv();
                         },
-                        "production.csv");
+                        'production.csv');
                     })
-                    ->tooltip(__("Export"))
-                    ->icon("heroicon-s-download")
-                    ->color("primary"),
+                    ->tooltip(__('Export'))
+                    ->icon('heroicon-s-download')
+                    ->color('primary'),
             ])
             ->bulkActions([
                 //
             ]);
     }
 
-    public static function getRelations(): array
-    {
+    public static function getRelations(): array {
         return [
                 //
             ];
     }
 
-    public static function getPages(): array
-    {
+    public static function getPages(): array {
         return [
-            "index" => Pages\ListProductions::route("/"),
-            "view" => Pages\ViewProduction::route("/{record}"),
+            'index' => Pages\ListProductions::route('/'),
+            'view' => Pages\ViewProduction::route('/{record}'),
         ];
     }
 
-    public static function getWidgets(): array
-    {
+    public static function getWidgets(): array {
         return [PlateOverview::class];
     }
 }

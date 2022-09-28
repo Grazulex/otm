@@ -13,111 +13,107 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 
-class IncomingResource extends Resource
-{
+class IncomingResource extends Resource {
     protected static ?string $model = Incoming::class;
 
-    protected static ?string $navigationGroup = "Plates";
+    protected static ?string $navigationGroup = 'Plates';
     protected static ?int $navigationSort = 5;
-    protected static ?string $navigationIcon = "heroicon-o-check-circle";
+    protected static ?string $navigationIcon = 'heroicon-o-check-circle';
 
-    public static function form(Form $form): Form
-    {
+    public static function form(Form $form): Form {
         return $form->schema([
-            Forms\Components\Select::make("customer_id")
-                ->options(Customer::all()->pluck("name", "id"))
+            Forms\Components\Select::make('customer_id')
+                ->options(Customer::all()->pluck('name', 'id'))
                 ->searchable()
                 ->required(),
         ]);
     }
 
-    public static function table(Table $table): Table
-    {
+    public static function table(Table $table): Table {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make("created_at")
+                Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make("customer.name"),
-                Tables\Columns\BadgeColumn::make("plates_count")->counts(
-                    "plates"
+                Tables\Columns\TextColumn::make('customer.name'),
+                Tables\Columns\BadgeColumn::make('plates_count')->counts(
+                    'plates',
                 ),
-                Tables\Columns\TextColumn::make("close.created_at")
+                Tables\Columns\TextColumn::make('close.created_at')
                     ->dateTime()
                     ->sortable()
                     ->searchable(),
             ])
-            ->defaultSort("created_at", "desc")
+            ->defaultSort('created_at', 'desc')
             ->filters([
                 //
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\Action::make("printLabelBelfius")
-                    ->label(__("Label Co2"))
+                Tables\Actions\Action::make('printLabelBelfius')
+                    ->label(__('Label Co2'))
                     ->action(function ($record) {
                         return response()->streamDownload(function () use (
-                            $record
+                            $record,
                         ) {
                             $incomingService = new IncomingService($record);
                             echo $incomingService->makeLabelBelfius();
                         },
-                        "label.pdf");
+                        'label.pdf');
                     })
-                    ->tooltip(__("Print Label Co2"))
+                    ->tooltip(__('Print Label Co2'))
                     ->visible(
                         fn(Incoming $record): bool => $record->customer
-                            ->need_co2_label
+                            ->need_co2_label,
                     )
-                    ->icon("heroicon-s-printer")
-                    ->color("primary"),
-                Tables\Actions\Action::make("printLabelKbc")
-                    ->label(__("Label Order"))
+                    ->icon('heroicon-s-printer')
+                    ->color('primary'),
+                Tables\Actions\Action::make('printLabelKbc')
+                    ->label(__('Label Order'))
                     ->action(function ($record) {
                         return response()->streamDownload(function () use (
-                            $record
+                            $record,
                         ) {
                             $incomingService = new IncomingService($record);
                             echo $incomingService->makeLabelKbc();
                         },
-                        "label.pdf");
+                        'label.pdf');
                     })
-                    ->tooltip(__("Print Order Label"))
+                    ->tooltip(__('Print Order Label'))
                     ->visible(
                         fn(Incoming $record): bool => $record->customer
-                            ->need_order_label
+                            ->need_order_label,
                     )
-                    ->icon("heroicon-s-printer")
-                    ->color("primary"),
-                Tables\Actions\Action::make("downloadBposFile")
-                    ->label(__("BPOST File"))
+                    ->icon('heroicon-s-printer')
+                    ->color('primary'),
+                Tables\Actions\Action::make('downloadBposFile')
+                    ->label(__('BPOST File'))
                     ->action(function ($record) {
                         return response()->streamDownload(function () use (
-                            $record
+                            $record,
                         ) {
                             $incomingService = new IncomingService($record);
                             echo $incomingService->makeBpostFile();
                         },
-                        "bpost.csv");
+                        'bpost.csv');
                     })
-                    ->tooltip(__("Download"))
+                    ->tooltip(__('Download'))
                     ->visible(
                         fn(Incoming $record): bool => $record->customer
-                            ->delivery_type == DeliveryTypeEnums::BPOST
+                            ->delivery_type == DeliveryTypeEnums::BPOST,
                     )
-                    ->icon("heroicon-o-truck")
-                    ->color("primary"),
+                    ->icon('heroicon-o-truck')
+                    ->color('primary'),
             ])
             ->bulkActions([Tables\Actions\DeleteBulkAction::make()]);
     }
 
-    public static function getPages(): array
-    {
+    public static function getPages(): array {
         return [
-            "index" => Pages\ListIncomings::route("/"),
-            "create" => Pages\CreateIncoming::route("/create"),
-            "edit" => Pages\EditIncoming::route("/{record}/edit"),
+            'index' => Pages\ListIncomings::route('/'),
+            'create' => Pages\CreateIncoming::route('/create'),
+            'edit' => Pages\EditIncoming::route('/{record}/edit'),
         ];
     }
 }

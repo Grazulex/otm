@@ -3,19 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 use RalphJSmit\Filament\Notifications\Concerns\FilamentNotifiable;
 use Filament\Models\Contracts\FilamentUser;
 
-class User extends Authenticatable implements FilamentUser
-{
+class User extends Authenticatable implements FilamentUser {
     use HasFactory, FilamentNotifiable;
 
-
-    public function canAccessFilament(): bool
-    {
+    public function canAccessFilament(): bool {
         return true;
     }
 
@@ -24,22 +19,14 @@ class User extends Authenticatable implements FilamentUser
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
-
+    protected $fillable = ['name', 'email', 'password'];
 
     /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    protected $hidden = ['password', 'remember_token'];
 
     /**
      * The attributes that should be cast.
@@ -50,9 +37,7 @@ class User extends Authenticatable implements FilamentUser
         'email_verified_at' => 'datetime',
     ];
 
-
-    public function initials()
-    {
+    public function initials() {
         $ret = '';
         foreach (explode(' ', $this->name) as $word) {
             $ret .= strtoupper($word[0]);

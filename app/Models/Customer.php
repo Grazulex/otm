@@ -11,8 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Customer extends Model
-{
+class Customer extends Model {
     use HasFactory;
 
     protected $fillable = [
@@ -34,21 +33,20 @@ class Customer extends Model
         'enum_ref',
         'plate_type',
         'need_co2_label',
-        'need_order_label'
+        'need_order_label',
     ];
 
     protected $casts = [
-        'delivery_type'    => DeliveryTypeEnums::class,
-        'process_type'  => ProcessTypeEnums::class,
+        'delivery_type' => DeliveryTypeEnums::class,
+        'process_type' => ProcessTypeEnums::class,
         'location_report_type' => LocationReportTypeEnums::class,
         'plate_type' => TypeEnums::class,
-        'is_delivery_grouped'     => 'boolean',
-        'is_delivery_bpost'     => 'boolean',
-        'is_inmotiv_customer'     => 'boolean',
+        'is_delivery_grouped' => 'boolean',
+        'is_delivery_bpost' => 'boolean',
+        'is_inmotiv_customer' => 'boolean',
         'need_co2_label' => 'boolean',
-        'need_order_label' => 'boolean'
+        'need_order_label' => 'boolean',
     ];
-
 
     protected $attributes = [
         'delivery_type' => DeliveryTypeEnums::BPOST,
@@ -57,23 +55,18 @@ class Customer extends Model
         'plate_type' => TypeEnums::N1FR,
     ];
 
-
     /**
      *
      * @return HasMany
      */
-    public function incomings(): HasMany
-    {
+    public function incomings(): HasMany {
         return $this->hasMany(
             related: Incoming::class,
-            foreignKey: 'customer_id'
+            foreignKey: 'customer_id',
         );
     }
 
-    public function items(): HasMany
-    {
-        return $this->hasMany(
-            related: CustomerItem::class
-        );
+    public function items(): HasMany {
+        return $this->hasMany(related: CustomerItem::class);
     }
 }

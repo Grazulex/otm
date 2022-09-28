@@ -2,7 +2,6 @@
 
 namespace App\Notifications;
 
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Illuminate\Notifications\Notification;
@@ -10,8 +9,8 @@ use RalphJSmit\Filament\Notifications\Concerns\StoresNotificationInDatabase;
 use RalphJSmit\Filament\Notifications\Contracts\AsFilamentNotification;
 use RalphJSmit\Filament\Notifications\FilamentNotification;
 
-class ExportNotification extends Notification implements AsFilamentNotification
-{
+class ExportNotification extends Notification implements
+    AsFilamentNotification {
     use StoresNotificationInDatabase;
 
     public function __construct(
@@ -20,8 +19,7 @@ class ExportNotification extends Notification implements AsFilamentNotification
     ) {
     }
 
-    public static function toFilamentNotification(): FilamentNotification
-    {
+    public static function toFilamentNotification(): FilamentNotification {
         return FilamentNotification::make()
             ->form([
                 TextInput::make('type')
@@ -32,7 +30,7 @@ class ExportNotification extends Notification implements AsFilamentNotification
                     ->label('Message')
                     ->columnSpan(2),
             ])
-            ->message(fn (self $notification) => $notification->type)
-            ->description(fn (self $notification) => $notification->message);
+            ->message(fn(self $notification) => $notification->type)
+            ->description(fn(self $notification) => $notification->message);
     }
 }

@@ -10,51 +10,48 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 
-class ReceptionResource extends Resource
-{
+class ReceptionResource extends Resource {
     protected static ?string $model = Reception::class;
 
-    protected static ?string $navigationGroup = "Cash ledgers";
+    protected static ?string $navigationGroup = 'Cash ledgers';
     protected static ?int $navigationSort = 2;
 
-    protected static ?string $navigationIcon = "heroicon-o-truck";
+    protected static ?string $navigationIcon = 'heroicon-o-truck';
 
-    public static function form(Form $form): Form
-    {
+    public static function form(Form $form): Form {
         return $form->schema([
-            Forms\Components\TextInput::make("amount_cash")
+            Forms\Components\TextInput::make('amount_cash')
                 ->numeric()
-                ->prefix("€")
+                ->prefix('€')
                 ->required(),
-            Forms\Components\TextInput::make("amount_bbc")
+            Forms\Components\TextInput::make('amount_bbc')
                 ->numeric()
-                ->prefix("€")
+                ->prefix('€')
                 ->required(),
         ]);
     }
 
-    public static function table(Table $table): Table
-    {
+    public static function table(Table $table): Table {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make("created_at")
+                Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make("amount_cash")->money(
-                    "eur",
-                    true
+                Tables\Columns\TextColumn::make('amount_cash')->money(
+                    'eur',
+                    true,
                 ),
-                Tables\Columns\TextColumn::make("amount_bbc")->money(
-                    "eur",
-                    true
+                Tables\Columns\TextColumn::make('amount_bbc')->money(
+                    'eur',
+                    true,
                 ),
-                Tables\Columns\TextColumn::make("close.created_at")
+                Tables\Columns\TextColumn::make('close.created_at')
                     ->dateTime()
                     ->sortable()
                     ->searchable(),
             ])
-            ->defaultSort("created_at", "desc")
+            ->defaultSort('created_at', 'desc')
             ->filters([
                 //
             ])
@@ -62,19 +59,17 @@ class ReceptionResource extends Resource
             ->bulkActions([Tables\Actions\DeleteBulkAction::make()]);
     }
 
-    public static function getRelations(): array
-    {
+    public static function getRelations(): array {
         return [
                 //
             ];
     }
 
-    public static function getPages(): array
-    {
+    public static function getPages(): array {
         return [
-            "index" => Pages\ListReceptions::route("/"),
-            "create" => Pages\CreateReception::route("/create"),
-            "edit" => Pages\EditReception::route("/{record}/edit"),
+            'index' => Pages\ListReceptions::route('/'),
+            'create' => Pages\CreateReception::route('/create'),
+            'edit' => Pages\EditReception::route('/{record}/edit'),
         ];
     }
 }

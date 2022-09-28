@@ -15,106 +15,102 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 
-class CustomerResource extends Resource
-{
+class CustomerResource extends Resource {
     protected static ?string $model = Customer::class;
-    protected static ?string $navigationGroup = "Customers";
+    protected static ?string $navigationGroup = 'Customers';
     protected static ?int $navigationSort = 6;
-    protected static ?string $navigationIcon = "heroicon-o-user-group";
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
-    protected static function getNavigationBadge(): ?string
-    {
+    protected static function getNavigationBadge(): ?string {
         return static::getModel()::count();
     }
 
-    public static function form(Form $form): Form
-    {
+    public static function form(Form $form): Form {
         return $form->schema([
-            Forms\Components\Section::make("Name & ref")
+            Forms\Components\Section::make('Name & ref')
                 ->schema([
-                    Forms\Components\TextInput::make("name")
+                    Forms\Components\TextInput::make('name')
                         ->required()
                         ->maxLength(255),
-                    Forms\Components\TextInput::make("enum_ref")->maxLength(
-                        255
+                    Forms\Components\TextInput::make('enum_ref')->maxLength(
+                        255,
                     ),
                 ])
                 ->columns(2),
-            Forms\Components\Section::make("Configuration")
+            Forms\Components\Section::make('Configuration')
                 ->schema([
-                    Forms\Components\Select::make("delivery_type")
+                    Forms\Components\Select::make('delivery_type')
                         ->required()
                         ->options(DeliveryTypeEnums::class)
                         ->searchable(),
-                    Forms\Components\Select::make("process_type")
+                    Forms\Components\Select::make('process_type')
                         ->required()
                         ->options(ProcessTypeEnums::class)
                         ->searchable(),
-                    Forms\Components\Select::make("location_report_type")
+                    Forms\Components\Select::make('location_report_type')
                         ->required()
                         ->options(LocationReportTypeEnums::class)
                         ->searchable(),
-                    Forms\Components\Select::make("plate_type")
+                    Forms\Components\Select::make('plate_type')
                         ->required()
                         ->options(TypeEnums::class)
                         ->searchable(),
                     Forms\Components\Toggle::make(
-                        "is_delivery_grouped"
+                        'is_delivery_grouped',
                     )->required(),
                     Forms\Components\Toggle::make(
-                        "is_delivery_bpost"
+                        'is_delivery_bpost',
                     )->required(),
                     Forms\Components\Toggle::make(
-                        "is_inmotiv_customer"
+                        'is_inmotiv_customer',
                     )->required(),
-                    Forms\Components\Toggle::make("need_co2_label"),
-                    Forms\Components\Toggle::make("need_order_label"),
+                    Forms\Components\Toggle::make('need_co2_label'),
+                    Forms\Components\Toggle::make('need_order_label'),
                 ])
                 ->columns(4),
-            Forms\Components\Section::make("Delivery Location")
+            Forms\Components\Section::make('Delivery Location')
                 ->schema([
-                    Forms\Components\TextInput::make("delivery_key")->maxLength(
-                        255
+                    Forms\Components\TextInput::make('delivery_key')->maxLength(
+                        255,
                     ),
                     Forms\Components\TextInput::make(
-                        "delivery_contact"
+                        'delivery_contact',
                     )->maxLength(255),
                     Forms\Components\TextInput::make(
-                        "delivery_street"
+                        'delivery_street',
                     )->maxLength(255),
                     Forms\Components\TextInput::make(
-                        "delivery_number"
+                        'delivery_number',
                     )->maxLength(255),
-                    Forms\Components\TextInput::make("delivery_box")->maxLength(
-                        255
+                    Forms\Components\TextInput::make('delivery_box')->maxLength(
+                        255,
                     ),
-                    Forms\Components\TextInput::make("delivery_zip")->maxLength(
-                        255
+                    Forms\Components\TextInput::make('delivery_zip')->maxLength(
+                        255,
                     ),
                     Forms\Components\TextInput::make(
-                        "delivery_city"
+                        'delivery_city',
                     )->maxLength(255),
                 ])
                 ->columns(2),
-            Forms\Components\Section::make("Documents")
-                ->schema([Forms\Components\FileUpload::make("process_file")])
+            Forms\Components\Section::make('Documents')
+                ->schema([Forms\Components\FileUpload::make('process_file')])
                 ->columns(1),
         ]);
     }
 
-    public static function table(Table $table): Table
-    {
+    public static function table(Table $table): Table {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make("name"),
-                Tables\Columns\BadgeColumn::make("delivery_type"),
-                Tables\Columns\BooleanColumn::make("is_inmotiv_customer"),
-                Tables\Columns\TextColumn::make("process_type"),
-                Tables\Columns\BadgeColumn::make("items_count")->counts(
-                    "items"
+                Tables\Columns\TextColumn::make('name'),
+                Tables\Columns\BadgeColumn::make('delivery_type'),
+                Tables\Columns\BooleanColumn::make('is_inmotiv_customer'),
+                Tables\Columns\TextColumn::make('process_type'),
+                Tables\Columns\BadgeColumn::make('items_count')->counts(
+                    'items',
                 ),
-                Tables\Columns\BadgeColumn::make("incomings_count")->counts(
-                    "incomings"
+                Tables\Columns\BadgeColumn::make('incomings_count')->counts(
+                    'incomings',
                 ),
             ])
             ->filters([
@@ -124,17 +120,15 @@ class CustomerResource extends Resource
             ->bulkActions([Tables\Actions\DeleteBulkAction::make()]);
     }
 
-    public static function getRelations(): array
-    {
+    public static function getRelations(): array {
         return [RelationManagers\ItemsRelationManager::class];
     }
 
-    public static function getPages(): array
-    {
+    public static function getPages(): array {
         return [
-            "index" => Pages\ListCustomers::route("/"),
-            "create" => Pages\CreateCustomer::route("/create"),
-            "edit" => Pages\EditCustomer::route("/{record}/edit"),
+            'index' => Pages\ListCustomers::route('/'),
+            'create' => Pages\CreateCustomer::route('/create'),
+            'edit' => Pages\EditCustomer::route('/{record}/edit'),
         ];
     }
 }

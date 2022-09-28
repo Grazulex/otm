@@ -2,25 +2,17 @@
 
 namespace App\Http\Livewire;
 
-use App\Enums\DeliveryTypeEnums;
 use App\Enums\OriginEnums;
 use App\Enums\TypeEnums;
 use App\Models\Customer;
 use App\Models\Incoming;
 use App\Models\Plate;
-use Closure;
 use Filament\Notifications\Notification;
 use Livewire\Component;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Model;
-use PhpParser\Node\Stmt\Label;
-use Str;
 
-class IncomingPlate extends Component  implements Tables\Contracts\HasTable
-{
-
-
+class IncomingPlate extends Component implements Tables\Contracts\HasTable {
     use Tables\Concerns\InteractsWithTable;
 
     public Incoming $incoming;
@@ -31,19 +23,25 @@ class IncomingPlate extends Component  implements Tables\Contracts\HasTable
     public string $type;
     public bool $cod_is_disable;
 
-    protected int | string | array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 'full';
 
-    public function mount()
-    {
+    public function mount() {
         $this->datamatrix = '';
         $this->cod = '';
         $this->type = 'cod';
         $this->cod_is_disable = true;
     }
 
-    public function searchDatamatrix()
-    {
-        $datamatrix = strtoupper(trim(preg_replace('/[^a-z0-9]+/i', '', substr(trim($this->datamatrix), 0, 10))));
+    public function searchDatamatrix() {
+        $datamatrix = strtoupper(
+            trim(
+                preg_replace(
+                    '/[^a-z0-9]+/i',
+                    '',
+                    substr(trim($this->datamatrix), 0, 10),
+                ),
+            ),
+        );
         if ($this->type == 'cod') {
             $is_cod = true;
             $is_rush = false;
@@ -86,7 +84,10 @@ class IncomingPlate extends Component  implements Tables\Contracts\HasTable
                     $this->emit('focusCod');
                 }
                 if (!$is_cod && !$is_rush) {
-                    $this->createPlate(customer: $this->incoming->customer, reference: $datamatrix);
+                    $this->createPlate(
+                        customer: $this->incoming->customer,
+                        reference: $datamatrix,
+                    );
                     Notification::make()
                         ->title('Plate created and saved successfully')
                         ->warning()
@@ -111,10 +112,13 @@ class IncomingPlate extends Component  implements Tables\Contracts\HasTable
         }
     }
 
-    public function searchCod()
-    {
-        $datamatrix = preg_replace('/[^a-z0-9]+/i', '', substr(trim($this->datamatrix), 0, 10));
-        $cod = (int)substr(trim($this->cod), 4, 6) / 100;
+    public function searchCod() {
+        $datamatrix = preg_replace(
+            '/[^a-z0-9]+/i',
+            '',
+            substr(trim($this->datamatrix), 0, 10),
+        );
+        $cod = (int) substr(trim($this->cod), 4, 6) / 100;
         if ($this->type == 'cod') {
             $is_cod = true;
             $is_rush = false;
@@ -134,13 +138,25 @@ class IncomingPlate extends Component  implements Tables\Contracts\HasTable
             $plate->incoming_id = $this->incoming->id;
             $plate->is_cod = $is_cod;
             $plate->is_rush = $is_rush;
-            $plate->amount = (int)$cod;
+            $plate->amount = (int) $cod;
             $plate->save();
         } else {
             if ($this->type == 'cod') {
-                $this->createPlate(customer: $this->incoming->customer, reference: $datamatrix, amount: (int)$cod, is_cod: true, is_rush: false);
+                $this->createPlate(
+                    customer: $this->incoming->customer,
+                    reference: $datamatrix,
+                    amount: (int) $cod,
+                    is_cod: true,
+                    is_rush: false,
+                );
             } else {
-                $this->createPlate(customer: $this->incoming->customer, reference: $datamatrix, amount: (int)$cod, is_cod: false, is_rush: true);
+                $this->createPlate(
+                    customer: $this->incoming->customer,
+                    reference: $datamatrix,
+                    amount: (int) $cod,
+                    is_cod: false,
+                    is_rush: true,
+                );
             }
         }
         Notification::make()
@@ -154,14 +170,19 @@ class IncomingPlate extends Component  implements Tables\Contracts\HasTable
         $this->emit('focusDatamatrix');
     }
 
-    public function createPlate(Customer $customer, string $reference, int $amount = 0, bool $is_cod = false, bool $is_rush = false)
-    {
+    public function createPlate(
+        Customer $customer,
+        string $reference,
+        int $amount = 0,
+        bool $is_cod = false,
+        bool $is_rush = false,
+    ) {
         if ($customer->is_delivery_bpost && $customer->is_delivery_grouped) {
             Plate::create([
                 'reference' => $reference,
                 'is_cod' => $is_cod,
                 'is_rush' => $is_rush,
-                'amount' => (int)$amount,
+                'amount' => (int) $amount,
                 'plate_type' => $customer->plate_type,
                 'product_type' => 'plates',
                 'type' => $customer->plate_type,
@@ -177,15 +198,14 @@ class IncomingPlate extends Component  implements Tables\Contracts\HasTable
                     'destination_bus' => $customer->delivery_box,
                     'destination_postal_code' => $customer->delivery_zip,
                     'destination_city' => $customer->delivery_city,
-
-                ]
+                ],
             ]);
         } else {
             $plate = Plate::create([
                 'reference' => $reference,
                 'is_cod' => $is_cod,
                 'is_rush' => $is_rush,
-                'amount' => (int)$amount,
+                'amount' => (int) $amount,
                 'plate_type' => $customer->plate_type,
                 'product_type' => 'plates',
                 'type' => $customer->plate_type,
@@ -196,36 +216,45 @@ class IncomingPlate extends Component  implements Tables\Contracts\HasTable
         }
     }
 
-    protected function isTablePaginationEnabled(): bool
-    {
+    protected function isTablePaginationEnabled(): bool {
         return false;
     }
 
-    protected function getTableQuery(): Builder
-    {
-        return Plate::where('incoming_id', $this->incoming->id)->OrderBy('created_at', 'desc');
+    protected function getTableQuery(): Builder {
+        return Plate::where('incoming_id', $this->incoming->id)->OrderBy(
+            'created_at',
+            'desc',
+        );
     }
 
-    protected function getTableColumns(): array
-    {
+    protected function getTableColumns(): array {
         return [
             Tables\Columns\TextColumn::make('created_at')
-                ->dateTime()->searchable()->sortable(),
+                ->dateTime()
+                ->searchable()
+                ->sortable(),
             Tables\Columns\TextColumn::make('reference')
                 ->searchable()
                 ->sortable()
-                ->url(fn (Plate $record): string => route('filament.resources.plates.edit', ['record' => $record])),
+                ->url(
+                    fn(Plate $record): string => route(
+                        'filament.resources.plates.edit',
+                        ['record' => $record],
+                    ),
+                ),
             Tables\Columns\BooleanColumn::make('is_cod'),
             Tables\Columns\BooleanColumn::make('is_rush'),
             Tables\Columns\TextColumn::make('amount')->money('eur', true),
-            Tables\Columns\TextColumn::make('customer')->searchable()->sortable(),
-            Tables\Columns\TextColumn::make('datas.owner_language')->label('Language'),
+            Tables\Columns\TextColumn::make('customer')
+                ->searchable()
+                ->sortable(),
+            Tables\Columns\TextColumn::make('datas.owner_language')->label(
+                'Language',
+            ),
         ];
     }
 
-
-    public function render()
-    {
+    public function render() {
         return view('livewire.incoming-plate');
     }
 }
