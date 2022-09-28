@@ -44,8 +44,12 @@ class IncomingService
                       }
                   }
               } 
-              
-              $content[] =  array('TXP24H', $plate->datas['destination_name'],'','',$plate->datas['destination_street'], $plate->datas['destination_house_number'], $plate->datas['destination_bus'], $plate->datas['destination_postal_code'], $plate->datas['destination_city'], 'BE', 'OTM-Shop', '', 'Potaardestraat', '42', '', '1082', 'Brussel','','','999786', $message, $plate->datas['price'], ((int)$plate->datas['price']>0) ? 'BE29096898971264' : '',((int)$plate->datas['price']>0) ? '' : 'N',((int)$plate->datas['price']>0) ? '' : 'N', ((int)$plate->datas['price']>0 ? '' : 'N'),'','','','','','','','','','','','','',((int)$plate->datas['price']>0) ? 'GKCCBEBB' : '');
+             $cod = null;
+             if (isset($plate->datas['price'])) {
+                $cod = $plate->datas['price'];
+             }
+
+              $content[] =  array('TXP24H', $plate->datas['destination_name'],'','',$plate->datas['destination_street'], $plate->datas['destination_house_number'], $plate->datas['destination_bus'], $plate->datas['destination_postal_code'], $plate->datas['destination_city'], 'BE', 'OTM-Shop', '', 'Potaardestraat', '42', '', '1082', 'Brussel','','','999786', $message, $cod, ((int)$cod>0) ? 'BE29096898971264' : '',((int)$cod>0) ? '' : 'N',((int)$cod>0) ? '' : 'N', ((int)$cod>0 ? '' : 'N'),'','','','','','','','','','','','','',((int)$cod>0) ? 'GKCCBEBB' : '');
               $i++;
           }
       }
