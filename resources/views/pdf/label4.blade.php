@@ -38,7 +38,7 @@
 
 <body>
     @foreach ($plates as $plate)
-        @if ($loop->odd)
+        @if ($loop->odd && $loop->first)
             <div class="row">
         @endif
         <div class="column">
@@ -49,11 +49,10 @@
                     width="180" />
             </div>
         </div>
-        @if ($loop->even)
+        @if ($loop->even || $loop->last)
             </div>
         @endif
     @endforeach
-    </div>
 </body>
 
 </html>

@@ -4,7 +4,7 @@
 
 /**
  * A helper file for Laravel, to provide autocomplete information to your IDE
- * Generated for Laravel 9.31.0.
+ * Generated for Laravel 9.32.0.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -2254,6 +2254,17 @@
                         return $instance->setRequest($request);
         }
                     /**
+         * Get the timebox instance used by the guard.
+         *
+         * @return \Illuminate\Support\Timebox 
+         * @static 
+         */ 
+        public static function getTimebox()
+        {
+                        /** @var \Illuminate\Auth\SessionGuard $instance */
+                        return $instance->getTimebox();
+        }
+                    /**
          * Determine if the current user is authenticated. If not, throw an exception.
          *
          * @return \App\Models\User 
@@ -3492,6 +3503,18 @@
         {
                         /** @var \Illuminate\Support\Testing\Fakes\BusFake $instance */
                         return $instance->hasDispatchedAfterResponse($command);
+        }
+                    /**
+         * Dispatch an empty job batch for testing.
+         *
+         * @param string $name
+         * @return \Illuminate\Bus\Batch 
+         * @static 
+         */ 
+        public static function dispatchFakeBatch($name = '')
+        {
+                        /** @var \Illuminate\Support\Testing\Fakes\BusFake $instance */
+                        return $instance->dispatchFakeBatch($name);
         }
                     /**
          * Record the fake pending batch dispatch.
@@ -12043,12 +12066,39 @@
                         return $instance->boolean($key, $default);
         }
                     /**
+         * Retrieve input as an integer value.
+         *
+         * @param string $key
+         * @param int $default
+         * @return int 
+         * @static 
+         */ 
+        public static function integer($key, $default = 0)
+        {
+                        /** @var \Illuminate\Http\Request $instance */
+                        return $instance->integer($key, $default);
+        }
+                    /**
+         * Retrieve input as a float value.
+         *
+         * @param string $key
+         * @param float $default
+         * @return float 
+         * @static 
+         */ 
+        public static function float($key, $default = 0.0)
+        {
+                        /** @var \Illuminate\Http\Request $instance */
+                        return $instance->float($key, $default);
+        }
+                    /**
          * Retrieve input from the request as a Carbon instance.
          *
          * @param string $key
          * @param string|null $format
          * @param string|null $tz
          * @return \Illuminate\Support\Carbon|null 
+         * @throws \Carbon\Exceptions\InvalidFormatException
          * @static 
          */ 
         public static function date($key, $format = null, $tz = null)
@@ -15747,6 +15797,18 @@
                         return $instance->setKeyResolver($keyResolver);
         }
                     /**
+         * Clone a new instance of the URL generator with a different encryption key resolver.
+         *
+         * @param callable $keyResolver
+         * @return \Illuminate\Routing\UrlGenerator 
+         * @static 
+         */ 
+        public static function withKeyResolver($keyResolver)
+        {
+                        /** @var \Illuminate\Routing\UrlGenerator $instance */
+                        return $instance->withKeyResolver($keyResolver);
+        }
+                    /**
          * Get the root controller namespace.
          *
          * @return string 
@@ -17520,6 +17582,110 @@
      
 }
 
+    namespace Milon\Barcode\Facades { 
+            /**
+     * 
+     *
+     */ 
+        class DNS1DFacade {
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function setStorPath($path)
+        {
+                        /** @var \Milon\Barcode\DNS1D $instance */
+                        return $instance->setStorPath($path);
+        }
+         
+    }
+            /**
+     * 
+     *
+     */ 
+        class DNS2DFacade {
+                    /**
+         * Return a SVG string representation of barcode.
+         * 
+         * <li>$arrcode['code'] code to be printed on text label</li>
+         * <li>$arrcode['num_rows'] required number of rows</li>
+         * <li>$arrcode['num_cols'] required number of columns</li>
+         * <li>$arrcode['bcode'][$r][$c] value of the cell is $r row and $c column (0 = transparent, 1 = black)</li></ul>
+         *
+         * @param $code (string) code to print
+         * @param $type (string) type of barcode: <ul><li>DATAMATRIX : Datamatrix (ISO/IEC 16022)</li><li>PDF417 : PDF417 (ISO/IEC 15438:2006)</li><li>PDF417,a,e,t,s,f,o0,o1,o2,o3,o4,o5,o6 : PDF417 with parameters: a = aspect ratio (width/height); e = error correction level (0-8); t = total number of macro segments; s = macro segment index (0-99998); f = file ID; o0 = File Name (text); o1 = Segment Count (numeric); o2 = Time Stamp (numeric); o3 = Sender (text); o4 = Addressee (text); o5 = File Size (numeric); o6 = Checksum (numeric). NOTES: Parameters t, s and f are required for a Macro Control Block, all other parametrs are optional. To use a comma character ',' on text options, replace it with the character 255: "\xff".</li><li>QRCODE : QRcode Low error correction</li><li>QRCODE,L : QRcode Low error correction</li><li>QRCODE,M : QRcode Medium error correction</li><li>QRCODE,Q : QRcode Better error correction</li><li>QRCODE,H : QR-CODE Best error correction</li><li>RAW: raw mode - comma-separad list of array rows</li><li>RAW2: raw mode - array rows are surrounded by square parenthesis.</li><li>TEST : Test matrix</li></ul>
+         * @param $w (int) Width of a single rectangle element in user units.
+         * @param $h (int) Height of a single rectangle element in user units.
+         * @param $color (string) Foreground color (in SVG format) for bar elements (background is transparent).
+         * @return string SVG code.
+         * @protected 
+         * @static 
+         */ 
+        public static function getBarcodeSVG($code, $type, $w = 3, $h = 3, $color = 'black')
+        {
+                        /** @var \Milon\Barcode\DNS2D $instance */
+                        return $instance->getBarcodeSVG($code, $type, $w, $h, $color);
+        }
+                    /**
+         * Return an HTML representation of barcode.
+         * 
+         * <li>$arrcode['code'] code to be printed on text label</li>
+         * <li>$arrcode['num_rows'] required number of rows</li>
+         * <li>$arrcode['num_cols'] required number of columns</li>
+         * <li>$arrcode['bcode'][$r][$c] value of the cell is $r row and $c column (0 = transparent, 1 = black)</li></ul>
+         *
+         * @param $code (string) code to print
+         * @param $type (string) type of barcode: <ul><li>DATAMATRIX : Datamatrix (ISO/IEC 16022)</li><li>PDF417 : PDF417 (ISO/IEC 15438:2006)</li><li>PDF417,a,e,t,s,f,o0,o1,o2,o3,o4,o5,o6 : PDF417 with parameters: a = aspect ratio (width/height); e = error correction level (0-8); t = total number of macro segments; s = macro segment index (0-99998); f = file ID; o0 = File Name (text); o1 = Segment Count (numeric); o2 = Time Stamp (numeric); o3 = Sender (text); o4 = Addressee (text); o5 = File Size (numeric); o6 = Checksum (numeric). NOTES: Parameters t, s and f are required for a Macro Control Block, all other parametrs are optional. To use a comma character ',' on text options, replace it with the character 255: "\xff".</li><li>QRCODE : QRcode Low error correction</li><li>QRCODE,L : QRcode Low error correction</li><li>QRCODE,M : QRcode Medium error correction</li><li>QRCODE,Q : QRcode Better error correction</li><li>QRCODE,H : QR-CODE Best error correction</li><li>RAW: raw mode - comma-separad list of array rows</li><li>RAW2: raw mode - array rows are surrounded by square parenthesis.</li><li>TEST : Test matrix</li></ul>
+         * @param $w (int) Width of a single rectangle element in pixels.
+         * @param $h (int) Height of a single rectangle element in pixels.
+         * @param $color (string) Foreground color for bar elements (background is transparent).
+         * @return string HTML code.
+         * @protected 
+         * @static 
+         */ 
+        public static function getBarcodeHTML($code, $type, $w = 10, $h = 10, $color = 'black')
+        {
+                        /** @var \Milon\Barcode\DNS2D $instance */
+                        return $instance->getBarcodeHTML($code, $type, $w, $h, $color);
+        }
+                    /**
+         * Return a PNG image representation of barcode (requires GD or Imagick library).
+         * 
+         * <li>$arrcode['code'] code to be printed on text label</li>
+         * <li>$arrcode['num_rows'] required number of rows</li>
+         * <li>$arrcode['num_cols'] required number of columns</li>
+         * <li>$arrcode['bcode'][$r][$c] value of the cell is $r row and $c column (0 = transparent, 1 = black)</li></ul>
+         *
+         * @param $code (string) code to print
+         * @param $type (string) type of barcode: <ul><li>DATAMATRIX : Datamatrix (ISO/IEC 16022)</li><li>PDF417 : PDF417 (ISO/IEC 15438:2006)</li><li>PDF417,a,e,t,s,f,o0,o1,o2,o3,o4,o5,o6 : PDF417 with parameters: a = aspect ratio (width/height); e = error correction level (0-8); t = total number of macro segments; s = macro segment index (0-99998); f = file ID; o0 = File Name (text); o1 = Segment Count (numeric); o2 = Time Stamp (numeric); o3 = Sender (text); o4 = Addressee (text); o5 = File Size (numeric); o6 = Checksum (numeric). NOTES: Parameters t, s and f are required for a Macro Control Block, all other parametrs are optional. To use a comma character ',' on text options, replace it with the character 255: "\xff".</li><li>QRCODE : QRcode Low error correction</li><li>QRCODE,L : QRcode Low error correction</li><li>QRCODE,M : QRcode Medium error correction</li><li>QRCODE,Q : QRcode Better error correction</li><li>QRCODE,H : QR-CODE Best error correction</li><li>RAW: raw mode - comma-separad list of array rows</li><li>RAW2: raw mode - array rows are surrounded by square parenthesis.</li><li>TEST : Test matrix</li></ul>
+         * @param $w (int) Width of a single rectangle element in pixels.
+         * @param $h (int) Height of a single rectangle element in pixels.
+         * @param $color (array) RGB (0-255) foreground color for bar elements (background is transparent).
+         * @return \Milon\Barcode\path or false in case of error.
+         * @protected 
+         * @static 
+         */ 
+        public static function getBarcodePNG($code, $type, $w = 3, $h = 3, $color = [])
+        {
+                        /** @var \Milon\Barcode\DNS2D $instance */
+                        return $instance->getBarcodePNG($code, $type, $w, $h, $color);
+        }
+                    /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function setStorPath($path)
+        {
+                        /** @var \Milon\Barcode\DNS2D $instance */
+                        return $instance->setStorPath($path);
+        }
+         
+    }
+     
+}
+
     namespace Barryvdh\Debugbar\Facades { 
             /**
      * 
@@ -18542,110 +18708,6 @@
         {
                         /** @var \Livewire\LivewireManager $instance */
                         return $instance->flushState();
-        }
-         
-    }
-     
-}
-
-    namespace Milon\Barcode\Facades { 
-            /**
-     * 
-     *
-     */ 
-        class DNS1DFacade {
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function setStorPath($path)
-        {
-                        /** @var \Milon\Barcode\DNS1D $instance */
-                        return $instance->setStorPath($path);
-        }
-         
-    }
-            /**
-     * 
-     *
-     */ 
-        class DNS2DFacade {
-                    /**
-         * Return a SVG string representation of barcode.
-         * 
-         * <li>$arrcode['code'] code to be printed on text label</li>
-         * <li>$arrcode['num_rows'] required number of rows</li>
-         * <li>$arrcode['num_cols'] required number of columns</li>
-         * <li>$arrcode['bcode'][$r][$c] value of the cell is $r row and $c column (0 = transparent, 1 = black)</li></ul>
-         *
-         * @param $code (string) code to print
-         * @param $type (string) type of barcode: <ul><li>DATAMATRIX : Datamatrix (ISO/IEC 16022)</li><li>PDF417 : PDF417 (ISO/IEC 15438:2006)</li><li>PDF417,a,e,t,s,f,o0,o1,o2,o3,o4,o5,o6 : PDF417 with parameters: a = aspect ratio (width/height); e = error correction level (0-8); t = total number of macro segments; s = macro segment index (0-99998); f = file ID; o0 = File Name (text); o1 = Segment Count (numeric); o2 = Time Stamp (numeric); o3 = Sender (text); o4 = Addressee (text); o5 = File Size (numeric); o6 = Checksum (numeric). NOTES: Parameters t, s and f are required for a Macro Control Block, all other parametrs are optional. To use a comma character ',' on text options, replace it with the character 255: "\xff".</li><li>QRCODE : QRcode Low error correction</li><li>QRCODE,L : QRcode Low error correction</li><li>QRCODE,M : QRcode Medium error correction</li><li>QRCODE,Q : QRcode Better error correction</li><li>QRCODE,H : QR-CODE Best error correction</li><li>RAW: raw mode - comma-separad list of array rows</li><li>RAW2: raw mode - array rows are surrounded by square parenthesis.</li><li>TEST : Test matrix</li></ul>
-         * @param $w (int) Width of a single rectangle element in user units.
-         * @param $h (int) Height of a single rectangle element in user units.
-         * @param $color (string) Foreground color (in SVG format) for bar elements (background is transparent).
-         * @return string SVG code.
-         * @protected 
-         * @static 
-         */ 
-        public static function getBarcodeSVG($code, $type, $w = 3, $h = 3, $color = 'black')
-        {
-                        /** @var \Milon\Barcode\DNS2D $instance */
-                        return $instance->getBarcodeSVG($code, $type, $w, $h, $color);
-        }
-                    /**
-         * Return an HTML representation of barcode.
-         * 
-         * <li>$arrcode['code'] code to be printed on text label</li>
-         * <li>$arrcode['num_rows'] required number of rows</li>
-         * <li>$arrcode['num_cols'] required number of columns</li>
-         * <li>$arrcode['bcode'][$r][$c] value of the cell is $r row and $c column (0 = transparent, 1 = black)</li></ul>
-         *
-         * @param $code (string) code to print
-         * @param $type (string) type of barcode: <ul><li>DATAMATRIX : Datamatrix (ISO/IEC 16022)</li><li>PDF417 : PDF417 (ISO/IEC 15438:2006)</li><li>PDF417,a,e,t,s,f,o0,o1,o2,o3,o4,o5,o6 : PDF417 with parameters: a = aspect ratio (width/height); e = error correction level (0-8); t = total number of macro segments; s = macro segment index (0-99998); f = file ID; o0 = File Name (text); o1 = Segment Count (numeric); o2 = Time Stamp (numeric); o3 = Sender (text); o4 = Addressee (text); o5 = File Size (numeric); o6 = Checksum (numeric). NOTES: Parameters t, s and f are required for a Macro Control Block, all other parametrs are optional. To use a comma character ',' on text options, replace it with the character 255: "\xff".</li><li>QRCODE : QRcode Low error correction</li><li>QRCODE,L : QRcode Low error correction</li><li>QRCODE,M : QRcode Medium error correction</li><li>QRCODE,Q : QRcode Better error correction</li><li>QRCODE,H : QR-CODE Best error correction</li><li>RAW: raw mode - comma-separad list of array rows</li><li>RAW2: raw mode - array rows are surrounded by square parenthesis.</li><li>TEST : Test matrix</li></ul>
-         * @param $w (int) Width of a single rectangle element in pixels.
-         * @param $h (int) Height of a single rectangle element in pixels.
-         * @param $color (string) Foreground color for bar elements (background is transparent).
-         * @return string HTML code.
-         * @protected 
-         * @static 
-         */ 
-        public static function getBarcodeHTML($code, $type, $w = 10, $h = 10, $color = 'black')
-        {
-                        /** @var \Milon\Barcode\DNS2D $instance */
-                        return $instance->getBarcodeHTML($code, $type, $w, $h, $color);
-        }
-                    /**
-         * Return a PNG image representation of barcode (requires GD or Imagick library).
-         * 
-         * <li>$arrcode['code'] code to be printed on text label</li>
-         * <li>$arrcode['num_rows'] required number of rows</li>
-         * <li>$arrcode['num_cols'] required number of columns</li>
-         * <li>$arrcode['bcode'][$r][$c] value of the cell is $r row and $c column (0 = transparent, 1 = black)</li></ul>
-         *
-         * @param $code (string) code to print
-         * @param $type (string) type of barcode: <ul><li>DATAMATRIX : Datamatrix (ISO/IEC 16022)</li><li>PDF417 : PDF417 (ISO/IEC 15438:2006)</li><li>PDF417,a,e,t,s,f,o0,o1,o2,o3,o4,o5,o6 : PDF417 with parameters: a = aspect ratio (width/height); e = error correction level (0-8); t = total number of macro segments; s = macro segment index (0-99998); f = file ID; o0 = File Name (text); o1 = Segment Count (numeric); o2 = Time Stamp (numeric); o3 = Sender (text); o4 = Addressee (text); o5 = File Size (numeric); o6 = Checksum (numeric). NOTES: Parameters t, s and f are required for a Macro Control Block, all other parametrs are optional. To use a comma character ',' on text options, replace it with the character 255: "\xff".</li><li>QRCODE : QRcode Low error correction</li><li>QRCODE,L : QRcode Low error correction</li><li>QRCODE,M : QRcode Medium error correction</li><li>QRCODE,Q : QRcode Better error correction</li><li>QRCODE,H : QR-CODE Best error correction</li><li>RAW: raw mode - comma-separad list of array rows</li><li>RAW2: raw mode - array rows are surrounded by square parenthesis.</li><li>TEST : Test matrix</li></ul>
-         * @param $w (int) Width of a single rectangle element in pixels.
-         * @param $h (int) Height of a single rectangle element in pixels.
-         * @param $color (array) RGB (0-255) foreground color for bar elements (background is transparent).
-         * @return \Milon\Barcode\path or false in case of error.
-         * @protected 
-         * @static 
-         */ 
-        public static function getBarcodePNG($code, $type, $w = 3, $h = 3, $color = [])
-        {
-                        /** @var \Milon\Barcode\DNS2D $instance */
-                        return $instance->getBarcodePNG($code, $type, $w, $h, $color);
-        }
-                    /**
-         * 
-         *
-         * @static 
-         */ 
-        public static function setStorPath($path)
-        {
-                        /** @var \Milon\Barcode\DNS2D $instance */
-                        return $instance->setStorPath($path);
         }
          
     }
@@ -20154,6 +20216,18 @@
         public static function assertCanRenderTableColumn($name)
         {
                         return \Livewire\Testing\TestableLivewire::assertCanRenderTableColumn($name);
+        }
+                    /**
+         * 
+         *
+         * @see \Filament\Tables\Testing\TestsColumns::assertCanNotRenderTableColumn()
+         * @param string $name
+         * @return static 
+         * @static 
+         */ 
+        public static function assertCanNotRenderTableColumn($name)
+        {
+                        return \Livewire\Testing\TestableLivewire::assertCanNotRenderTableColumn($name);
         }
                     /**
          * 
@@ -24294,12 +24368,12 @@ namespace  {
             class View extends \Illuminate\Support\Facades\View {}
             class Vite extends \Illuminate\Support\Facades\Vite {}
             class PDF extends \Barryvdh\DomPDF\Facade\Pdf {}
+            class DNS1D extends \Milon\Barcode\Facades\DNS1DFacade {}
+            class DNS2D extends \Milon\Barcode\Facades\DNS2DFacade {}
             class Debugbar extends \Barryvdh\Debugbar\Facades\Debugbar {}
             class Pdf extends \Barryvdh\DomPDF\Facade\Pdf {}
             class Honeybadger extends \Honeybadger\HoneybadgerLaravel\Facades\Honeybadger {}
             class Livewire extends \Livewire\Livewire {}
-            class DNS1D extends \Milon\Barcode\Facades\DNS1DFacade {}
-            class DNS2D extends \Milon\Barcode\Facades\DNS2DFacade {}
             class Flare extends \Spatie\LaravelIgnition\Facades\Flare {}
      
 }

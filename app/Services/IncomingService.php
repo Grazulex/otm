@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Models\Incoming;
 use App\Models\Plate;
+use App\Models\Item;
+use App\Enums\TypeEnums;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class IncomingService
@@ -28,10 +30,24 @@ class IncomingService
 
    public function makeBpostFile()
    {
-      $content[] = array('Plate nr.', 'Ref plaque', 'Order date', 'OwnerID', 'Nom Client', 'Rue Client', 'Nr. Client', 'Boite ClIENT', 'Commune', 'Code postal');
+      $content[] = array('ProductId', 'Name', 'Contact Name', 'Contact Phone', 'Street', 'Street Number', 'Box Number', 'Postal Code', 'City', 'Country', 'Sender Name', 'Sender Contact Name', 'Sender Street', 'Sender Street Number', 'Sender Box Number', 'Sender Postal Code', 'Sender City', 'Weight', 'Customer Reference', 'Cost Center', 'Free Message', 'COD Amount', 'COD Account', 'Signature', 'Insurance', 'Automatic Second Presentation', 'Before 11am', 'Info Reminder', 'Info Reminder Language', 'Info Reminter Type', 'Info Reminder Contact Data', 'Info Next Day', 'Info Next Day language', 'Info Next Day Type', 'Info Next day Contact Data', 'Info Distributed', 'Info Distributed Language', 'Info Distributed Type', 'Info Distributed Contact Data', 'bic cod');
+      $i=1;
       foreach ($this->plates as $plate) {
-         //$datas = $plate->datas;
-         $content[] =  array($plate->reference);
+          if ($plate->datas) {
+              $message = $i. '*** / '.$plate->reference;  
+              $otherItems = Plate::where('reference', $plate->reference)->whereNotIn('type', array_column(TypeEnums::cases(), 'name'))->get();
+              if ($otherItems) {
+                  foreach ($otherItems as $otherItem) {
+                      $item = Item::where('reference_customer', $plate->datas['plate_type'])->first();
+                      if ($item) {
+                          $message .= ' / 1 '.strtoupper($item->reference_otm);
+                      }
+                  }
+              } 
+              
+              $content[] =  array('TXP24H', $plate->datas['destination_name'],'','',$plate->datas['destination_street'], $plate->datas['destination_house_number'], $plate->datas['destination_bus'], $plate->datas['destination_postal_code'], $plate->datas['destination_city'], 'BE', 'OTM-Shop', '', 'Potaardestraat', '42', '', '1082', 'Brussel','','','999786', $message);
+              $i++;
+          }
       }
       return $this->array2csv($content);
    }
