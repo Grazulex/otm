@@ -20,10 +20,10 @@ class IncomingService
       $this->plates = Plate::where('incoming_id', $incoming->id)->OrderBy('incoming_id', 'desc')->OrderBy('origin', 'desc')->OrderBy('order_id', 'asc')->get();
    }
 
-   public function makeLabel()
+   public function makeLabelBelfius()
    {
       $plates = $this->plates;
-      $pdf = Pdf::loadView('pdf/label4', compact('plates'))->setPaper('a4', 'landscape');
+      $pdf = Pdf::loadView('pdf/labelBelfius', compact('plates'))->setPaper('a4', 'landscape');
 
       return $pdf->download('label.pdf');
    }

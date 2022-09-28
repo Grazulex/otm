@@ -55,6 +55,8 @@ class CustomerResource extends Resource
                             ->required(),
                         Forms\Components\Toggle::make('is_inmotiv_customer')
                             ->required(),
+                        Forms\Components\Toggle::make('need_co2_label'),
+                        Forms\Components\Toggle::make('need_order_label'),
 
                     ])->columns(4),
                 Forms\Components\Section::make('Delivery Location')

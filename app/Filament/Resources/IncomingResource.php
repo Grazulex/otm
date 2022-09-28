@@ -50,15 +50,28 @@ class IncomingResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-                Tables\Actions\Action::make('printLabelPdf')
-                    ->label(__('Label'))
+                Tables\Actions\Action::make('printLabelBelfius')
+                    ->label(__('Label Co2'))
                     ->action(function ($record) {
                         return response()->streamDownload(function () use ($record) {
                             $incomingService = new IncomingService($record);
-                            echo $incomingService->makeLabel();
+                            echo $incomingService->makeLabelBelfius();
                         }, 'label.pdf');
                     })
-                    ->tooltip(__('Print'))
+                    ->tooltip(__('Print Label Co2'))
+                    ->visible(fn (Incoming $record): bool => $record->customer->need_co2_label)
+                    ->icon('heroicon-s-printer')
+                    ->color('primary'),
+                Tables\Actions\Action::make('printLabelKbc')
+                    ->label(__('Label Order'))
+                    ->action(function ($record) {
+                        return response()->streamDownload(function () use ($record) {
+                            $incomingService = new IncomingService($record);
+                            echo $incomingService->makeLabelKbc();
+                        }, 'label.pdf');
+                    })
+                    ->tooltip(__('Print Order Label'))
+                    ->visible(fn (Incoming $record): bool => $record->customer->need_order_label)
                     ->icon('heroicon-s-printer')
                     ->color('primary'),
                 Tables\Actions\Action::make('downloadBposFile')

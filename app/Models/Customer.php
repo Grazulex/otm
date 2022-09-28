@@ -32,7 +32,9 @@ class Customer extends Model
         'process_file',
         'location_report_type',
         'enum_ref',
-        'plate_type'
+        'plate_type',
+        'need_co2_label',
+        'need_order_label'
     ];
 
     protected $casts = [
@@ -43,6 +45,8 @@ class Customer extends Model
         'is_delivery_grouped'     => 'boolean',
         'is_delivery_bpost'     => 'boolean',
         'is_inmotiv_customer'     => 'boolean',
+        'need_co2_label' => 'boolean',
+        'need_order_label' => 'boolean'
     ];
 
 
