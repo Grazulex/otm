@@ -4,7 +4,6 @@ namespace App\Filament\Resources;
 
 use App\Enums\DeliveryTypeEnums;
 use App\Filament\Resources\IncomingResource\Pages;
-use App\Filament\Resources\IncomingResource\RelationManagers;
 use App\Models\Customer;
 use App\Models\Incoming;
 use App\Services\IncomingService;
@@ -13,8 +12,6 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class IncomingResource extends Resource
 {
