@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\DeliveryTypeEnums;
 use App\Filament\Resources\IncomingResource\Pages;
 use App\Filament\Resources\IncomingResource\RelationManagers;
 use App\Models\Customer;
@@ -83,6 +84,7 @@ class IncomingResource extends Resource
                         }, 'bpost.csv');
                     })
                     ->tooltip(__('Download'))
+                    ->visible(fn (Incoming $record): bool => $record->customer->delivery_type == DeliveryTypeEnums::BPOST)
                     ->icon('heroicon-o-truck')
                     ->color('primary'),
             ])
