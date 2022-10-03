@@ -9,7 +9,7 @@
         .column {
             float: left;
             width: 50%;
-            border: 1px solid black;
+            border: none;
         }
 
         .row {
@@ -26,7 +26,7 @@
         .label {
             width: 90%;
             height: 90%;
-            border: 1px solid gray;
+            border: none;
             margin: 10px;
             display: flex;
         }
@@ -35,8 +35,8 @@
             text-align: center;
             font-size: 40px;
             font-weight: bold;
-            color: red;
-            border: 1px solid red;
+            color: #b90000;
+            border: 1px solid #b90000;
             margin: 10px;
          }
 
@@ -46,18 +46,32 @@
             font-weight: bold;
             text-transformation: uppercase;
         }
-        .others {
-            height: auto;
+        .datas {
             display: flex-row;
             width: 100%;
+            margin-top: 25px;
         }
-        .co .order {
-            width: 50%;
-            text-align: center;
+        .co {
+            margin-top: 15px;
+            text-align: left;
             font-size: 20px;
             font-weight: bold;
             text-transformation: uppercase;
         }
+        .order {
+            flex: 50%;
+            text-align: right;
+            font-size: 20px;
+            font-weight: bold;
+            text-transformation: uppercase;
+        }
+        .company {
+            flex:50%;
+            text-align: left;
+            font-size: 20px;
+            font-weight: bold;
+         }
+
         .page-break {
             page-break-after: always;
         }
@@ -82,10 +96,15 @@
                     width="380" />
                     </div>
                 @endif
-                <div class="others">
-                    <div class="co">
-                        @if (isset($plate->datas['co2']))
-                            CO²: {{ $plate->datas['co2'] }} g/km
+                <div class="co">
+                    @if (isset($plate->datas['co2']))
+                        CO²: {{ $plate->datas['co2'] }} g/km
+                    @endif
+                </div>
+                <div class="datas">
+                    <div class="company">
+                        @if (isset($plate->datas['driver']))
+                            {{ $plate->datas['driver'] }}
                         @endif
                     </div>
                     <div class="order">
@@ -94,15 +113,13 @@
                         @endif
                     </div>
                 </div>
-                <div class="company">
-                    @if (isset($plate->datas['driver']))
-                        {{ $plate->datas['driver'] }}
-                    @endif
-                </div>
             </div>
         </div>
         @if ($loop->even || $loop->last)
             </div>
+        @endif
+        @if ($loop->iteration % 4 == 0)
+            <div class="page-break"></div>
         @endif
     @endforeach
 </body>
