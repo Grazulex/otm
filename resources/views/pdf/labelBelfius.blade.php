@@ -28,8 +28,36 @@
             height: 90%;
             border: 1px solid gray;
             margin: 10px;
+            display: flex;
         }
 
+        .plate {
+            text-align: center;
+            font-size: 40px;
+            font-weight: bold;
+            color: red;
+            border: 1px solid red;
+            margin: 10px;
+         }
+
+        .vin {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            text-transformation: uppercase;
+        }
+        .others {
+            height: auto;
+            display: flex-row;
+            width: 100%;
+        }
+        .co .order {
+            width: 50%;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            text-transformation: uppercase;
+        }
         .page-break {
             page-break-after: always;
         }
@@ -43,10 +71,34 @@
         @endif
         <div class="column">
             <div class="label">
-                {{ $plate->reference }}
-                <br />
-                <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($plate->reference, 'C39') }}" height="30"
-                    width="180" />
+                <div class="plate">
+                    {{ $plate->reference }}
+                </div>
+                @if (isset($plate->datas['vin']))
+                    <div class="vin">
+                        {{ strtoupper($plate->datas['vin'])}}
+                        <br/>
+                        <img src="data:image/png;base64,{{ DNS1D::getBarcodePNG($plate->datas['vin'], 'C39') }}" height="40"
+                    width="380" />
+                    </div>
+                @endif
+                <div class="others">
+                    <div class="co">
+                        @if (isset($plate->datas['co2']))
+                            CO²: {{ $plate->datas['co2'] }} g/km
+                        @endif
+                    </div>
+                    <div class="order">
+                        @if (isset($plate->datas['order_id']))
+                            {{ $plate->datas['order_id'] }}
+                        @endif
+                    </div>
+                </div>
+                <div class="company">
+                    @if (isset($plate->datas['driver']))
+                        {{ $plate->datas['driver'] }}
+                    @endif
+                </div>
             </div>
         </div>
         @if ($loop->even || $loop->last)
