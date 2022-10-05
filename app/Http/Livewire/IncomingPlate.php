@@ -216,7 +216,7 @@ class IncomingPlate extends Component implements Tables\Contracts\HasTable
                 'product_type' => 'plates',
                 'type' => $customer->plate_type,
                 'incoming_id' => $this->incoming->id,
-                'customer' => '',
+                'customer' => $customer->name,
                 'origin' => OriginEnums::OTHER->value,
             ]);
         }
