@@ -230,8 +230,11 @@ class IncomingPlate extends Component implements Tables\Contracts\HasTable
     protected function getTableQuery(): Builder
     {
         return Plate::where('incoming_id', $this->incoming->id)->OrderBy(
-            'created_at',
-            'desc',
+            'customer',
+            'asc',
+        )->OrderBy(
+            'reference',
+            'asc',
         );
     }
 
@@ -240,11 +243,9 @@ class IncomingPlate extends Component implements Tables\Contracts\HasTable
         return [
             Tables\Columns\TextColumn::make('created_at')
                 ->dateTime()
-                ->searchable()
-                ->sortable(),
+                ->searchable(),
             Tables\Columns\TextColumn::make('reference')
                 ->searchable()
-                ->sortable()
                 ->url(
                     fn (Plate $record): string => route(
                         'filament.resources.plates.edit',
@@ -255,8 +256,7 @@ class IncomingPlate extends Component implements Tables\Contracts\HasTable
             Tables\Columns\BooleanColumn::make('is_rush'),
             Tables\Columns\TextColumn::make('amount')->money('eur', true),
             Tables\Columns\TextColumn::make('customer')
-                ->searchable()
-                ->sortable(),
+                ->searchable(),
             Tables\Columns\TextColumn::make('datas.owner_language')->label(
                 'Language',
             ),
