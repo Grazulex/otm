@@ -83,8 +83,22 @@ class IncomingPlate extends Component implements Tables\Contracts\HasTable
                     $this->cod = '';
                     $this->emit('focusDatamatrix');
                 } else {
-                    $this->cod_is_disable = false;
-                    $this->emit('focusCod');
+                    $this->createPlate(
+                        customer: $this->incoming->customer,
+                        reference: $datamatrix,
+                        amount: 0,
+                        is_cod: false,
+                        is_rush: false,
+                    );
+                    $this->cod_is_disable = true;
+                    $this->datamatrix = '';
+                    $this->cod = '';
+                    $this->emit('focusDatamatrix');
+                    Notification::make()
+                        ->title('Plate created and saved successfully')
+                        ->warning()
+                        ->seconds(2)
+                        ->send();
                 }
             } else {
                 $this->cod_is_disable = false;
