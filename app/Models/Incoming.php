@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -31,8 +32,11 @@ class Incoming extends Model
         return $this->hasMany(related: Plate::class, foreignKey: 'incoming_id');
     }
 
-    public function getAmountAttribute(): int|float
+    protected function amount(): Attribute
     {
-        return $this->plates()->sum('amount') / 100;
+        return Attribute::make(
+            set: fn ($value) => $value * 100,
+            get: fn ($value) => $value / 100
+        );
     }
 }

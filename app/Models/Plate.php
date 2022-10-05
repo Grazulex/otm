@@ -3,11 +3,13 @@
 namespace App\Models;
 
 use App\Enums\OriginEnums;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Plate extends Model {
+class Plate extends Model
+{
     use HasFactory;
 
     protected $fillable = [
@@ -42,35 +44,29 @@ class Plate extends Model {
         'origin' => OriginEnums::ESHOP,
     ];
 
-    /**
-     *
-     * @return BelongsTo
-     */
-    public function production(): BelongsTo {
+    public function production(): BelongsTo
+    {
         return $this->belongsTo(related: Production::class);
     }
 
-    /**
-     *
-     * @return BelongsTo
-     */
-    public function incoming(): BelongsTo {
+    public function incoming(): BelongsTo
+    {
         return $this->belongsTo(related: Incoming::class);
     }
 
-    public function setAmountAttribute($price): void {
-        $this->attributes['amount'] = $price * 100;
+    protected function amount(): Attribute
+    {
+        return Attribute::make(
+            set: fn ($value) => $value * 100,
+            get: fn ($value) => $value / 100
+        );
     }
 
-    public function getAmountAttribute(): int|float {
-        return $this->attributes['amount'] / 100;
-    }
-
-    public function setReferenceAttribute($reference): void {
-        $this->attributes['reference'] = strtoupper($reference);
-    }
-
-    public function getReferenceAttribute(): string {
-        return strtoupper($this->attributes['reference']);
+    protected function reference(): Attribute
+    {
+        return Attribute::make(
+            set: fn ($value) => strtoupper($value),
+            get: fn ($value) => strtoupper($value)
+        );
     }
 }

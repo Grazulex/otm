@@ -11,7 +11,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Customer extends Model {
+class Customer extends Model
+{
     use HasFactory;
 
     protected $fillable = [
@@ -55,18 +56,17 @@ class Customer extends Model {
         'plate_type' => TypeEnums::N1FR,
     ];
 
-    /**
-     *
-     * @return HasMany
-     */
-    public function incomings(): HasMany {
+
+    public function incomings(): HasMany
+    {
         return $this->hasMany(
             related: Incoming::class,
             foreignKey: 'customer_id',
         );
     }
 
-    public function items(): HasMany {
+    public function items(): HasMany
+    {
         return $this->hasMany(related: CustomerItem::class);
     }
 }
