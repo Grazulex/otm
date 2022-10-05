@@ -12,7 +12,8 @@ use Livewire\Component;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
 
-class IncomingPlate extends Component implements Tables\Contracts\HasTable {
+class IncomingPlate extends Component implements Tables\Contracts\HasTable
+{
     use Tables\Concerns\InteractsWithTable;
 
     public Incoming $incoming;
@@ -25,14 +26,16 @@ class IncomingPlate extends Component implements Tables\Contracts\HasTable {
 
     protected int|string|array $columnSpan = 'full';
 
-    public function mount() {
+    public function mount()
+    {
         $this->datamatrix = '';
         $this->cod = '';
         $this->type = 'cod';
         $this->cod_is_disable = true;
     }
 
-    public function searchDatamatrix() {
+    public function searchDatamatrix()
+    {
         $datamatrix = strtoupper(
             trim(
                 preg_replace(
@@ -83,6 +86,9 @@ class IncomingPlate extends Component implements Tables\Contracts\HasTable {
                     $this->cod_is_disable = false;
                     $this->emit('focusCod');
                 }
+            } else {
+                $this->cod_is_disable = false;
+                $this->emit('focusCod');
             }
         } else {
             Notification::make()
@@ -97,7 +103,8 @@ class IncomingPlate extends Component implements Tables\Contracts\HasTable {
         }
     }
 
-    public function searchCod() {
+    public function searchCod()
+    {
         $datamatrix = preg_replace(
             '/[^a-z0-9]+/i',
             '',
@@ -201,18 +208,21 @@ class IncomingPlate extends Component implements Tables\Contracts\HasTable {
         }
     }
 
-    protected function isTablePaginationEnabled(): bool {
+    protected function isTablePaginationEnabled(): bool
+    {
         return false;
     }
 
-    protected function getTableQuery(): Builder {
+    protected function getTableQuery(): Builder
+    {
         return Plate::where('incoming_id', $this->incoming->id)->OrderBy(
             'created_at',
             'desc',
         );
     }
 
-    protected function getTableColumns(): array {
+    protected function getTableColumns(): array
+    {
         return [
             Tables\Columns\TextColumn::make('created_at')
                 ->dateTime()
@@ -222,7 +232,7 @@ class IncomingPlate extends Component implements Tables\Contracts\HasTable {
                 ->searchable()
                 ->sortable()
                 ->url(
-                    fn(Plate $record): string => route(
+                    fn (Plate $record): string => route(
                         'filament.resources.plates.edit',
                         ['record' => $record],
                     ),
@@ -239,7 +249,8 @@ class IncomingPlate extends Component implements Tables\Contracts\HasTable {
         ];
     }
 
-    public function render() {
+    public function render()
+    {
         return view('livewire.incoming-plate');
     }
 }

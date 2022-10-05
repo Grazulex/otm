@@ -47,7 +47,6 @@
             text-transformation: uppercase;
         }
         .datas {
-            display: flex-row;
             width: 100%;
             margin-top: 25px;
         }
@@ -59,14 +58,16 @@
             text-transformation: uppercase;
         }
         .order {
-            flex: 50%;
+            display: inline-block;
+            width: 50%;
             text-align: right;
             font-size: 20px;
             font-weight: bold;
             text-transformation: uppercase;
         }
         .company {
-            flex:50%;
+            display: inline-block;
+            width: 50%;
             text-align: left;
             font-size: 20px;
             font-weight: bold;
