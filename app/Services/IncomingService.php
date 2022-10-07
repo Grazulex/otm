@@ -7,12 +7,15 @@ use App\Models\Plate;
 use App\Models\Item;
 use App\Enums\TypeEnums;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\DB;
 
-class IncomingService {
-    public $production;
+class IncomingService
+{
+    public $incoming;
     public $plates;
 
-    public function __construct(Incoming $incoming) {
+    public function __construct(Incoming $incoming)
+    {
         $this->incoming = $incoming;
         $this->plates = Plate::where('incoming_id', $incoming->id)
             ->OrderBy('incoming_id', 'desc')
@@ -21,9 +24,10 @@ class IncomingService {
             ->get();
     }
 
-    public function makeLabelKbc() {
+    public function makeLabelKbc()
+    {
         $plates = $this->plates;
-        $df = Pdf::loadView('pdf/labelKbc', compact('plates'))->setpaper(
+        $pdf = Pdf::loadView('pdf/labelKbc', compact('plates'))->setpaper(
             'a4',
             'landscape',
         );
@@ -31,7 +35,8 @@ class IncomingService {
         return $pdf->download('lable.pdf');
     }
 
-    public function makeLabelBelfius() {
+    public function makeLabelBelfius()
+    {
         $plates = $this->plates;
         $pdf = Pdf::loadView('pdf/labelBelfius', compact('plates'))->setPaper(
             'a4',
@@ -41,7 +46,17 @@ class IncomingService {
         return $pdf->download('label.pdf');
     }
 
-    public function makeBpostFile() {
+    public function makeBpostFile()
+    {
+
+        /*$plates = DB::table('plates')
+            ->groupBy('customer_key')
+            ->where('incoming_id', $this->incoming->id)
+            ->OrderBy('customer_key', 'asc')
+            ->OrderBy('reference', 'asc')
+            ->get();
+            */
+        // env('OTM_PRODUCTIONS_QUANTITY_MAX_BOX')
         $content[] = [
             'ProductId',
             'Name',

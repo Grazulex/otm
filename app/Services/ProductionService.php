@@ -5,11 +5,13 @@ namespace App\Services;
 use App\Models\Plate;
 use App\Models\Production;
 
-class ProductionService {
+class ProductionService
+{
     public $production;
     public $plates;
 
-    public function __construct(Production $production) {
+    public function __construct(Production $production)
+    {
         $this->production = $production;
         $this->plates = Plate::where('production_id', $production->id)
             ->OrderBy('incoming_id', 'desc')
@@ -18,7 +20,8 @@ class ProductionService {
             ->get();
     }
 
-    public function makeCsvAttach() {
+    public function makeCsvAttach()
+    {
         $fp = fopen('prod_' . $this->production->id . '.csv', 'w');
         fputcsv(
             $fp,
@@ -58,7 +61,8 @@ class ProductionService {
         fclose($fp);
     }
 
-    public function makeCsv() {
+    public function makeCsv()
+    {
         $content[] = [
             'Plate nr.',
             'Ref plaque',
@@ -103,7 +107,8 @@ class ProductionService {
         return stream_get_contents($f);
     }
 
-    public function deleteCSV() {
+    public function deleteCSV()
+    {
         unlink('prod_' . $this->production->id . '.csv');
     }
 }
