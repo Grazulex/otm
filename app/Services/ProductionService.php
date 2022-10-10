@@ -16,7 +16,7 @@ class ProductionService
         $this->plates = Plate::where('production_id', $production->id)
             ->OrderBy('origin', 'desc')
             ->OrderBy('customer_key', 'asc')
-            ->OrderBy('order_id', 'asc')
+            ->OrderBy('reference', 'asc')
             ->get();
     }
 
