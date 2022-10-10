@@ -48,15 +48,6 @@ class IncomingService
 
     public function makeBpostFile()
     {
-
-        /*$plates = DB::table('plates')
-            ->groupBy('customer_key')
-            ->where('incoming_id', $this->incoming->id)
-            ->OrderBy('customer_key', 'asc')
-            ->OrderBy('reference', 'asc')
-            ->get();
-            */
-        // env('OTM_PRODUCTIONS_QUANTITY_MAX_BOX')
         $content[] = [
             'ProductId',
             'Name',
@@ -99,78 +90,244 @@ class IncomingService
             'Info Distributed Contact Data',
             'bic cod',
         ];
-        $i = 1;
-        foreach ($this->plates as $plate) {
-            if ($plate->datas) {
-                $message = $i . '*** / ' . $plate->reference;
-                $otherItems = Plate::where('reference', $plate->reference)
-                    ->whereNotIn(
-                        'type',
-                        array_column(TypeEnums::cases(), 'name'),
-                    )
-                    ->get();
-                if ($otherItems) {
-                    foreach ($otherItems as $otherItem) {
-                        $item = Item::where(
-                            'reference_customer',
-                            $plate->datas['plate_type'],
-                        )->first();
-                        if ($item) {
-                            $message .=
-                                ' / 1 ' . strtoupper($item->reference_otm);
-                        }
-                    }
-                }
-                $cod = null;
-                if (isset($plate->datas['price'])) {
-                    $cod = $plate->datas['price'];
+
+        if ($this->incoming->customer->is_delivery_grouped) {
+
+            $quantity_max_grouped = env('OTM_PRODUCTIONS_QUANTITY_MAX_BOX');
+            $groupes = DB::table('plates')
+                ->select('customer_key')
+                ->groupBy('customer_key')
+                ->where('incoming_id', $this->incoming->id)
+                ->whereNotNull('customer_key')
+                ->OrderBy('customer_key', 'asc')
+                ->get();
+            foreach ($groupes as $group) {
+                $plates = Plate::where('incoming_id', $this->incoming->id)
+                    ->where('customer_key', $group->customer_key)
+                    ->count();
+
+                $lines = (int)($plates / $quantity_max_grouped);
+                if ($lines === 0) {
+                    $lines = 1;
                 }
 
-                $content[] = [
-                    'TXP24H',
-                    $plate->datas['destination_name'],
-                    '',
-                    '',
-                    $plate->datas['destination_street'],
-                    $plate->datas['destination_house_number'],
-                    $plate->datas['destination_bus'],
-                    $plate->datas['destination_postal_code'],
-                    $plate->datas['destination_city'],
-                    'BE',
-                    'OTM-Shop',
-                    '',
-                    'Potaardestraat',
-                    '42',
-                    '',
-                    '1082',
-                    'Brussel',
-                    '',
-                    '',
-                    '999786',
-                    $message,
-                    $cod,
-                    (int) $cod > 0 ? 'BE29096898971264' : '',
-                    (int) $cod > 0 ? '' : 'N',
-                    (int) $cod > 0 ? '' : 'N',
-                    (int) $cod > 0 ? '' : 'N',
-                    '',
-                    '',
-                    '',
-                    '',
-                    '',
-                    '',
-                    '',
-                    '',
-                    '',
-                    '',
-                    '',
-                    '',
-                    '',
-                    (int) $cod > 0 ? 'GKCCBEBB' : '',
-                ];
-                $i++;
+                $location = Plate::where('incoming_id', $this->incoming->id)
+                    ->where('customer_key', $group->customer_key)
+                    ->first();
+
+                for ($i = 1; $i <= $lines; $i++) {
+                    if ($location->datas) {
+                        $cod = null;
+                        if (isset($location->datas['price'])) {
+                            $cod = $location->datas['price'];
+                        }
+
+                        $content[] = [
+                            'TXP24H',
+                            $location->datas['destination_name'],
+                            '',
+                            '',
+                            $location->datas['destination_street'],
+                            $location->datas['destination_house_number'],
+                            $location->datas['destination_bus'],
+                            $location->datas['destination_postal_code'],
+                            $location->datas['destination_city'],
+                            'BE',
+                            'OTM-Shop',
+                            '',
+                            'Potaardestraat',
+                            '42',
+                            '',
+                            '1082',
+                            'Brussel',
+                            '',
+                            '',
+                            '999786',
+                            '',
+                            $cod,
+                            (int) $cod > 0 ? 'BE29096898971264' : '',
+                            (int) $cod > 0 ? '' : 'N',
+                            (int) $cod > 0 ? '' : 'N',
+                            (int) $cod > 0 ? '' : 'N',
+                            '',
+                            '',
+                            '',
+                            '',
+                            '',
+                            '',
+                            '',
+                            '',
+                            '',
+                            '',
+                            '',
+                            '',
+                            '',
+                            (int) $cod > 0 ? 'GKCCBEBB' : '',
+                        ];
+                        $i++;
+                    }
+                }
+            }
+
+            $plates = Plate::where('incoming_id', $this->incoming->id)
+                ->OrderBy('incoming_id', 'desc')
+                ->OrderBy('origin', 'desc')
+                ->OrderBy('order_id', 'asc')
+                ->whereNull('customer_key')
+                ->get();
+            $i = 1;
+            foreach ($plates as $plate) {
+                if ($plate->datas) {
+                    $message = $i . '*** / ' . $plate->reference;
+                    $otherItems = Plate::where('reference', $plate->reference)
+                        ->whereNotIn(
+                            'type',
+                            array_column(TypeEnums::cases(), 'name'),
+                        )
+                        ->get();
+                    if ($otherItems) {
+                        foreach ($otherItems as $otherItem) {
+                            $item = Item::where(
+                                'reference_customer',
+                                $plate->datas['plate_type'],
+                            )->first();
+                            if ($item) {
+                                $message .=
+                                    ' / 1 ' . strtoupper($item->reference_otm);
+                            }
+                        }
+                    }
+                    $cod = null;
+                    if (isset($plate->datas['price'])) {
+                        $cod = $plate->datas['price'];
+                    }
+
+                    $content[] = [
+                        'TXP24H',
+                        $plate->datas['destination_name'],
+                        '',
+                        '',
+                        $plate->datas['destination_street'],
+                        $plate->datas['destination_house_number'],
+                        $plate->datas['destination_bus'],
+                        $plate->datas['destination_postal_code'],
+                        $plate->datas['destination_city'],
+                        'BE',
+                        'OTM-Shop',
+                        '',
+                        'Potaardestraat',
+                        '42',
+                        '',
+                        '1082',
+                        'Brussel',
+                        '',
+                        '',
+                        '999786',
+                        $message,
+                        $cod,
+                        (int) $cod > 0 ? 'BE29096898971264' : '',
+                        (int) $cod > 0 ? '' : 'N',
+                        (int) $cod > 0 ? '' : 'N',
+                        (int) $cod > 0 ? '' : 'N',
+                        '',
+                        '',
+                        '',
+                        '',
+                        '',
+                        '',
+                        '',
+                        '',
+                        '',
+                        '',
+                        '',
+                        '',
+                        '',
+                        (int) $cod > 0 ? 'GKCCBEBB' : '',
+                    ];
+                    $i++;
+                }
+            }
+        } else {
+            $plates = Plate::where('incoming_id', $this->incoming->id)
+                ->OrderBy('incoming_id', 'desc')
+                ->OrderBy('origin', 'desc')
+                ->OrderBy('order_id', 'asc')
+                ->get();
+
+            $i = 1;
+            foreach ($plates as $plate) {
+                if ($plate->datas) {
+                    $message = $i . '*** / ' . $plate->reference;
+                    $otherItems = Plate::where('reference', $plate->reference)
+                        ->whereNotIn(
+                            'type',
+                            array_column(TypeEnums::cases(), 'name'),
+                        )
+                        ->get();
+                    if ($otherItems) {
+                        foreach ($otherItems as $otherItem) {
+                            $item = Item::where(
+                                'reference_customer',
+                                $plate->datas['plate_type'],
+                            )->first();
+                            if ($item) {
+                                $message .=
+                                    ' / 1 ' . strtoupper($item->reference_otm);
+                            }
+                        }
+                    }
+                    $cod = null;
+                    if (isset($plate->datas['price'])) {
+                        $cod = $plate->datas['price'];
+                    }
+
+                    $content[] = [
+                        'TXP24H',
+                        $plate->datas['destination_name'],
+                        '',
+                        '',
+                        $plate->datas['destination_street'],
+                        $plate->datas['destination_house_number'],
+                        $plate->datas['destination_bus'],
+                        $plate->datas['destination_postal_code'],
+                        $plate->datas['destination_city'],
+                        'BE',
+                        'OTM-Shop',
+                        '',
+                        'Potaardestraat',
+                        '42',
+                        '',
+                        '1082',
+                        'Brussel',
+                        '',
+                        '',
+                        '999786',
+                        $message,
+                        $cod,
+                        (int) $cod > 0 ? 'BE29096898971264' : '',
+                        (int) $cod > 0 ? '' : 'N',
+                        (int) $cod > 0 ? '' : 'N',
+                        (int) $cod > 0 ? '' : 'N',
+                        '',
+                        '',
+                        '',
+                        '',
+                        '',
+                        '',
+                        '',
+                        '',
+                        '',
+                        '',
+                        '',
+                        '',
+                        '',
+                        (int) $cod > 0 ? 'GKCCBEBB' : '',
+                    ];
+                    $i++;
+                }
             }
         }
+
         return $this->array2csv($content);
     }
 
