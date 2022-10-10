@@ -49,11 +49,11 @@ class ProductionService
                     $plate->created_at,
                     $plate->order_id,
                     $plate->customer,
-                    $plate->datas['destination_street'],
-                    $plate->datas['destination_house_number'],
-                    $plate->datas['destination_bus'],
-                    $plate->datas['destination_city'],
-                    $plate->datas['destination_postal_code'],
+                    (isset($plate->datas['destination_street'])) ? $plate->datas['destination_street'] : '',
+                    (isset($plate->datas['destination_house_number'])) ? $plate->datas['destination_house_number'] : '',
+                    (isset($plate->datas['destination_bus'])) ? $plate->datas['destination_bus'] : '',
+                    (isset($plate->datas['destination_city'])) ? $plate->datas['destination_city'] : '',
+                    (isset($plate->datas['destination_postal_code'])) ? $plate->datas['destination_postal_code'] : '',
                 ],
                 ';',
             );
@@ -83,11 +83,12 @@ class ProductionService
                 $plate->created_at,
                 $plate->order_id,
                 $plate->customer,
-                $plate->datas['destination_street'],
-                $plate->datas['destination_house_number'],
-                $plate->datas['destination_bus'],
-                $plate->datas['destination_city'],
-                $plate->datas['destination_postal_code'],
+                (isset($plate->datas['destination_street'])) ? $plate->datas['destination_street'] : '',
+                (isset($plate->datas['destination_house_number'])) ? $plate->datas['destination_house_number'] : '',
+                (isset($plate->datas['destination_bus'])) ? $plate->datas['destination_bus'] : '',
+                (isset($plate->datas['destination_city'])) ? $plate->datas['destination_city'] : '',
+                (isset($plate->datas['destination_postal_code'])) ? $plate->datas['destination_postal_code'] : '',
+
             ];
         }
         return $this->array2csv($content);
