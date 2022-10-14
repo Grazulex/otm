@@ -66,8 +66,8 @@ class ProductionService
         $content[] = [
             'Plate nr.',
             'Ref plaque',
-            'Order date',
             'OwnerID',
+            'Order date',
             'Nom Client',
             'Rue Client',
             'Nr. Client',
@@ -80,8 +80,8 @@ class ProductionService
             $content[] = [
                 $plate->reference,
                 $plate->type,
+                $plate->order_id, //max 8 alpĥanum
                 $plate->created_at,
-                $plate->order_id,
                 $plate->customer,
                 (isset($plate->datas['destination_street'])) ? $plate->datas['destination_street'] : '',
                 (isset($plate->datas['destination_house_number'])) ? $plate->datas['destination_house_number'] : '',
