@@ -135,9 +135,9 @@ class IncomingService
                     '',
                     '',
                     '',
-                ];                
+                ];
             }
-        } 
+        }
         if ($this->incoming->customer->is_delivery_grouped) {
             $quantity_max_grouped = env('OTM_PRODUCTIONS_QUANTITY_MAX_BOX');
             $groupes = DB::table('plates')
