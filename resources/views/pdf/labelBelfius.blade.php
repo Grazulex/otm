@@ -15,10 +15,14 @@
 <body>
 <table width="1050px" cellpadding="20">
     @foreach ($plates as $plate)
-        @if ($loop->odd && $loop->first)
-            <tr width="100%">
+        @if ($loop->first)
+            <tr width="100%"> 
+        @else
+            @if ($loop->odd)
+                <tr width="100%"> 
+            @endif
         @endif
-        <td height="320px" width="50%" style="vertical-align:top">
+        <td height="300px" width="50%" style="vertical-align:top;">
             <div>
                 <div style="text-align: center;color:red;font-size: 48px;font-style: bold;border: 2px solid red">
                     {{ $plate->reference }}
@@ -64,8 +68,12 @@
                 </div>
             </div>
         </td>
-        @if ($loop->even || $loop->last)
+        @if ($loop->last)
             </tr>
+        @else
+            @if ($loop->even)
+                </tr>
+            @endif
         @endif
         @if ($loop->iteration % 4 == 0)
             </table>
