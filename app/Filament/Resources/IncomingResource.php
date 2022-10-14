@@ -33,6 +33,8 @@ class IncomingResource extends Resource
         ]);
     }
 
+
+    //TODO : ajouter bulk action pour imprimer bpost file
     public static function table(Table $table): Table
     {
         return $table

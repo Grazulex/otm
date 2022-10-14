@@ -187,7 +187,7 @@ class IncomingPlate extends Component implements Tables\Contracts\HasTable
         bool $is_cod = false,
         bool $is_rush = false,
     ) {
-        if ($customer->is_delivery_bpost && $customer->is_delivery_grouped) {
+        if ($customer->is_delivery_grouped && $customer->delivery_contact) {
             Plate::create([
                 'reference' => $reference,
                 'is_cod' => $is_cod,
@@ -256,8 +256,8 @@ class IncomingPlate extends Component implements Tables\Contracts\HasTable
                         ['record' => $record],
                     ),
                 ),
-            Tables\Columns\BooleanColumn::make('is_cod'),
-            Tables\Columns\BooleanColumn::make('is_rush'),
+            Tables\Columns\IconColumn::make('is_cod')->boolean(),
+            Tables\Columns\IconColumn::make('is_rush')->boolean(),
             Tables\Columns\TextColumn::make('amount')->money('eur', true),
             Tables\Columns\TextColumn::make('customer')
                 ->searchable(),

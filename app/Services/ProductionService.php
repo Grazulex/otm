@@ -13,10 +13,10 @@ class ProductionService
 
     public function __construct(Production $production)
     {
+        //TODO : changer ORDER BY origine, zip, reference
         $this->production = $production;
-        $this->plates = Plate::where('production_id', $production->id)
+        $this->plates = Plate::where('production_id', $production->id) 
             ->OrderBy('origin', 'desc')
-            ->OrderBy('customer_key', 'asc')
             ->OrderBy('reference', 'asc')
             ->get();
     }
