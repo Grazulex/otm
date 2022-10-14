@@ -9,9 +9,7 @@ use App\Filament\Resources\CloseResource\Widgets\ReceptionOverview;
 use App\Models\Cash;
 use App\Models\Incoming;
 use App\Models\Reception;
-use Filament\Pages\Actions;
 use Filament\Resources\Pages\CreateRecord;
-use Illuminate\Database\Eloquent\Model;
 
 class CreateClose extends CreateRecord
 {
@@ -65,7 +63,6 @@ class CreateClose extends CreateRecord
         }
     }
 
-
     protected function getHeaderWidgets(): array
     {
         return [
@@ -73,6 +70,7 @@ class CreateClose extends CreateRecord
             IncomingOverview::class,
         ];
     }
+
     protected function getFooterWidgets(): array
     {
         return [

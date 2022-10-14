@@ -4,7 +4,6 @@ namespace App\Filament\Resources\ProductionResource\Widgets;
 
 use App\Enums\OriginEnums;
 use App\Models\Plate;
-use Closure;
 use Filament\Tables;
 use Filament\Widgets\TableWidget as BaseWidget;
 use Illuminate\Database\Eloquent\Builder;
@@ -15,7 +14,6 @@ class PlateOverview extends BaseWidget
     protected int | string | array $columnSpan = 'full';
 
     public ?Model $record = null;
-
 
     protected function getTableQuery(): Builder
     {

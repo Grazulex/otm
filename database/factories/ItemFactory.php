@@ -18,7 +18,7 @@ class ItemFactory extends Factory
     public function definition()
     {
         return [
-            'reference'     => $this->faker->randomDigit().Str::random(6),
+            'reference' => $this->faker->randomDigit().Str::random(6),
             'name' => $this->faker->word(),
         ];
     }

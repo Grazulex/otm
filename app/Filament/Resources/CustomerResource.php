@@ -15,17 +15,23 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 
-class CustomerResource extends Resource {
+class CustomerResource extends Resource
+{
     protected static ?string $model = Customer::class;
+
     protected static ?string $navigationGroup = 'Customers';
+
     protected static ?int $navigationSort = 6;
+
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
-    protected static function getNavigationBadge(): ?string {
+    protected static function getNavigationBadge(): ?string
+    {
         return static::getModel()::count();
     }
 
-    public static function form(Form $form): Form {
+    public static function form(Form $form): Form
+    {
         return $form->schema([
             Forms\Components\Section::make('Name & ref')
                 ->schema([
@@ -99,12 +105,13 @@ class CustomerResource extends Resource {
         ]);
     }
 
-    public static function table(Table $table): Table {
+    public static function table(Table $table): Table
+    {
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\BadgeColumn::make('delivery_type'),
-                Tables\Columns\BooleanColumn::make('is_inmotiv_customer'),
+                Tables\Columns\IconColumn::make('is_inmotiv_customer')->boolean(),
                 Tables\Columns\TextColumn::make('process_type'),
                 Tables\Columns\BadgeColumn::make('items_count')->counts(
                     'items',
@@ -120,11 +127,16 @@ class CustomerResource extends Resource {
             ->bulkActions([Tables\Actions\DeleteBulkAction::make()]);
     }
 
-    public static function getRelations(): array {
-        return [RelationManagers\ItemsRelationManager::class];
+    public static function getRelations(): array
+    {
+        return [
+            RelationManagers\ItemsRelationManager::class,
+            RelationManagers\LabelsRelationManager::class,
+        ];
     }
 
-    public static function getPages(): array {
+    public static function getPages(): array
+    {
         return [
             'index' => Pages\ListCustomers::route('/'),
             'create' => Pages\CreateCustomer::route('/create'),

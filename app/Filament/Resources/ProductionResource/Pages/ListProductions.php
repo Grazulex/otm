@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\ProductionResource\Pages;
 
 use App\Filament\Resources\ProductionResource;
-use Filament\Pages\Actions;
 use Filament\Resources\Pages\ListRecords;
 
 class ListProductions extends ListRecords

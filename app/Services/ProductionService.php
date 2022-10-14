@@ -8,6 +8,7 @@ use App\Models\Production;
 class ProductionService
 {
     public $production;
+
     public $plates;
 
     public function __construct(Production $production)
@@ -22,7 +23,7 @@ class ProductionService
 
     public function makeCsvAttach()
     {
-        $fp = fopen('prod_' . $this->production->id . '.csv', 'w');
+        $fp = fopen('prod_'.$this->production->id.'.csv', 'w');
         fputcsv(
             $fp,
             [
@@ -91,10 +92,11 @@ class ProductionService
 
             ];
         }
+
         return $this->array2csv($content);
     }
 
-    function array2csv(
+    public function array2csv(
         $data,
         $delimiter = ',',
         $enclosure = '"',
@@ -105,11 +107,12 @@ class ProductionService
             fputcsv($f, $item, $delimiter, $enclosure, $escape_char);
         }
         rewind($f);
+
         return stream_get_contents($f);
     }
 
     public function deleteCSV()
     {
-        unlink('prod_' . $this->production->id . '.csv');
+        unlink('prod_'.$this->production->id.'.csv');
     }
 }

@@ -4,7 +4,6 @@ namespace App\Filament\Resources\ProductionResource\Pages;
 
 use App\Filament\Resources\ProductionResource;
 use App\Filament\Resources\ProductionResource\Widgets\PlateOverview;
-use Filament\Pages\Actions;
 use Filament\Resources\Pages\ViewRecord;
 
 class ViewProduction extends ViewRecord

@@ -11,14 +11,18 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 
-class CashResource extends Resource {
+class CashResource extends Resource
+{
     protected static ?string $model = Cash::class;
 
     protected static ?string $navigationGroup = 'Cash ledgers';
+
     protected static ?int $navigationSort = 1;
+
     protected static ?string $navigationIcon = 'heroicon-o-cash';
 
-    public static function form(Form $form): Form {
+    public static function form(Form $form): Form
+    {
         return $form->schema([
             Forms\Components\Select::make('user_id')
                 ->options(User::all()->pluck('name', 'id'))
@@ -32,7 +36,8 @@ class CashResource extends Resource {
         ]);
     }
 
-    public static function table(Table $table): Table {
+    public static function table(Table $table): Table
+    {
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('created_at')
@@ -56,13 +61,15 @@ class CashResource extends Resource {
             ->bulkActions([Tables\Actions\DeleteBulkAction::make()]);
     }
 
-    public static function getRelations(): array {
+    public static function getRelations(): array
+    {
         return [
-                //
-            ];
+            //
+        ];
     }
 
-    public static function getPages(): array {
+    public static function getPages(): array
+    {
         return [
             'index' => Pages\ListCashes::route('/'),
             'create' => Pages\CreateCash::route('/create'),

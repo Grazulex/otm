@@ -13,14 +13,18 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 
-class IncomingResource extends Resource {
+class IncomingResource extends Resource
+{
     protected static ?string $model = Incoming::class;
 
     protected static ?string $navigationGroup = 'Plates';
+
     protected static ?int $navigationSort = 5;
+
     protected static ?string $navigationIcon = 'heroicon-o-check-circle';
 
-    public static function form(Form $form): Form {
+    public static function form(Form $form): Form
+    {
         return $form->schema([
             Forms\Components\Select::make('customer_id')
                 ->options(Customer::all()->pluck('name', 'id'))
@@ -29,7 +33,8 @@ class IncomingResource extends Resource {
         ]);
     }
 
-    public static function table(Table $table): Table {
+    public static function table(Table $table): Table
+    {
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('created_at')
@@ -60,11 +65,11 @@ class IncomingResource extends Resource {
                             $incomingService = new IncomingService($record);
                             echo $incomingService->makeLabelBelfius();
                         },
-                        'label.pdf');
+                            'label.pdf');
                     })
                     ->tooltip(__('Print Label Co2'))
                     ->visible(
-                        fn(Incoming $record): bool => $record->customer
+                        fn (Incoming $record): bool => $record->customer
                             ->need_co2_label,
                     )
                     ->icon('heroicon-s-printer')
@@ -78,11 +83,11 @@ class IncomingResource extends Resource {
                             $incomingService = new IncomingService($record);
                             echo $incomingService->makeLabelKbc();
                         },
-                        'label.pdf');
+                            'label.pdf');
                     })
                     ->tooltip(__('Print Order Label'))
                     ->visible(
-                        fn(Incoming $record): bool => $record->customer
+                        fn (Incoming $record): bool => $record->customer
                             ->need_order_label,
                     )
                     ->icon('heroicon-s-printer')
@@ -96,11 +101,11 @@ class IncomingResource extends Resource {
                             $incomingService = new IncomingService($record);
                             echo $incomingService->makeBpostFile();
                         },
-                        'bpost.csv');
+                            'bpost.csv');
                     })
                     ->tooltip(__('Download'))
                     ->visible(
-                        fn(Incoming $record): bool => $record->customer
+                        fn (Incoming $record): bool => $record->customer
                             ->delivery_type == DeliveryTypeEnums::BPOST,
                     )
                     ->icon('heroicon-o-truck')
@@ -109,7 +114,8 @@ class IncomingResource extends Resource {
             ->bulkActions([Tables\Actions\DeleteBulkAction::make()]);
     }
 
-    public static function getPages(): array {
+    public static function getPages(): array
+    {
         return [
             'index' => Pages\ListIncomings::route('/'),
             'create' => Pages\CreateIncoming::route('/create'),

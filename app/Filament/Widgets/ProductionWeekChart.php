@@ -5,7 +5,6 @@ namespace App\Filament\Widgets;
 use App\Enums\OriginEnums;
 use App\Enums\TypeEnums;
 use App\Models\Plate;
-use App\Models\Production;
 use Filament\Widgets\LineChartWidget;
 use Flowframe\Trend\Trend;
 use Flowframe\Trend\TrendValue;
@@ -13,7 +12,9 @@ use Flowframe\Trend\TrendValue;
 class ProductionWeekChart extends LineChartWidget
 {
     protected static ?string $heading = 'Orders this month';
+
     protected static ?string $pollingInterval = null;
+
     protected static ?int $sort = 2;
 
     protected function getData(): array

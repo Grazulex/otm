@@ -10,14 +10,18 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 
-class ItemResource extends Resource {
+class ItemResource extends Resource
+{
     protected static ?string $model = Item::class;
 
     protected static ?string $navigationGroup = 'Customers';
+
     protected static ?int $navigationSort = 7;
+
     protected static ?string $navigationIcon = 'heroicon-o-archive';
 
-    public static function form(Form $form): Form {
+    public static function form(Form $form): Form
+    {
         return $form->schema([
             Forms\Components\TextInput::make('name')
                 ->required()
@@ -29,7 +33,8 @@ class ItemResource extends Resource {
         ]);
     }
 
-    public static function table(Table $table): Table {
+    public static function table(Table $table): Table
+    {
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
@@ -46,13 +51,15 @@ class ItemResource extends Resource {
             ->bulkActions([Tables\Actions\DeleteBulkAction::make()]);
     }
 
-    public static function getRelations(): array {
+    public static function getRelations(): array
+    {
         return [
-                //
-            ];
+            //
+        ];
     }
 
-    public static function getPages(): array {
+    public static function getPages(): array
+    {
         return [
             'index' => Pages\ListItems::route('/'),
             'create' => Pages\CreateItem::route('/create'),

@@ -9,7 +9,8 @@ use App\Notifications\ImportNotification;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 
-class ImportInmotivCommand extends Command {
+class ImportInmotivCommand extends Command
+{
     /**
      * The name and signature of the console command.
      *
@@ -29,7 +30,8 @@ class ImportInmotivCommand extends Command {
      *
      * @return int
      */
-    public function handle() {
+    public function handle()
+    {
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'Content-Type' => 'application/x-www-form-urlencoded',
@@ -46,8 +48,8 @@ class ImportInmotivCommand extends Command {
             $responseDatas = Http::withHeaders([
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $token,
-            ])->get(env('OTM_INMOTIV_ENDPOINT_API') . '/webdiv/orders/1.0'); //?start=2022-09-18T00:00:00&end=2022-09-21T22:00:00
+                'Authorization' => 'Bearer '.$token,
+            ])->get(env('OTM_INMOTIV_ENDPOINT_API').'/webdiv/orders/1.0'); //?start=2022-09-18T00:00:00&end=2022-09-21T22:00:00
             if ($responseDatas->successful()) {
                 $orders = $responseDatas->json('orders');
                 //$orders = $orders['orders'];
@@ -56,9 +58,9 @@ class ImportInmotivCommand extends Command {
                     $plate = Plate::where([
                         'order_id' => $order['order_id'],
                     ])->first();
-                    if (!$plate) {
+                    if (! $plate) {
                         $this->info(
-                            'Make new plate for order ' . $order['order_id'],
+                            'Make new plate for order '.$order['order_id'],
                         );
                         $is_incoming = false;
                         if (
@@ -101,7 +103,7 @@ class ImportInmotivCommand extends Command {
                         $user->notify(
                             new ImportNotification(
                                 type: 'inmotiv',
-                                message: $inserted . ' order(s) imported',
+                                message: $inserted.' order(s) imported',
                             ),
                         );
                     }

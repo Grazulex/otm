@@ -32,6 +32,7 @@ class EditClose extends EditRecord
             IncomingOverview::class,
         ];
     }
+
     protected function getFooterWidgets(): array
     {
         return [

@@ -9,8 +9,8 @@ use RalphJSmit\Filament\Notifications\Concerns\StoresNotificationInDatabase;
 use RalphJSmit\Filament\Notifications\Contracts\AsFilamentNotification;
 use RalphJSmit\Filament\Notifications\FilamentNotification;
 
-class ImportNotification extends Notification implements
-    AsFilamentNotification {
+class ImportNotification extends Notification implements AsFilamentNotification
+{
     use StoresNotificationInDatabase;
 
     public function __construct(
@@ -19,7 +19,8 @@ class ImportNotification extends Notification implements
     ) {
     }
 
-    public static function toFilamentNotification(): FilamentNotification {
+    public static function toFilamentNotification(): FilamentNotification
+    {
         return FilamentNotification::make()
             ->form([
                 TextInput::make('type')
@@ -30,7 +31,7 @@ class ImportNotification extends Notification implements
                     ->label('Message')
                     ->columnSpan(2),
             ])
-            ->message(fn(self $notification) => $notification->type)
-            ->description(fn(self $notification) => $notification->message);
+            ->message(fn (self $notification) => $notification->type)
+            ->description(fn (self $notification) => $notification->message);
     }
 }

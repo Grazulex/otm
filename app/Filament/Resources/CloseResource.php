@@ -13,13 +13,18 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 
-class CloseResource extends Resource {
+class CloseResource extends Resource
+{
     protected static ?string $model = Close::class;
+
     protected static ?string $navigationGroup = 'Cash ledgers';
+
     protected static ?int $navigationSort = 3;
+
     protected static ?string $navigationIcon = 'heroicon-o-lock-closed';
 
-    public static function form(Form $form): Form {
+    public static function form(Form $form): Form
+    {
         return $form->schema([
             Forms\Components\TextInput::make('diff')
                 ->numeric()
@@ -28,7 +33,8 @@ class CloseResource extends Resource {
         ]);
     }
 
-    public static function table(Table $table): Table {
+    public static function table(Table $table): Table
+    {
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('created_at')
@@ -54,13 +60,15 @@ class CloseResource extends Resource {
             ->bulkActions([Tables\Actions\DeleteBulkAction::make()]);
     }
 
-    public static function getRelations(): array {
+    public static function getRelations(): array
+    {
         return [
-                //
-            ];
+            //
+        ];
     }
 
-    public static function getPages(): array {
+    public static function getPages(): array
+    {
         return [
             'index' => Pages\ListCloses::route('/'),
             'create' => Pages\CreateClose::route('/create'),
@@ -68,7 +76,8 @@ class CloseResource extends Resource {
         ];
     }
 
-    public static function getWidgets(): array {
+    public static function getWidgets(): array
+    {
         return [
             CashOverview::class,
             ReceptionOverview::class,

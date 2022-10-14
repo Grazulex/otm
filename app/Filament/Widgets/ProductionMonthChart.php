@@ -4,7 +4,6 @@ namespace App\Filament\Widgets;
 
 use App\Enums\OriginEnums;
 use App\Models\Plate;
-use App\Models\Production;
 use Filament\Widgets\LineChartWidget;
 use Flowframe\Trend\Trend;
 use Flowframe\Trend\TrendValue;
@@ -12,7 +11,9 @@ use Flowframe\Trend\TrendValue;
 class ProductionMonthChart extends LineChartWidget
 {
     protected static ?string $heading = 'Orders this year';
+
     protected static ?string $pollingInterval = null;
+
     protected static ?int $sort = 3;
 
     protected function getData(): array

@@ -10,15 +10,18 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 
-class ReceptionResource extends Resource {
+class ReceptionResource extends Resource
+{
     protected static ?string $model = Reception::class;
 
     protected static ?string $navigationGroup = 'Cash ledgers';
+
     protected static ?int $navigationSort = 2;
 
     protected static ?string $navigationIcon = 'heroicon-o-truck';
 
-    public static function form(Form $form): Form {
+    public static function form(Form $form): Form
+    {
         return $form->schema([
             Forms\Components\TextInput::make('amount_cash')
                 ->numeric()
@@ -31,7 +34,8 @@ class ReceptionResource extends Resource {
         ]);
     }
 
-    public static function table(Table $table): Table {
+    public static function table(Table $table): Table
+    {
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('created_at')
@@ -59,13 +63,15 @@ class ReceptionResource extends Resource {
             ->bulkActions([Tables\Actions\DeleteBulkAction::make()]);
     }
 
-    public static function getRelations(): array {
+    public static function getRelations(): array
+    {
         return [
-                //
-            ];
+            //
+        ];
     }
 
-    public static function getPages(): array {
+    public static function getPages(): array
+    {
         return [
             'index' => Pages\ListReceptions::route('/'),
             'create' => Pages\CreateReception::route('/create'),

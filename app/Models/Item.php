@@ -6,12 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Item extends Model {
+class Item extends Model
+{
     use HasFactory;
 
     protected $fillable = ['name', 'reference_otm', 'reference_customer'];
 
-    public function packs(): HasMany {
+    public function packs(): HasMany
+    {
         return $this->hasMany(related: CustomerItem::class);
     }
 }

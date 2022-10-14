@@ -8,7 +8,6 @@ use App\Enums\ProcessTypeEnums;
 use App\Enums\TypeEnums;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -57,7 +56,6 @@ class Customer extends Model
         'plate_type' => TypeEnums::N1FR,
     ];
 
-
     public function incomings(): HasMany
     {
         return $this->hasMany(
@@ -69,5 +67,10 @@ class Customer extends Model
     public function items(): HasMany
     {
         return $this->hasMany(related: CustomerItem::class);
+    }
+
+    public function labels(): HasMany
+    {
+        return $this->hasMany(related: CustomerLabel::class);
     }
 }

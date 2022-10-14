@@ -2,16 +2,17 @@
 
 namespace App\Services;
 
-use App\Models\Incoming;
-use App\Models\Plate;
-use App\Models\Item;
 use App\Enums\TypeEnums;
+use App\Models\Incoming;
+use App\Models\Item;
+use App\Models\Plate;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 
 class IncomingService
 {
     public $incoming;
+
     public $plates;
 
     public function __construct(Incoming $incoming)
@@ -92,7 +93,6 @@ class IncomingService
         ];
 
         if ($this->incoming->customer->is_delivery_grouped) {
-
             $quantity_max_grouped = env('OTM_PRODUCTIONS_QUANTITY_MAX_BOX');
             $groupes = DB::table('plates')
                 ->select('customer_key')
@@ -106,7 +106,7 @@ class IncomingService
                     ->where('customer_key', $group->customer_key)
                     ->count();
 
-                $lines = (int)($plates / $quantity_max_grouped);
+                $lines = (int) ($plates / $quantity_max_grouped);
                 if ($lines === 0) {
                     $lines = 1;
                 }
@@ -178,7 +178,7 @@ class IncomingService
             $i = 1;
             foreach ($plates as $plate) {
                 if ($plate->datas) {
-                    $message = $i . '*** / ' . $plate->reference;
+                    $message = $i.'*** / '.$plate->reference;
                     $otherItems = Plate::where('reference', $plate->reference)
                         ->whereNotIn(
                             'type',
@@ -193,7 +193,7 @@ class IncomingService
                             )->first();
                             if ($item) {
                                 $message .=
-                                    ' / 1 ' . strtoupper($item->reference_otm);
+                                    ' / 1 '.strtoupper($item->reference_otm);
                             }
                         }
                     }
@@ -257,7 +257,7 @@ class IncomingService
             $i = 1;
             foreach ($plates as $plate) {
                 if ($plate->datas) {
-                    $message = $i . '*** / ' . $plate->reference;
+                    $message = $i.'*** / '.$plate->reference;
                     $otherItems = Plate::where('reference', $plate->reference)
                         ->whereNotIn(
                             'type',
@@ -272,7 +272,7 @@ class IncomingService
                             )->first();
                             if ($item) {
                                 $message .=
-                                    ' / 1 ' . strtoupper($item->reference_otm);
+                                    ' / 1 '.strtoupper($item->reference_otm);
                             }
                         }
                     }
@@ -331,7 +331,7 @@ class IncomingService
         return $this->array2csv($content);
     }
 
-    function array2csv(
+    public function array2csv(
         $data,
         $delimiter = ',',
         $enclosure = '"',
@@ -342,6 +342,7 @@ class IncomingService
             fputcsv($f, $item, $delimiter, $enclosure, $escape_char);
         }
         rewind($f);
+
         return stream_get_contents($f);
     }
 }

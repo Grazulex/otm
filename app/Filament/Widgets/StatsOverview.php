@@ -4,15 +4,12 @@ namespace App\Filament\Widgets;
 
 use App\Enums\TypeEnums;
 use App\Models\Plate;
+use Carbon\Carbon;
 use Filament\Widgets\StatsOverviewWidget as BaseWidget;
 use Filament\Widgets\StatsOverviewWidget\Card;
-use Carbon\Carbon;
-use Carbon\CarbonPeriod;
-
 
 class StatsOverview extends BaseWidget
 {
-
     protected static ?int $sort = 1;
 
     protected function getCards(): array
@@ -45,7 +42,7 @@ class StatsOverview extends BaseWidget
             Card::make(
                 'Plates shipped (last 7 days)',
                 0
-            )
+            ),
         ];
     }
 }

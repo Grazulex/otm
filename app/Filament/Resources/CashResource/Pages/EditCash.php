@@ -5,7 +5,6 @@ namespace App\Filament\Resources\CashResource\Pages;
 use App\Filament\Resources\CashResource;
 use App\Models\Cash;
 use Filament\Pages\Actions;
-use Filament\Pages\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
 
 class EditCash extends EditRecord

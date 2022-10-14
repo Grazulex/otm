@@ -6,16 +6,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class CustomerItem extends Model
+class CustomerLabel extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['customer_id', 'item_id', 'quantity'];
-
-    public function item(): BelongsTo
-    {
-        return $this->belongsTo(Item::class);
-    }
+    protected $fillable = [
+        'customer_id',
+        'delivery_contact',
+        'delivery_street',
+        'delivery_number',
+        'delivery_box',
+        'delivery_zip',
+        'delivery_city',
+    ];
 
     public function customer(): BelongsTo
     {

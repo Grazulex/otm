@@ -8,9 +8,9 @@ use App\Models\Customer;
 use App\Models\Incoming;
 use App\Models\Plate;
 use Filament\Notifications\Notification;
-use Livewire\Component;
 use Filament\Tables;
 use Illuminate\Database\Eloquent\Builder;
+use Livewire\Component;
 
 class IncomingPlate extends Component implements Tables\Contracts\HasTable
 {
@@ -19,9 +19,13 @@ class IncomingPlate extends Component implements Tables\Contracts\HasTable
     public Incoming $incoming;
 
     public $plates;
+
     public string $datamatrix;
+
     public string $cod;
+
     public string $type;
+
     public bool $cod_is_disable;
 
     protected int|string|array $columnSpan = 'full';
@@ -61,8 +65,8 @@ class IncomingPlate extends Component implements Tables\Contracts\HasTable
             ->where('is_cod', $is_cod)
             ->where('is_rush', $is_rush)
             ->first();
-        if (!$plate) {
-            if (!$is_cod && !$is_rush) {
+        if (! $plate) {
+            if (! $is_cod && ! $is_rush) {
                 $plate = Plate::where('reference', $datamatrix)
                     ->whereNull('incoming_id')
                     ->whereNull('production_id')

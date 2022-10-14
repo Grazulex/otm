@@ -9,6 +9,7 @@ use Filament\Resources\Pages\ListRecords;
 class ListPlates extends ListRecords
 {
     protected static string $resource = PlateResource::class;
+
     protected ?string $maxContentWidth = 'full';
 
     protected function getActions(): array

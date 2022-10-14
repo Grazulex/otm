@@ -11,29 +11,34 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
-use Filament\Tables\Filters\Layout;
 use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\Layout;
 use Illuminate\Database\Eloquent\Builder;
 
-class PlateResource extends Resource {
+class PlateResource extends Resource
+{
     protected static ?string $model = Plate::class;
 
     protected static ?string $navigationGroup = 'Plates';
+
     protected static ?int $navigationSort = 4;
+
     protected static ?string $navigationIcon = 'heroicon-o-shopping-cart';
 
-    protected function getTableFiltersLayout(): ?string {
+    protected function getTableFiltersLayout(): ?string
+    {
         return Layout::AboveContent;
     }
 
-    protected static function getNavigationBadge(): ?string {
-        return static::getModel()
-            ::whereNull('production_id')
+    protected static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::whereNull('production_id')
             ->whereIn('type', TypeEnums::cases())
             ->count();
     }
 
-    public static function form(Form $form): Form {
+    public static function form(Form $form): Form
+    {
         return $form->schema([
             Forms\Components\Section::make('Main fields')
                 ->schema([
@@ -91,7 +96,8 @@ class PlateResource extends Resource {
         ]);
     }
 
-    public static function table(Table $table): Table {
+    public static function table(Table $table): Table
+    {
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('created_at')
@@ -127,14 +133,14 @@ class PlateResource extends Resource {
                     ->label('Waiting for production')
                     ->default()
                     ->query(
-                        fn(Builder $query): Builder => $query->whereNull(
+                        fn (Builder $query): Builder => $query->whereNull(
                             'production_id',
                         ),
                     ),
                 Filter::make('is_incoming')
                     ->label('Waiting for Bpost')
                     ->query(
-                        fn(Builder $query): Builder => $query
+                        fn (Builder $query): Builder => $query
                             ->where('is_incoming', true)
                             ->whereNull('incoming_id'),
                     ),
@@ -143,13 +149,15 @@ class PlateResource extends Resource {
             ->bulkActions([Tables\Actions\DeleteBulkAction::make()]);
     }
 
-    public static function getRelations(): array {
+    public static function getRelations(): array
+    {
         return [
-                //
-            ];
+            //
+        ];
     }
 
-    public static function getPages(): array {
+    public static function getPages(): array
+    {
         return [
             'index' => Pages\ListPlates::route('/'),
             'create' => Pages\CreatePlate::route('/create'),

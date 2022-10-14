@@ -11,17 +11,21 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
-class ProcessUpdateDateInMotiv implements ShouldQueue {
+class ProcessUpdateDateInMotiv implements ShouldQueue
+{
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     private $plate;
+
     private $datas;
+
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Plate $plate, array $datas = []) {
+    public function __construct(Plate $plate, array $datas = [])
+    {
         $this->plate = $plate;
         $this->datas = $datas;
     }
@@ -31,7 +35,8 @@ class ProcessUpdateDateInMotiv implements ShouldQueue {
      *
      * @return void
      */
-    public function handle() {
+    public function handle()
+    {
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'Content-Type' => 'application/x-www-form-urlencoded',
@@ -47,8 +52,8 @@ class ProcessUpdateDateInMotiv implements ShouldQueue {
             $token = $response->json('access_token');
             try {
                 Log::debug(
-                    env('OTM_INMOTIV_ENDPOINT_API') .
-                        '/webdiv/orders/1.0/' .
+                    env('OTM_INMOTIV_ENDPOINT_API').
+                        '/webdiv/orders/1.0/'.
                         $this->plate->order_id,
                 );
                 Log::debug($this->datas);
@@ -56,10 +61,10 @@ class ProcessUpdateDateInMotiv implements ShouldQueue {
                 $responseDatas = Http::withHeaders([
                     'Accept' => 'application/json',
                     'Content-Type' => 'application/json',
-                    'Authorization' => 'Bearer ' . $token,
+                    'Authorization' => 'Bearer '.$token,
                 ])->patch(
-                    env('OTM_INMOTIV_ENDPOINT_API') .
-                        '/webdiv/orders/1.0/' .
+                    env('OTM_INMOTIV_ENDPOINT_API').
+                        '/webdiv/orders/1.0/'.
                         $this->plate->order_id,
                     $this->datas,
                 );
@@ -67,7 +72,7 @@ class ProcessUpdateDateInMotiv implements ShouldQueue {
                 Log::debug('API: ok');
                 Log::debug($responseDatas->body());
                 Log::debug($responseDatas->headers());
-                if (!$responseDatas->successful()) {
+                if (! $responseDatas->successful()) {
                     Log::debug('API: not successful');
                     Log::debug($responseDatas->status());
                 }

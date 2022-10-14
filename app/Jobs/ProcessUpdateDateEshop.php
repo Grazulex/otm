@@ -10,17 +10,21 @@ use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Http;
 
-class ProcessUpdateDateEshop implements ShouldQueue {
+class ProcessUpdateDateEshop implements ShouldQueue
+{
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     private $plate;
+
     private $datas;
+
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Plate $plate, array $datas = []) {
+    public function __construct(Plate $plate, array $datas = [])
+    {
         $this->plate = $plate;
         $this->datas = $datas;
     }
@@ -30,12 +34,13 @@ class ProcessUpdateDateEshop implements ShouldQueue {
      *
      * @return void
      */
-    public function handle() {
+    public function handle()
+    {
         $response = Http::withHeaders([
             'Accept' => 'application/json',
             'Content-Type' => 'application/json',
         ])->get(
-            'https://arco.otm-shop.be/modules/otmprod/frontplatepatch.php?order_id=' .
+            'https://arco.otm-shop.be/modules/otmprod/frontplatepatch.php?order_id='.
                 $this->plate->order_id,
             $this->datas,
         );

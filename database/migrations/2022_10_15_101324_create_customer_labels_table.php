@@ -13,11 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('customer_items', function (Blueprint $table) {
+        Schema::create('customer_labels', function (Blueprint $table) {
             $table->id();
             $table->foreignId('customer_id')->constrained('customers')->onDelete('cascade');
-            $table->foreignId('item_id')->constrained('items')->onDelete('cascade');
-            $table->integer('quantity')->default(0);
+            $table->string('delivery_contact')->nullable();
+            $table->string('delivery_street')->nullable();
+            $table->string('delivery_number')->nullable();
+            $table->string('delivery_box')->nullable();
+            $table->string('delivery_zip')->nullable();
+            $table->string('delivery_city')->nullable();
             $table->timestamps();
         });
     }
@@ -29,6 +33,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('customer_items');
+        Schema::dropIfExists('customer_labels');
     }
 };

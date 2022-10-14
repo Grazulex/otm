@@ -2,28 +2,36 @@
 
 namespace App\Services;
 
-use DateTimeImmutable;
+use ArrayIterator;
 use DateInterval;
+use DateTimeImmutable;
 use DateTimeZone;
 use IteratorAggregate;
-use ArrayIterator;
 
-class HolidayService implements IteratorAggregate {
+class HolidayService implements IteratorAggregate
+{
     protected static $years = [];
+
     protected $year;
+
     protected $easter;
+
     protected $list;
+
     protected $timezone;
 
-    public static function get(int $year = null): HolidayService {
+    public static function get(int $year = null): HolidayService
+    {
         $year = $year ?? date('Y');
-        if (!array_key_exists($year, static::$years)) {
+        if (! array_key_exists($year, static::$years)) {
             static::$years[$year] = new HolidayService($year);
         }
+
         return static::$years[$year];
     }
 
-    protected function __construct(int $year) {
+    protected function __construct(int $year)
+    {
         $this->year = $year;
 
         $this->timezone = new DateTimeZone('Europe/Brussels');
@@ -34,18 +42,21 @@ class HolidayService implements IteratorAggregate {
         $this->list = $this->generateList();
     }
 
-    public function getEaster(): DateTimeImmutable {
+    public function getEaster(): DateTimeImmutable
+    {
         return $this->easter;
     }
 
-    protected function makeDate(int $month, int $day): DateTimeImmutable {
+    protected function makeDate(int $month, int $day): DateTimeImmutable
+    {
         return new DateTimeImmutable(
             "{$this->year}-{$month}-{$day} 00:00:00",
             $this->timezone,
         );
     }
 
-    protected function generateList(): array {
+    protected function generateList(): array
+    {
         $list = [
             [
                 'date' => $this->makeDate(1, 1),
@@ -148,19 +159,24 @@ class HolidayService implements IteratorAggregate {
         array_map(function ($item) {
             $this->list[$item['date']->format('m-d')] = $item;
         }, $list);
+
         return $this->list;
     }
 
-    public function getIterator(): ArrayIterator {
+    public function getIterator(): ArrayIterator
+    {
         return new ArrayIterator($this->list);
     }
 
-    public function toArray(): array {
+    public function toArray(): array
+    {
         return $this->list;
     }
 
-    public function isHoliday(int $month, int $day) {
+    public function isHoliday(int $month, int $day)
+    {
         $key = $this->makeDate($month, $day)->format('m-d');
+
         return array_key_exists($key, $this->list);
     }
 }

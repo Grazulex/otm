@@ -10,18 +10,23 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 
-class UserResource extends Resource {
+class UserResource extends Resource
+{
     protected static ?string $model = User::class;
 
     protected static ?string $navigationGroup = 'Admin';
+
     protected static ?int $navigationSort = 8;
+
     protected static ?string $navigationIcon = 'heroicon-o-user';
 
-    protected static function getNavigationBadge(): ?string {
+    protected static function getNavigationBadge(): ?string
+    {
         return static::getModel()::count();
     }
 
-    public static function form(Form $form): Form {
+    public static function form(Form $form): Form
+    {
         return $form->schema([
             Forms\Components\TextInput::make('name')
                 ->required()
@@ -38,7 +43,8 @@ class UserResource extends Resource {
         ]);
     }
 
-    public static function table(Table $table): Table {
+    public static function table(Table $table): Table
+    {
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
@@ -51,13 +57,15 @@ class UserResource extends Resource {
             ->bulkActions([Tables\Actions\DeleteBulkAction::make()]);
     }
 
-    public static function getRelations(): array {
+    public static function getRelations(): array
+    {
         return [
-                //
-            ];
+            //
+        ];
     }
 
-    public static function getPages(): array {
+    public static function getPages(): array
+    {
         return [
             'index' => Pages\ListUsers::route('/'),
             'create' => Pages\CreateUser::route('/create'),
@@ -65,9 +73,10 @@ class UserResource extends Resource {
         ];
     }
 
-    public static function getWidgets(): array {
+    public static function getWidgets(): array
+    {
         return [
-                //
-            ];
+            //
+        ];
     }
 }

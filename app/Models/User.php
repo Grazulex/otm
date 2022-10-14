@@ -2,10 +2,10 @@
 
 namespace App\Models;
 
+use Filament\Models\Contracts\FilamentUser;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use RalphJSmit\Filament\Notifications\Concerns\FilamentNotifiable;
-use Filament\Models\Contracts\FilamentUser;
 
 class User extends Authenticatable implements FilamentUser
 {
@@ -30,6 +30,7 @@ class User extends Authenticatable implements FilamentUser
         foreach (explode(' ', $this->name) as $word) {
             $ret .= strtoupper($word[0]);
         }
+
         return $ret;
     }
 }

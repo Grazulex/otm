@@ -3,7 +3,6 @@
 namespace App\Filament\Resources\CloseResource\Widgets;
 
 use App\Models\Incoming;
-use Closure;
 use Filament\Tables;
 use Filament\Widgets\TableWidget as BaseWidget;
 use Illuminate\Database\Eloquent\Builder;
@@ -14,7 +13,6 @@ class IncomingOverview extends BaseWidget
     protected int | string | array $columnSpan = 'full';
 
     public ?Model $record = null;
-
 
     public function isTableSearchable(): bool
     {

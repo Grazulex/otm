@@ -13,7 +13,6 @@ class Reception extends Model
 
     protected $fillable = ['amount_cash', 'amount_bbc', 'close_id'];
 
-
     public function close(): BelongsTo
     {
         return $this->belongsTo(related: Close::class, foreignKey: 'close_id');
