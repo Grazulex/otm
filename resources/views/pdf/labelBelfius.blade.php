@@ -69,6 +69,10 @@
             </div>
         </td>
         @if ($loop->last)
+            @if ($loop->odd)
+                <td height="300px" width="50%" style="vertical-align:top;">
+                </td
+            @endif
             </tr>
         @else
             @if ($loop->even)
