@@ -50,6 +50,7 @@ class ImportEshopCommand extends Command
                         'origin' => OriginEnums::ESHOP->value,
                         'order_id' => $order['order_id'],
                         'customer' => $order['destination_name'].' '.$order['destination_company'],
+                        'delivery_zip' => $order['destination_postal_code'],
                         'customer_key' => $order['destination_key'],
                         'amount' => 0,
                         'is_cod' => false,

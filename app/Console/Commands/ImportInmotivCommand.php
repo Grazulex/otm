@@ -79,6 +79,7 @@ class ImportInmotivCommand extends Command
                             'order_id' => $order['order_id'],
                             'customer' => $order['destination_name'],
                             'customer_key' => $order['destination_key'],
+                            'delivery_zip' => $order['destination_postal_code'],
                             'amount' => 0,
                             'is_cod' => false,
                             'is_incoming' => $is_incoming,

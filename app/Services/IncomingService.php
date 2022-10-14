@@ -19,9 +19,10 @@ class IncomingService
     {
         $this->incoming = $incoming;
         $this->plates = Plate::where('incoming_id', $incoming->id)
-            ->OrderBy('incoming_id', 'desc')
             ->OrderBy('origin', 'desc')
-            ->OrderBy('order_id', 'asc')
+            ->OrderBy('delivery_zip', 'asc')
+            ->OrderBy('customer_key', 'asc')
+            ->OrderBy('reference', 'asc')
             ->get();
     }
 
@@ -146,7 +147,10 @@ class IncomingService
                 ->groupBy('customer_key')
                 ->where('incoming_id', $this->incoming->id)
                 ->whereNotNull('customer_key')
+                ->OrderBy('origin', 'desc')
+                ->OrderBy('delivery_zip', 'asc')
                 ->OrderBy('customer_key', 'asc')
+                ->OrderBy('reference', 'asc')
                 ->get();
             foreach ($groupes as $group) {
                 $plates = Plate::where('incoming_id', $this->incoming->id)
@@ -217,9 +221,10 @@ class IncomingService
             }
 
             $plates = Plate::where('incoming_id', $this->incoming->id)
-                ->OrderBy('incoming_id', 'desc')
                 ->OrderBy('origin', 'desc')
-                ->OrderBy('order_id', 'asc')
+                ->OrderBy('delivery_zip', 'asc')
+                ->OrderBy('customer_key', 'asc')
+                ->OrderBy('reference', 'asc')
                 ->whereNull('customer_key')
                 ->get();
             $i = 1;
@@ -296,9 +301,10 @@ class IncomingService
             }
         } else {
             $plates = Plate::where('incoming_id', $this->incoming->id)
-                ->OrderBy('incoming_id', 'desc')
                 ->OrderBy('origin', 'desc')
-                ->OrderBy('order_id', 'asc')
+                ->OrderBy('delivery_zip', 'asc')
+                ->OrderBy('customer_key', 'asc')
+                ->OrderBy('reference', 'asc')
                 ->get();
 
             $i = 1;

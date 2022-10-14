@@ -199,6 +199,7 @@ class IncomingPlate extends Component implements Tables\Contracts\HasTable
                 'incoming_id' => $this->incoming->id,
                 'customer' => $customer->delivery_contact,
                 'customer_key' => $customer->delivery_key,
+                'delivery_zip' => $customer->delivery_zip,
                 'origin' => OriginEnums::OTHER->value,
                 'datas' => [
                     'destination_name' => $customer->delivery_contact,
@@ -211,7 +212,7 @@ class IncomingPlate extends Component implements Tables\Contracts\HasTable
                 ],
             ]);
         } else {
-            $plate = Plate::create([
+            Plate::create([
                 'reference' => $reference,
                 'is_cod' => $is_cod,
                 'is_rush' => $is_rush,

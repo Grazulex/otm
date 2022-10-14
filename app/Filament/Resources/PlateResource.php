@@ -69,9 +69,12 @@ class PlateResource extends Resource
                     Forms\Components\TextInput::make('customer')
                         ->required()
                         ->maxLength(255),
-                    Forms\Components\TextInput::make('amount')->prefix('€'),
+                    Forms\Components\TextInput::make('delivery_zip')->maxLength(
+                        10,
+                    ),
+                    Forms\Components\TextInput::make('amount')->label('COD')->prefix('€'),
                 ])
-                ->columns(4),
+                ->columns(5),
             Forms\Components\Section::make('Configurations')
                 ->schema([
                     Forms\Components\Toggle::make('is_cod')->required(),
