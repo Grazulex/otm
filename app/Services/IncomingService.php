@@ -92,6 +92,52 @@ class IncomingService
             'bic cod',
         ];
 
+        if (count($this->incoming->customer->labels) > 0) {
+            foreach ($this->incoming->customer->labels as $label) {
+                $content[] = [
+                    'TXP24H',
+                    $label->delivery_contact,
+                    '',
+                    '',
+                    $label->delivery_street,
+                    $label->delivery_number,
+                    $label->delivery_box,
+                    $label->delivery_zip,
+                    $label->delivery_city,
+                    'BE',
+                    'OTM-Shop',
+                    '',
+                    'Potaardestraat',
+                    '42',
+                    '',
+                    '1082',
+                    'Brussel',
+                    '',
+                    '',
+                    '999786',
+                    '',
+                    '',
+                    '',
+                    'N',
+                    'N',
+                    'N',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                    '',
+                ];                
+            }
+        } 
         if ($this->incoming->customer->is_delivery_grouped) {
             $quantity_max_grouped = env('OTM_PRODUCTIONS_QUANTITY_MAX_BOX');
             $groupes = DB::table('plates')
