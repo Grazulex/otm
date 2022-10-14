@@ -12,6 +12,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Illuminate\Support\Collection;
 
 class IncomingResource extends Resource
 {
@@ -94,7 +95,7 @@ class IncomingResource extends Resource
                     ->icon('heroicon-s-printer')
                     ->color('primary'),
                 Tables\Actions\Action::make('downloadBposFile')
-                    ->label(__('BPOST File'))
+                    ->label(__('Bpost File'))
                     ->action(function ($record) {
                         return response()->streamDownload(function () use (
                             $record,
@@ -112,7 +113,36 @@ class IncomingResource extends Resource
                     ->icon('heroicon-o-truck')
                     ->color('primary'),
             ])
-            ->bulkActions([Tables\Actions\DeleteBulkAction::make()]);
+            ->bulkActions([
+                Tables\Actions\DeleteBulkAction::make(),
+                Tables\Actions\BulkAction::make('bpost')
+                ->label(__('Bpost file'))
+                ->icon('heroicon-s-check-circle')
+                ->action(function (Collection $records) {
+                    
+                    return response()->streamDownload(function () use (
+                        $records,
+                    ) {
+                        $bpost = null;
+                        $i = 0;
+                        foreach ($records as $record) {
+                            $incomingService = new IncomingService($record);
+                            if ($i == 0) {
+                                $bpost = $incomingService->makeBpostFile();
+                            } else {
+                                $bpost .= $incomingService->makeBpostFile(false);
+                            }
+                            $i++;
+                        }
+                        echo $bpost;
+                    },
+                
+                        'bpost.csv');
+                    
+                })
+                ->deselectRecordsAfterCompletion(),
+
+            ]);
     }
 
     public static function getPages(): array

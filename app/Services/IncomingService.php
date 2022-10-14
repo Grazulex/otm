@@ -49,51 +49,55 @@ class IncomingService
         return $pdf->download('label.pdf');
     }
 
-    public function makeBpostFile()
+    public function makeBpostFile(bool $needFirstLine=true)
     {
-        $content[] = [
-            'ProductId',
-            'Name',
-            'Contact Name',
-            'Contact Phone',
-            'Street',
-            'Street Number',
-            'Box Number',
-            'Postal Code',
-            'City',
-            'Country',
-            'Sender Name',
-            'Sender Contact Name',
-            'Sender Street',
-            'Sender Street Number',
-            'Sender Box Number',
-            'Sender Postal Code',
-            'Sender City',
-            'Weight',
-            'Customer Reference',
-            'Cost Center',
-            'Free Message',
-            'COD Amount',
-            'COD Account',
-            'Signature',
-            'Insurance',
-            'Automatic Second Presentation',
-            'Before 11am',
-            'Info Reminder',
-            'Info Reminder Language',
-            'Info Reminter Type',
-            'Info Reminder Contact Data',
-            'Info Next Day',
-            'Info Next Day language',
-            'Info Next Day Type',
-            'Info Next day Contact Data',
-            'Info Distributed',
-            'Info Distributed Language',
-            'Info Distributed Type',
-            'Info Distributed Contact Data',
-            'bic cod',
-        ];
-
+        if ($needFirstLine)
+        {
+            $content[] = [
+                'ProductId',
+                'Name',
+                'Contact Name',
+                'Contact Phone',
+                'Street',
+                'Street Number',
+                'Box Number',
+                'Postal Code',
+                'City',
+                'Country',
+                'Sender Name',
+                'Sender Contact Name',
+                'Sender Street',
+                'Sender Street Number',
+                'Sender Box Number',
+                'Sender Postal Code',
+                'Sender City',
+                'Weight',
+                'Customer Reference',
+                'Cost Center',
+                'Free Message',
+                'COD Amount',
+                'COD Account',
+                'Signature',
+                'Insurance',
+                'Automatic Second Presentation',
+                'Before 11am',
+                'Info Reminder',
+                'Info Reminder Language',
+                'Info Reminter Type',
+                'Info Reminder Contact Data',
+                'Info Next Day',
+                'Info Next Day language',
+                'Info Next Day Type',
+                'Info Next day Contact Data',
+                'Info Distributed',
+                'Info Distributed Language',
+                'Info Distributed Type',
+                'Info Distributed Contact Data',
+                'bic cod',
+            ];
+        } else {
+            $content = [];
+        }
         if (count($this->incoming->customer->labels) > 0) {
             foreach ($this->incoming->customer->labels as $label) {
                 $content[] = [
