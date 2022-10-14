@@ -39,7 +39,8 @@ class IncomingService
     public function makeLabelBelfius()
     {
         $plates = $this->plates;
-        $pdf = Pdf::loadView('pdf/labelBelfius', compact('plates'))->setPaper(
+        $customer = $this->incoming->customer;
+        $pdf = Pdf::loadView('pdf/labelBelfius', compact('plates', 'customer'))->setPaper(
             'a4',
             'landscape',
         );

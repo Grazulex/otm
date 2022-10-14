@@ -30,10 +30,12 @@ class Customer extends Model
         'is_inmotiv_customer',
         'process_type',
         'process_file',
+        'logo_file',
         'location_report_type',
         'enum_ref',
         'plate_type',
         'need_co2_label',
+        'co2_text',
         'need_order_label',
     ];
 

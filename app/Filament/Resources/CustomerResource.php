@@ -70,10 +70,17 @@ class CustomerResource extends Resource
                     Forms\Components\Toggle::make(
                         'is_inmotiv_customer',
                     )->required(),
-                    Forms\Components\Toggle::make('need_co2_label'),
                     Forms\Components\Toggle::make('need_order_label'),
                 ])
                 ->columns(4),
+            Forms\Components\Section::make('C02 Label')
+                ->schema([
+                    Forms\Components\Toggle::make('need_co2_label'),
+                    Forms\Components\TextInput::make('co2_text'),
+                    Forms\Components\FileUpload::make('logo_file')->image(),
+                ])
+                ->columns(3),
+
             Forms\Components\Section::make('Delivery Location')
                 ->schema([
                     Forms\Components\TextInput::make('delivery_key')->maxLength(
@@ -100,7 +107,9 @@ class CustomerResource extends Resource
                 ])
                 ->columns(2),
             Forms\Components\Section::make('Documents')
-                ->schema([Forms\Components\FileUpload::make('process_file')])
+                ->schema([
+                    Forms\Components\FileUpload::make('process_file'),
+                ])
                 ->columns(1),
         ]);
     }
