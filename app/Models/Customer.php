@@ -26,8 +26,6 @@ class Customer extends Model
         'delivery_zip',
         'delivery_city',
         'is_delivery_grouped',
-        'is_delivery_bpost',
-        'is_inmotiv_customer',
         'process_type',
         'process_file',
         'logo_file',
@@ -45,8 +43,6 @@ class Customer extends Model
         'location_report_type' => LocationReportTypeEnums::class,
         'plate_type' => TypeEnums::class,
         'is_delivery_grouped' => 'boolean',
-        'is_delivery_bpost' => 'boolean',
-        'is_inmotiv_customer' => 'boolean',
         'need_co2_label' => 'boolean',
         'need_order_label' => 'boolean',
     ];

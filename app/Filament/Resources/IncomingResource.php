@@ -34,7 +34,6 @@ class IncomingResource extends Resource
         ]);
     }
 
-    //TODO : ajouter bulk action pour imprimer bpost file
     public static function table(Table $table): Table
     {
         return $table
@@ -119,7 +118,6 @@ class IncomingResource extends Resource
                 ->label(__('Bpost file'))
                 ->icon('heroicon-s-check-circle')
                 ->action(function (Collection $records) {
-                    
                     return response()->streamDownload(function () use (
                         $records,
                     ) {
@@ -136,9 +134,8 @@ class IncomingResource extends Resource
                         }
                         echo $bpost;
                     },
-                
+
                         'bpost.csv');
-                    
                 })
                 ->deselectRecordsAfterCompletion(),
 

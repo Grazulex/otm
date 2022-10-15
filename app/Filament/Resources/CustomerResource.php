@@ -64,12 +64,6 @@ class CustomerResource extends Resource
                     Forms\Components\Toggle::make(
                         'is_delivery_grouped',
                     )->required(),
-                    Forms\Components\Toggle::make(
-                        'is_delivery_bpost',
-                    )->required(),
-                    Forms\Components\Toggle::make(
-                        'is_inmotiv_customer',
-                    )->required(),
                     Forms\Components\Toggle::make('need_order_label'),
                 ])
                 ->columns(4),
@@ -120,7 +114,6 @@ class CustomerResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name'),
                 Tables\Columns\BadgeColumn::make('delivery_type'),
-                Tables\Columns\IconColumn::make('is_inmotiv_customer')->boolean(),
                 Tables\Columns\TextColumn::make('process_type'),
                 Tables\Columns\BadgeColumn::make('items_count')->counts(
                     'items',

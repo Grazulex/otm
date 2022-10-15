@@ -49,10 +49,9 @@ class IncomingService
         return $pdf->download('label.pdf');
     }
 
-    public function makeBpostFile(bool $needFirstLine=true)
+    public function makeBpostFile(bool $needFirstLine = true)
     {
-        if ($needFirstLine)
-        {
+        if ($needFirstLine) {
             $content[] = [
                 'ProductId',
                 'Name',
