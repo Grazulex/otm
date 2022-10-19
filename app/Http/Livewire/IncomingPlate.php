@@ -45,7 +45,7 @@ class IncomingPlate extends Component implements Tables\Contracts\HasTable
                 preg_replace(
                     '/[^a-z0-9]+/i',
                     '',
-                    substr(trim($this->datamatrix), 0, 10),
+                    substr(trim($this->datamatrix), 0, 9),
                 ),
             ),
         );
@@ -126,7 +126,7 @@ class IncomingPlate extends Component implements Tables\Contracts\HasTable
         $datamatrix = preg_replace(
             '/[^a-z0-9]+/i',
             '',
-            substr(trim($this->datamatrix), 0, 10),
+            substr(trim($this->datamatrix), 0, 9),
         );
         $cod = (int) substr(trim($this->cod), 4, 6) / 100;
         if ($this->type == 'cod') {
