@@ -243,6 +243,13 @@ class IncomingPlate extends Component implements Tables\Contracts\HasTable
         );
     }
 
+    protected function getTableActions(): array
+    {
+        return [
+            Tables\Actions\DeleteAction::make(),
+        ];
+    }
+
     protected function getTableColumns(): array
     {
         return [
