@@ -110,21 +110,7 @@ class IncomingResource extends Resource
                             ->delivery_type == DeliveryTypeEnums::BPOST,
                     )
                     ->icon('heroicon-o-truck')
-                    ->color('primary'),
-                Tables\Actions\Action::make('printLabelCod')
-                    ->label(__('COD letter'))
-                    ->action(function ($record) {
-                        return response()->streamDownload(function () use (
-                            $record,
-                        ) {
-                            $incomingService = new IncomingService($record);
-                            echo $incomingService->makeLetterCod();
-                        },
-                            'letter.pdf');
-                    })
-                    ->tooltip(__('Print COD Leter'))
-                    ->icon('heroicon-s-book-open')
-                    ->color('primary'),
+                    ->color('primary')
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),

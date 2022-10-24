@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Plate;
 use App\Models\Production;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ProductionService
 {
@@ -95,6 +96,27 @@ class ProductionService
         }
 
         return $this->array2csv($content);
+    }
+
+    public function makeLetterCod()
+    {
+        $allPlates = $this->plates;
+        $plates = [];
+        foreach ($allPlates as $plate) {
+            if (isset($plate->datas)) {
+                if (array_key_exists('price', $plate->datas)) {
+                    if ((int) $plate->datas['price'] > 0) {
+                        $plates[] = $plate;
+                    }
+                }
+            }
+        }
+        $pdf = Pdf::loadView('pdf/letterCod', compact('plates'))->setPaper(
+            'a4',
+            'portrait',
+        );
+
+        return $pdf->download('letter.pdf');
     }
 
     public function array2csv(

@@ -45,6 +45,20 @@ class ProductionResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\Action::make('printLabelCod')
+                ->label(__('COD letter'))
+                ->action(function ($record) {
+                    return response()->streamDownload(function () use (
+                        $record,
+                    ) {
+                        $productionService = new ProductionService($record);
+                        echo $productionService->makeLetterCod();
+                    },
+                        'letter.pdf');
+                })
+                ->tooltip(__('Print COD Leter'))
+                ->icon('heroicon-s-book-open')
+                ->color('primary'),
                 Tables\Actions\Action::make('exportAsJson')
                     ->label(__('Export'))
                     ->action(function ($record) {

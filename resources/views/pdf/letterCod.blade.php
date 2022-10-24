@@ -33,8 +33,8 @@
       <center><h2 style="font-size: 16px">AANREKENINGSNOTA NUMMERPLAAT VIA COD</h2></center>
    @endif
 
-   <table>
-      <tr>
+   <table width="100%">
+      <tr width="100%">
          <td width="50%">
             @if (isset($plate->datas['owner_language']) && $plate->datas['owner_language'] == 'FR')
                <p>
@@ -188,7 +188,7 @@
             <td width="40%" style="border: 1px solid black;"></td>
             <td width="60%" style="border: 1px solid black;">
                @if (isset($plate->datas['broker_postal_code']) && isset($plate->datas['broker_city']))
-                  {{ $plate->datas['broker_postal_code'] }} {{ $plate->datas['broker_city    '] }}
+                  {{ $plate->datas['broker_postal_code'] }} {{ $plate->datas['broker_city'] }}
                @endif
             </td>
             <td width="40%" style="border: 1px solid black;"></td>
@@ -222,9 +222,9 @@
             </td>
          </tr>
          <tr>
-            <td width="40%" style="border: 1px solid black;"></td>
-            <td width="60%" style="border: 1px solid black;"></td>
-            <td width="40%" style="border: 1px solid black;"></td>
+            <td width="40%" style="border: 1px solid black;">&nbsp;</td>
+            <td width="60%" style="border: 1px solid black;">&nbsp;</td>
+            <td width="40%" style="border: 1px solid black;">&nbsp;</td>
          </tr>
          <tr>
             <td width="40%" style="border: 1px solid black;">Total :</td>
@@ -319,7 +319,7 @@
             <td width="40%" style="border: 1px solid black;"></td>
             <td width="60%" style="border: 1px solid black;">
                @if (isset($plate->datas['broker_postal_code']) && isset($plate->datas['broker_city']))
-                  {{ $plate->datas['broker_postal_code'] }} {{ $plate->datas['broker_city    '] }}
+                  {{ $plate->datas['broker_postal_code'] }} {{ $plate->datas['broker_city'] }}
                @endif
             </td>
             <td width="40%" style="border: 1px solid black;"></td>
@@ -412,7 +412,7 @@
       <center><h2 style="font-size: 18px">Bericht aan de GOCA-keuringsstations : het certificatienummer « 286375-OTM » bevindt zich in de linkerhovenhoek van de plaat</h2></center>
    @endif
 
-
+   <br/><br/>
    <p style="text-align:center;">
       @if (isset($plate->datas['owner_language']) && $plate->datas['owner_language'] == 'FR')
          <img src="{{ storage_path('app/public/layout/codfr.png')}}" width="450px" />
