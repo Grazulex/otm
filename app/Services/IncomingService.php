@@ -39,20 +39,17 @@ class IncomingService
 
     public function makeLetterCod()
     {
-        $plates = $this->plates;
-        /*
+        $allPlates = $this->plates;
         $plates= [];
         foreach ($allPlates as $plate) {
             if (isset($plate->datas)) {
-                $plate->datas = json_decode($plate->datas);
                 if (array_key_exists('price', $plate->datas)) {
-                    if ($plate->datas->price > 0) {
+                    if ((int)$plate->datas['price'] > 0) {
                         $plates[] = $plate;
                     }
                 }
             }
         }
-        */
         $customer = $this->incoming->customer;
         $pdf = Pdf::loadView('pdf/letterCod', compact('plates', 'customer'))->setPaper(
             'a4',
