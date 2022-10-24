@@ -222,9 +222,9 @@
             </td>
          </tr>
          <tr>
-            <td width="40%" style="border: 1px solid black;">&nbsp;</td>
-            <td width="60%" style="border: 1px solid black;">&nbsp;</td>
-            <td width="40%" style="border: 1px solid black;">&nbsp;</td>
+            <td width="40%" style="border: 1px solid black;">_</td>
+            <td width="60%" style="border: 1px solid black;">_</td>
+            <td width="40%" style="border: 1px solid black;">_</td>
          </tr>
          <tr>
             <td width="40%" style="border: 1px solid black;">Total :</td>
