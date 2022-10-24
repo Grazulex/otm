@@ -57,6 +57,9 @@ class ProductionResource extends Resource
                         'letter.pdf');
                 })
                 ->tooltip(__('Print COD Leter'))
+                ->visible(
+                    fn (Production $record): bool => $record->haveCod(),
+                )
                 ->icon('heroicon-s-book-open')
                 ->color('primary'),
                 Tables\Actions\Action::make('exportAsJson')

@@ -11,6 +11,21 @@ class Production extends Model
 {
     use HasFactory, SoftDeletes;
 
+    public function haveCod(): bool
+    {
+        foreach ($this->plates() as $plate) {
+            if (isset($plate->datas)) {
+                if (array_key_exists('price', $plate->datas)) {
+                    if ((int) $plate->datas['price'] > 0) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
     public function plates(): HasMany
     {
         return $this->hasMany(
