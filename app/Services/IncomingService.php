@@ -37,6 +37,31 @@ class IncomingService
         return $pdf->download('lable.pdf');
     }
 
+    public function makeLetterCod()
+    {
+        $plates = $this->plates;
+        /*
+        $plates= [];
+        foreach ($allPlates as $plate) {
+            if (isset($plate->datas)) {
+                $plate->datas = json_decode($plate->datas);
+                if (array_key_exists('price', $plate->datas)) {
+                    if ($plate->datas->price > 0) {
+                        $plates[] = $plate;
+                    }
+                }
+            }
+        }
+        */
+        $customer = $this->incoming->customer;
+        $pdf = Pdf::loadView('pdf/letterCod', compact('plates', 'customer'))->setPaper(
+            'a4',
+            'portrait',
+        );
+
+        return $pdf->download('letter.pdf');        
+    }
+
     public function makeLabelBelfius()
     {
         $plates = $this->plates;

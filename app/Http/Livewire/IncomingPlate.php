@@ -246,7 +246,19 @@ class IncomingPlate extends Component implements Tables\Contracts\HasTable
     protected function getTableActions(): array
     {
         return [
-            Tables\Actions\DeleteAction::make(),
+            Tables\Actions\Action::make('remove')
+            ->label(__('remove'))
+            ->action(function ($record) {
+                $record->incoming_id = null;
+                $record->save();
+                Notification::make()
+                    ->title('Plate removed successfully')
+                    ->warning()
+                    ->seconds(2)
+                    ->send();
+            })
+            ->tooltip(__('remove link'))
+            ->color('primary'),
         ];
     }
 
