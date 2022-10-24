@@ -124,7 +124,7 @@ class IncomingResource extends Resource
                     })
                     ->tooltip(__('Print COD Leter'))
                     ->icon('heroicon-s-book-open')
-                    ->color('primary'),                    
+                    ->color('primary'),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),

@@ -59,7 +59,7 @@ class IncomingService
             'portrait',
         );
 
-        return $pdf->download('letter.pdf');        
+        return $pdf->download('letter.pdf');
     }
 
     public function makeLabelBelfius()
