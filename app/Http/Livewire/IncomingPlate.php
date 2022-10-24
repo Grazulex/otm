@@ -257,7 +257,7 @@ class IncomingPlate extends Component implements Tables\Contracts\HasTable
                     ->seconds(2)
                     ->send();
             })
-            ->tooltip(__('remove link'))
+            ->tooltip(__('remove'))
             ->color('primary'),
         ];
     }

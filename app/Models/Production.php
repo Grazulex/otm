@@ -11,9 +11,17 @@ class Production extends Model
 {
     use HasFactory, SoftDeletes;
 
+    protected $fillable = [
+        'is_bpost',
+    ];
+
+    protected $casts = [
+        'is_bpost' => 'boolean',
+    ];
+
     public function haveCod(): bool
     {
-        foreach ($this->plates() as $plate) {
+        foreach ($this->plates as $plate) {
             if (isset($plate->datas)) {
                 if (array_key_exists('price', $plate->datas)) {
                     if ((int) $plate->datas['price'] > 0) {
@@ -23,7 +31,7 @@ class Production extends Model
             }
         }
 
-        return true;
+        return false;
     }
 
     public function plates(): HasMany

@@ -2,9 +2,11 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\DeliveryTypeEnums;
 use App\Filament\Resources\ProductionResource\Pages;
 use App\Filament\Resources\ProductionResource\Widgets\PlateOverview;
 use App\Models\Production;
+use App\Services\IncomingService;
 use App\Services\ProductionService;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
@@ -45,7 +47,21 @@ class ProductionResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\Action::make('printLabelCod')
+            Tables\Actions\Action::make('downloadBposFile')
+                ->label(__('Bpost File'))
+                ->action(function ($record) {
+                    return response()->streamDownload(function () use (
+                        $record,
+                    ) {
+                        $productionService = new ProductionService($record);
+                        echo $productionService->makeBpostFile();
+                    },
+                        'bpost.csv');
+                })
+                ->tooltip(__('Download'))
+                ->icon('heroicon-o-truck')
+                ->color('primary'),
+            Tables\Actions\Action::make('printLabelCod')
                 ->label(__('COD letter'))
                 ->action(function ($record) {
                     return response()->streamDownload(function () use (
@@ -58,24 +74,27 @@ class ProductionResource extends Resource
                 })
                 ->tooltip(__('Print COD Leter'))
                 ->visible(
-                    fn (Production $record): bool => $record->haveCod(),
+                    fn (Production $record): bool => $record->is_bpost && $record->haveCod(),
                 )
                 ->icon('heroicon-s-book-open')
                 ->color('primary'),
-                Tables\Actions\Action::make('exportAsJson')
-                    ->label(__('Export'))
-                    ->action(function ($record) {
-                        return response()->streamDownload(function () use (
-                            $record,
-                        ) {
-                            $productionService = new ProductionService($record);
-                            echo $productionService->makeCsv();
-                        },
-                            'production.csv');
-                    })
-                    ->tooltip(__('Export'))
-                    ->icon('heroicon-s-download')
-                    ->color('primary'),
+            Tables\Actions\Action::make('exportAsJson')
+                ->label(__('Production file'))
+                ->action(function ($record) {
+                    return response()->streamDownload(function () use (
+                        $record,
+                    ) {
+                        $productionService = new ProductionService($record);
+                        echo $productionService->makeCsv();
+                    },
+                        'production.csv');
+                })
+                ->tooltip(__('Export production file'))
+                ->visible(
+                    fn (Production $record): bool => $record->is_bpost,
+                )
+                ->icon('heroicon-s-download')
+                ->color('primary'),
             ])
             ->bulkActions([
                 //

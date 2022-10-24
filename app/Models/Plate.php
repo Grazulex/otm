@@ -32,6 +32,7 @@ class Plate extends Model
         'product_type',
         'client_code',
         'delivery_zip',
+        'box'
     ];
 
     protected $casts = [

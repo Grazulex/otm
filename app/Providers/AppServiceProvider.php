@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Model::shouldBeStrict(! $this->app->environment('production'));
+        //Model::shouldBeStrict(! $this->app->environment('production'));
 
         Filament::serving(function () {
             Filament::registerNavigationGroups([

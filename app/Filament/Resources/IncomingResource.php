@@ -93,24 +93,6 @@ class IncomingResource extends Resource
                     )
                     ->icon('heroicon-s-printer')
                     ->color('primary'),
-                Tables\Actions\Action::make('downloadBposFile')
-                    ->label(__('Bpost File'))
-                    ->action(function ($record) {
-                        return response()->streamDownload(function () use (
-                            $record,
-                        ) {
-                            $incomingService = new IncomingService($record);
-                            echo $incomingService->makeBpostFile();
-                        },
-                            'bpost.csv');
-                    })
-                    ->tooltip(__('Download'))
-                    ->visible(
-                        fn (Incoming $record): bool => $record->customer
-                            ->delivery_type == DeliveryTypeEnums::BPOST,
-                    )
-                    ->icon('heroicon-o-truck')
-                    ->color('primary'),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),

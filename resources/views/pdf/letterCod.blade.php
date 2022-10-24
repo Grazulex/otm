@@ -9,6 +9,15 @@
         .page-break {
             page-break-after: always;
         }
+
+        h4 {
+         margin-top:0px;
+         margin-bottom:0px;
+        }
+
+        table {
+         font-size: 14px;
+        }
     </style>
 </head>
 
@@ -23,7 +32,11 @@
             <img src="{{ storage_path('layout/otm.jpeg')}}" width="100%" />
          </td>
          <td width="10%" style="text-align: right;">
-            <h2>00</h2>
+            <h2>
+               @if (isset($plate->box))
+                  {{ $plate->box }}
+               @endif
+            </h2>
          </td>
       </tr>
    </table>
@@ -393,7 +406,11 @@
             <img src="{{ storage_path('layout/otm.jpeg')}}" width="100%" />
          </td>
          <td width="10%" style="text-align: right;">
-            <h2>00</h2>
+            <h2>
+               @if (isset($plate->box))
+                  {{ $plate->box }}
+               @endif
+            </h2>
          </td>
       </tr>
    </table>
@@ -407,7 +424,7 @@
       <hr>
    @endif
    @if (isset($plate->datas['owner_language']) && $plate->datas['owner_language'] == 'FR')
-      <center><h2 style="font-size: 18px">Message aux centres d'inspection GOCA: le numéro de certification "286375-OTM» est situé dans le coin supérieur gauche de la plaqueD</h2></center>
+      <center><h2 style="font-size: 18px">Message aux centres d'inspection GOCA: le numéro de certification "286375-OTM» est situé dans le coin supérieur gauche de la plaque</h2></center>
    @else
       <center><h2 style="font-size: 18px">Bericht aan de GOCA-keuringsstations : het certificatienummer « 286375-OTM » bevindt zich in de linkerhovenhoek van de plaat</h2></center>
    @endif
