@@ -3,11 +3,10 @@
 namespace App\Services;
 
 use App\Enums\TypeEnums;
-use App\Models\Plate;
 use App\Models\Item;
+use App\Models\Plate;
 use App\Models\Production;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Illuminate\Support\Facades\DB;
 
 class ProductionService
 {
@@ -171,7 +170,7 @@ class ProductionService
         } else {
             $content = [];
         }
-        
+
         $plates = Plate::where('production_id', $this->production->id)
             ->OrderBy('origin', 'desc')
             ->OrderBy('delivery_zip', 'asc')
@@ -179,8 +178,8 @@ class ProductionService
             ->OrderBy('reference', 'asc')
             ->with('incoming')
             ->get();
-        $i=1;
-        $group=1;
+        $i = 1;
+        $group = 1;
         $last_customer_key = null;
         foreach ($plates as $plate) {
             if ($plate->datas) {
@@ -193,17 +192,17 @@ class ProductionService
                         $content[] = $this->addline($plate, $i);
                     }
                 } else {
-                    $group=1;
+                    $group = 1;
                     $content[] = $this->addline($plate, $i);
                     $i++;
-                } 
+                }
                 $last_customer_key = $plate->customer_key;
             }
         }
 
         $this->production->is_bpost = true;
         $this->production->save();
-        
+
         return $this->array2csv($content);
     }
 
@@ -280,7 +279,7 @@ class ProductionService
             '',
             '',
             (int) $cod > 0 ? 'GKCCBEBB' : '',
-        ];        
+        ];
     }
 
     public function array2csv(
