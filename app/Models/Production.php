@@ -23,7 +23,7 @@ class Production extends Model
             }
         }
 
-        return false;
+        return true;
     }
 
     public function plates(): HasMany
