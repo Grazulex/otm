@@ -110,7 +110,7 @@ class IncomingResource extends Resource
                             ->delivery_type == DeliveryTypeEnums::BPOST,
                     )
                     ->icon('heroicon-o-truck')
-                    ->color('primary')
+                    ->color('primary'),
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),

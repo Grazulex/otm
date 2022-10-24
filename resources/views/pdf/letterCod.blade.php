@@ -17,10 +17,10 @@
    <table>
       <tr>
          <td width="60%">
-            <img src="{{ storage_path('app/public/layout/cod2.png')}}" width="100%" />
+            <img src="{{ storage_path('layout/cod2.png')}}" width="100%" />
          </td>
          <td width="30%">
-            <img src="{{ storage_path('app/public/layout/otm.jpeg')}}" width="100%" />
+            <img src="{{ storage_path('layout/otm.jpeg')}}" width="100%" />
          </td>
          <td width="10%" style="text-align: right;">
             <h2>00</h2>
@@ -387,10 +387,10 @@
    <table>
       <tr>
          <td width="60%">
-            <img src="{{ storage_path('app/public/layout/cod2.png')}}" width="100%" />
+            <img src="{{ storage_path('layout/cod2.png')}}" width="100%" />
          </td>
          <td width="30%">
-            <img src="{{ storage_path('app/public/layout/otm.jpeg')}}" width="100%" />
+            <img src="{{ storage_path('layout/otm.jpeg')}}" width="100%" />
          </td>
          <td width="10%" style="text-align: right;">
             <h2>00</h2>
@@ -415,9 +415,9 @@
    <br/><br/>
    <p style="text-align:center;">
       @if (isset($plate->datas['owner_language']) && $plate->datas['owner_language'] == 'FR')
-         <img src="{{ storage_path('app/public/layout/codfr.png')}}" width="450px" />
+         <img src="{{ storage_path('layout/codfr.png')}}" width="450px" />
       @else
-         <img src="{{ storage_path('app/public/layout/codnl.png')}}" width="450px" />
+         <img src="{{ storage_path('layout/codnl.png')}}" width="450px" />
       @endif
    </p>
 
