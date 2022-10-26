@@ -106,8 +106,8 @@ class ProductionService
         $plates = [];
         foreach ($allPlates as $plate) {
             if (isset($plate->datas)) {
-                if (array_key_exists('price', $plate->datas)) {
-                    if ((int) $plate->datas['price'] > 0) {
+                if (array_key_exists('payment_method', $plate->datas)) {
+                    if (strtolower($plate->datas['payment_method']) === 'cod') {
                         $plates[] = $plate;
                     }
                 }

@@ -25,10 +25,6 @@ class PlateResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-shopping-cart';
 
-    protected function getTableFiltersLayout(): ?string
-    {
-        return Layout::AboveContent;
-    }
 
     protected static function getNavigationBadge(): ?string
     {
@@ -127,26 +123,17 @@ class PlateResource extends Resource
                 Tables\Columns\TextColumn::make('customer')
                     ->searchable()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('production.created_at'),
-                Tables\Columns\TextColumn::make('incoming.created_at'),
+                Tables\Columns\TextColumn::make('production.created_at')->searchable()->sortable(),
+                Tables\Columns\TextColumn::make('incoming.created_at')->searchable()->sortable(),
             ])
             ->defaultSort('created_at', 'desc')
             ->filters([
-                Filter::make('is_producted')
-                    ->label('Waiting for production')
-                    ->default()
-                    ->query(
-                        fn (Builder $query): Builder => $query->whereNull(
-                            'production_id',
-                        ),
-                    ),
-                Filter::make('is_incoming')
-                    ->label('Waiting for Bpost')
+                Filter::make('is_cod')
+                    ->label('Payment method is COD')
                     ->query(
                         fn (Builder $query): Builder => $query
-                            ->where('is_incoming', true)
-                            ->whereNull('incoming_id'),
-                    ),
+                            ->where('datas->payment_method', 'COD'),
+                    ),         
             ])
             ->actions([Tables\Actions\EditAction::make()])
             ->bulkActions([Tables\Actions\DeleteBulkAction::make()]);
