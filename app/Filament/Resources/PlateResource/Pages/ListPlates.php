@@ -24,5 +24,4 @@ class ListPlates extends ListRecords
     {
         return Layout::AboveContent;
     }
-
 }

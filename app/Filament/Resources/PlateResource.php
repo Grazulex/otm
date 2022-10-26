@@ -12,7 +12,6 @@ use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
 use Filament\Tables\Filters\Filter;
-use Filament\Tables\Filters\Layout;
 use Illuminate\Database\Eloquent\Builder;
 
 class PlateResource extends Resource
@@ -24,7 +23,6 @@ class PlateResource extends Resource
     protected static ?int $navigationSort = 4;
 
     protected static ?string $navigationIcon = 'heroicon-o-shopping-cart';
-
 
     protected static function getNavigationBadge(): ?string
     {
@@ -133,7 +131,7 @@ class PlateResource extends Resource
                     ->query(
                         fn (Builder $query): Builder => $query
                             ->where('datas->payment_method', 'COD'),
-                    ),         
+                    ),
             ])
             ->actions([Tables\Actions\EditAction::make()])
             ->bulkActions([Tables\Actions\DeleteBulkAction::make()]);
