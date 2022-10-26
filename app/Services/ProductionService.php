@@ -186,14 +186,14 @@ class ProductionService
                 $this->saveBox($plate, $i);
                 if ($plate->customer_key != '' && $plate->customer_key === $last_customer_key) {
                     $group++;
-                    if ($group > $quantity_max_grouped) {
+                    if ($group >= $quantity_max_grouped) {
                         $group = 1;
+                        $content[] = $this->addline($plate, $i, false);
                         $i++;
-                        $content[] = $this->addline($plate, $i);
                     }
                 } else {
                     $group = 1;
-                    $content[] = $this->addline($plate, $i);
+                    $content[] = $this->addline($plate, $i, true);
                     $i++;
                 }
                 $last_customer_key = $plate->customer_key;
@@ -215,26 +215,30 @@ class ProductionService
         $plate->save();
     }
 
-    private function addline(Plate $plate, $i)
+    private function addline(Plate $plate, $i, $needMessage = true)
     {
-        $message = $i.'*** / '.$plate->reference;
-        $otherItems = Plate::where('reference', $plate->reference)
-            ->whereNotIn(
-                'type',
-                array_column(TypeEnums::cases(), 'name'),
-            )
-            ->get();
-        if ($otherItems) {
-            foreach ($otherItems as $otherItem) {
-                $item = Item::where(
-                    'reference_customer',
-                    $plate->datas['plate_type'],
-                )->first();
-                if ($item) {
-                    $message .=
-                        ' / 1 '.strtoupper($item->reference_otm);
+        if ($needMessage) {
+            $message = $i.'*** / '.$plate->reference;
+            $otherItems = Plate::where('reference', $plate->reference)
+                ->whereNotIn(
+                    'type',
+                    array_column(TypeEnums::cases(), 'name'),
+                )
+                ->get();
+            if ($otherItems) {
+                foreach ($otherItems as $otherItem) {
+                    $item = Item::where(
+                        'reference_customer',
+                        $plate->datas['plate_type'],
+                    )->first();
+                    if ($item) {
+                        $message .=
+                            ' / 1 '.strtoupper($item->reference_otm);
+                    }
                 }
             }
+        } else {
+            $message = $i;
         }
         $cod = null;
         if (isset($plate->datas['price'])) {
