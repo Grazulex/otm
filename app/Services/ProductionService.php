@@ -203,6 +203,9 @@ class ProductionService
         $this->production->is_bpost = true;
         $this->production->save();
 
+        $this->production->checkIfCod();
+        $this->production->checkIfPicking();
+
         return $this->array2csv($content);
     }
 
@@ -280,6 +283,42 @@ class ProductionService
             '',
             (int) $cod > 0 ? 'GKCCBEBB' : '',
         ];
+    }
+
+    public function makePicking()
+    {
+        $allPlates = $this->plates;
+        $items = [];
+        $resumes = [];
+        foreach ($allPlates as $plate) {
+            $otherItems = Plate::where('reference', $plate->reference)
+            ->where('created_at', $plate->created_at)
+            ->whereNotIn(
+                'type',
+                array_column(TypeEnums::cases(), 'name'),
+            )
+            ->get();
+            if (count($otherItems)>0) {
+                $items[] = [
+                    'box' => $plate->box,
+                    'items' => $otherItems,
+                ]; 
+                foreach ($otherItems as $otherItem) {
+                    $name = Item::where(
+                        'reference_customer',
+                        $otherItem->type,
+                    )->first();
+                    $resumes[isset($name->name) ? $name->name : $otherItem->type] = isset($resumes[$otherItem->type]) ? $resumes[$otherItem->type] + 1 : 1;
+                }
+            }
+        }
+
+        $pdf = Pdf::loadView('pdf/picking', compact('resumes','items'))->setPaper(
+            'a4',
+            'portrait',
+        );
+
+        return $pdf->download('picking.pdf');
     }
 
     public function array2csv(

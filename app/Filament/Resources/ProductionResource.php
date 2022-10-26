@@ -72,10 +72,27 @@ class ProductionResource extends Resource
                     })
                     ->tooltip(__('Print COD Leter'))
                     ->visible(
-                        fn (Production $record): bool => $record->is_bpost && $record->haveCod(),
+                        fn (Production $record): bool => $record->is_bpost && $record->have_cod,
                     )
                     ->icon('heroicon-s-book-open')
                     ->color('primary'),
+                Tables\Actions\Action::make('printPickings')
+                    ->label(__('Picking list'))
+                    ->action(function ($record) {
+                        return response()->streamDownload(function () use (
+                            $record,
+                        ) {
+                            $productionService = new ProductionService($record);
+                            echo $productionService->makePicking();
+                        },
+                            'letter.pdf');
+                    })
+                    ->tooltip(__('Print Picking list'))
+                    ->visible(
+                        fn (Production $record): bool => $record->is_bpost && $record->have_picking,
+                    )
+                    ->icon('heroicon-s-archive')
+                    ->color('primary'),                    
                 Tables\Actions\Action::make('exportAsJson')
                     ->label(__('Production file'))
                     ->action(function ($record) {
