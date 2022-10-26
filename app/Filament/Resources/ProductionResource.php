@@ -68,7 +68,7 @@ class ProductionResource extends Resource
                             $productionService = new ProductionService($record);
                             echo $productionService->makeLetterCod();
                         },
-                            'letter.pdf');
+                            'cod.pdf');
                     })
                     ->tooltip(__('Print COD Leter'))
                     ->visible(
@@ -85,7 +85,7 @@ class ProductionResource extends Resource
                             $productionService = new ProductionService($record);
                             echo $productionService->makePicking();
                         },
-                            'letter.pdf');
+                            'picking.pdf');
                     })
                     ->tooltip(__('Print Picking list'))
                     ->visible(
