@@ -298,11 +298,11 @@ class ProductionService
                 array_column(TypeEnums::cases(), 'name'),
             )
             ->get();
-            if (count($otherItems)>0) {
+            if (count($otherItems) > 0) {
                 $items[] = [
                     'box' => $plate->box,
                     'items' => $otherItems,
-                ]; 
+                ];
                 foreach ($otherItems as $otherItem) {
                     $name = Item::where(
                         'reference_customer',
@@ -313,7 +313,7 @@ class ProductionService
             }
         }
 
-        $pdf = Pdf::loadView('pdf/picking', compact('resumes','items'))->setPaper(
+        $pdf = Pdf::loadView('pdf/picking', compact('resumes', 'items'))->setPaper(
             'a4',
             'portrait',
         );
