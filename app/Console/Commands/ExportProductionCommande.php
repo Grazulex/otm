@@ -88,6 +88,7 @@ class ExportProductionCommande extends Command
                 }
             }
 
+            /*
             $productionService = new ProductionService($production);
             $productionService->makeCsvAttach();
 
@@ -98,6 +99,7 @@ class ExportProductionCommande extends Command
             }
 
             $productionService->deleteCSV();
+            */
         }
     }
 }
