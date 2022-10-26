@@ -67,7 +67,7 @@ class ProductionMonthChart extends LineChartWidget
                     'data' => $dataInmotiv->map(fn (TrendValue $value) => $value->aggregate),
                 ],
                 [
-                    'label' => 'Inmotiv',
+                    'label' => 'Other',
                     'borderColor' => '#E73E88',
                     'data' => $dataOther->map(fn (TrendValue $value) => $value->aggregate),
                 ],
