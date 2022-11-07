@@ -4,7 +4,6 @@ namespace App\Jobs;
 
 use App\Models\Plate;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -40,7 +39,7 @@ class ProcessAddItems implements ShouldQueue
                     'is_cod' => $this->plate->is_cod,
                     'is_rush' => $this->plate->is_rush,
                     'amount' => 0,
-                    'plate_type' => $item->item->reference_otm,,
+                    'plate_type' => $item->item->reference_otm, ,
                     'product_type' => 'plates',
                     'type' => $item->item->reference_otm,
                     'incoming_id' => $this->plate->incoming_id,
