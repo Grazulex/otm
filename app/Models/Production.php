@@ -44,7 +44,7 @@ class Production extends Model
     public function checkIfShipping()
     {
         foreach ($this->plates as $plate) {
-            if ($plate->customer->need_shipping_list) {
+            if (!$plate->incoming_id) {
                 $this->have_shipping = true;
                 $this->save();
                 break;

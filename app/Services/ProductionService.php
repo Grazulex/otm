@@ -328,6 +328,27 @@ class ProductionService
 
     public function makeShipping()
     {
+        $allPlates = $this->plates;
+        $items = [];
+        foreach ($allPlates as $plate) {
+            if ($plate->incoming_id == null) {
+                $items[$plate->customer_key]['datas'] = $plate->datas;
+                $items[$plate->customer_key]['items'][] = ['ref'=>$plate->reference, 'type'=>$plate->type];
+            }
+        }
+        foreach ($items as $key => $item) { 
+            if (count($item['items']) === 1) {
+                unset($items[$key]);
+            }
+        }
+
+        $pdf = Pdf::loadView('pdf/shipping', compact('items'))->setPaper(
+            'a4',
+            'portrait',
+        );
+
+        return $pdf->download('shipping.pdf');
+
     }
 
     public function array2csv(
