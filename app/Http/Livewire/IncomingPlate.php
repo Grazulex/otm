@@ -4,6 +4,7 @@ namespace App\Http\Livewire;
 
 use App\Enums\OriginEnums;
 use App\Enums\TypeEnums;
+use App\Jobs\ProcessAddItems;
 use App\Models\Customer;
 use App\Models\Incoming;
 use App\Models\Plate;
@@ -188,7 +189,7 @@ class IncomingPlate extends Component implements Tables\Contracts\HasTable
         bool $is_rush = false,
     ) {
         if ($customer->is_delivery_grouped && $customer->delivery_contact) {
-            Plate::create([
+            $plate = Plate::create([
                 'reference' => $reference,
                 'is_cod' => $is_cod,
                 'is_rush' => $is_rush,
@@ -212,7 +213,7 @@ class IncomingPlate extends Component implements Tables\Contracts\HasTable
                 ],
             ]);
         } else {
-            Plate::create([
+            $plate = Plate::create([
                 'reference' => $reference,
                 'is_cod' => $is_cod,
                 'is_rush' => $is_rush,
@@ -225,6 +226,7 @@ class IncomingPlate extends Component implements Tables\Contracts\HasTable
                 'origin' => OriginEnums::OTHER->value,
             ]);
         }
+        ProcessAddItems::dispatch($plate);
     }
 
     protected function isTablePaginationEnabled(): bool
