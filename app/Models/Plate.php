@@ -33,6 +33,9 @@ class Plate extends Model
         'client_code',
         'delivery_zip',
         'box',
+        'back_id',
+        'return_reason',
+        'is_damaged',
     ];
 
     protected $casts = [
@@ -41,6 +44,7 @@ class Plate extends Model
         'is_cod' => 'boolean',
         'is_rush' => 'boolean',
         'is_incoming' => 'boolean',
+        'is_damaged' => 'boolean',
     ];
 
     protected $attributes = [
@@ -55,6 +59,11 @@ class Plate extends Model
     public function incoming(): BelongsTo
     {
         return $this->belongsTo(related: Incoming::class);
+    }
+
+    public function back(): BelongsTo
+    {
+        return $this->belongsTo(related: Back::class);
     }
 
     protected function amount(): Attribute

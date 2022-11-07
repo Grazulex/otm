@@ -32,6 +32,11 @@ class Close extends Model
         return $this->hasMany(related: Incoming::class, foreignKey: 'close_id');
     }
 
+    public function backs(): HasMany
+    {
+        return $this->hasMany(related: Back::class, foreignKey: 'close_id');
+    }
+
     protected function diff(): Attribute
     {
         return Attribute::make(

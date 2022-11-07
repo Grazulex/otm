@@ -205,6 +205,7 @@ class ProductionService
 
         $this->production->checkIfCod();
         $this->production->checkIfPicking();
+        $this->production->checkIfShipping();
 
         return $this->array2csv($content);
     }
@@ -323,6 +324,11 @@ class ProductionService
         );
 
         return $pdf->download('picking.pdf');
+    }
+
+    public function makeShipping()
+    {
+
     }
 
     public function array2csv(

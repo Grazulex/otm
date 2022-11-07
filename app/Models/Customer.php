@@ -35,6 +35,7 @@ class Customer extends Model
         'need_co2_label',
         'co2_text',
         'need_order_label',
+        'need_shipping_list',
     ];
 
     protected $casts = [
@@ -45,6 +46,7 @@ class Customer extends Model
         'is_delivery_grouped' => 'boolean',
         'need_co2_label' => 'boolean',
         'need_order_label' => 'boolean',
+        'need_shipping_list' => 'boolean',
     ];
 
     protected $attributes = [

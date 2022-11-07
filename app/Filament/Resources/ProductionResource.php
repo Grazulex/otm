@@ -17,7 +17,7 @@ class ProductionResource extends Resource
 
     protected static ?string $navigationGroup = 'Plates';
 
-    protected static ?int $navigationSort = 5;
+    protected static ?int $navigationSort = 7;
 
     protected static ?string $navigationIcon = 'heroicon-o-clipboard-list';
 
@@ -93,6 +93,23 @@ class ProductionResource extends Resource
                     )
                     ->icon('heroicon-s-archive')
                     ->color('primary'),
+                Tables\Actions\Action::make('printShipping')
+                    ->label(__('Shipping list'))
+                    ->action(function ($record) {
+                        return response()->streamDownload(function () use (
+                            $record,
+                        ) {
+                            $productionService = new ProductionService($record);
+                            echo $productionService->makeShipping();
+                        },
+                            'picking.pdf');
+                    })
+                    ->tooltip(__('Print Shipping list'))
+                    ->visible(
+                        fn (Production $record): bool => $record->is_bpost && $record->have_shipping,
+                    )
+                    ->icon('heroicon-s-archive')
+                    ->color('primary'),    
                 Tables\Actions\Action::make('exportAsJson')
                     ->label(__('Production file'))
                     ->action(function ($record) {

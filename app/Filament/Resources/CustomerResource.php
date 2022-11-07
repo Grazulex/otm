@@ -65,6 +65,7 @@ class CustomerResource extends Resource
                         'is_delivery_grouped',
                     )->required(),
                     Forms\Components\Toggle::make('need_order_label')->label('Printed Order Id backside plate'),
+                    Forms\Components\Toggle::make('need_shipping_list')->label('Print shipping list'),
                 ])
                 ->columns(4),
             Forms\Components\Section::make('C02 Label')

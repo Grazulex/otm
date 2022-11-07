@@ -41,6 +41,17 @@ class Production extends Model
         }
     }
 
+    public function checkIfShipping()
+    {
+        foreach ($this->plates as $plate) {
+            if ($plate->customer->need_shipping_list) {
+                $this->have_shipping = true;
+                $this->save();
+                break;
+            }
+        }        
+    }
+
     public function checkIfPicking()
     {
         foreach ($this->plates as $plate) {
