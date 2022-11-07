@@ -102,11 +102,11 @@ class ProductionResource extends Resource
                             $productionService = new ProductionService($record);
                             echo $productionService->makeShipping();
                         },
-                            'picking.pdf');
+                            'shipping.pdf');
                     })
                     ->tooltip(__('Print Shipping list'))
                     ->visible(
-                        //fn (Production $record): bool => $record->is_bpost && $record->have_shipping,
+                        fn (Production $record): bool => $record->is_bpost && $record->have_shipping,
                     )
                     ->icon('heroicon-s-archive')
                     ->color('primary'),
