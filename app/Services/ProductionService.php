@@ -333,10 +333,10 @@ class ProductionService
         foreach ($allPlates as $plate) {
             if ($plate->incoming_id == null) {
                 $items[$plate->customer_key]['datas'] = $plate->datas;
-                $items[$plate->customer_key]['items'][] = ['ref'=>$plate->reference, 'type'=>$plate->type];
+                $items[$plate->customer_key]['items'][] = ['ref' => $plate->reference, 'type' => $plate->type];
             }
         }
-        foreach ($items as $key => $item) { 
+        foreach ($items as $key => $item) {
             if (count($item['items']) === 1) {
                 unset($items[$key]);
             }
@@ -348,7 +348,6 @@ class ProductionService
         );
 
         return $pdf->download('shipping.pdf');
-
     }
 
     public function array2csv(
