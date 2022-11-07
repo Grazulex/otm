@@ -109,7 +109,7 @@ class ProductionResource extends Resource
                         fn (Production $record): bool => $record->is_bpost && $record->have_shipping,
                     )
                     ->icon('heroicon-s-archive')
-                    ->color('primary'),    
+                    ->color('primary'),
                 Tables\Actions\Action::make('exportAsJson')
                     ->label(__('Production file'))
                     ->action(function ($record) {

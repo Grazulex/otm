@@ -49,7 +49,7 @@ class Production extends Model
                 $this->save();
                 break;
             }
-        }        
+        }
     }
 
     public function checkIfPicking()

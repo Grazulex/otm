@@ -20,5 +20,4 @@ class EditBack extends EditRecord
             BackResource\Widgets\PlatesOverview::class,
         ];
     }
-
 }

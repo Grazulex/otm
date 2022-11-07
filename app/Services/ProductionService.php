@@ -328,7 +328,6 @@ class ProductionService
 
     public function makeShipping()
     {
-
     }
 
     public function array2csv(

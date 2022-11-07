@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Enums\TypeEnums;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -20,5 +19,4 @@ class Back extends Model
     {
         return $this->hasMany(related: Plate::class, foreignKey: 'back_id');
     }
-
 }

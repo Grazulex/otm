@@ -4,15 +4,9 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\BackResource\Pages;
 use App\Models\Back;
-use App\Models\Customer;
-use App\Models\Incoming;
-use App\Services\IncomingService;
-use Filament\Forms;
-use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
-use Illuminate\Support\Collection;
 
 class BackResource extends Resource
 {
