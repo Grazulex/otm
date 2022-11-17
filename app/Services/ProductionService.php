@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\OriginEnums;
 use App\Enums\TypeEnums;
 use App\Models\Item;
 use App\Models\Plate;
@@ -331,7 +332,7 @@ class ProductionService
         $allPlates = $this->plates;
         $items = [];
         foreach ($allPlates as $plate) {
-            if ($plate->incoming_id == null) {
+            if ($plate->incoming_id == null && $plate->origin === OriginEnums::INMOTIV) {
                 $items[$plate->customer_key]['datas'] = $plate->datas;
                 $items[$plate->customer_key]['items'][] = ['ref' => $plate->reference, 'type' => $plate->type];
             }

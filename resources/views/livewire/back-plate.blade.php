@@ -7,13 +7,13 @@
                         <div class="flex items-center justify-between space-x-2 rtl:space-x-reverse">
                             <label class="filament-forms-field-wrapper-label inline-flex items-center space-x-3 rtl:space-x-reverse" for="data.datamatrix">
                                 <span class="text-sm font-medium leading-4 text-gray-700 dark:text-gray-300">
-                                    QR code
+                                    QR code (backside plate)
                                 </span>
                             </label>
                         </div>
                         <div class="filament-forms-text-input-component flex items-center space-x-2 rtl:space-x-reverse group">
                             <div class="flex-1">
-                                <input wire:key="datamatrix" wire:model.defer="datamatrix" type="text"  wire:keydown.enter="searchDatamatrix" id="datamatrix" class="block w-full transition duration-75 rounded-lg shadow-sm focus:border-primary-600 focus:ring-1 focus:ring-inset focus:ring-primary-600 disabled:opacity-70 dark:bg-gray-700 dark:text-white dark:focus:border-primary-600 border-gray-300 dark:border-gray-600">
+                                <input wire:key="qr" wire:model.defer="qr" type="text"  wire:keydown.enter="searchQr" id="qr" class="block w-full transition duration-75 rounded-lg shadow-sm focus:border-primary-600 focus:ring-1 focus:ring-inset focus:ring-primary-600 disabled:opacity-70 dark:bg-gray-700 dark:text-white dark:focus:border-primary-600 border-gray-300 dark:border-gray-600">
                             </div>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                         </div>
                         <div class="filament-forms-text-input-component flex items-center space-x-2 rtl:space-x-reverse group">
                             <div class="flex-1">
-                                <input wire:key="datamatrix" wire:model.defer="datamatrix" type="text"  wire:keydown.enter="searchDatamatrix" id="datamatrix" class="block w-full transition duration-75 rounded-lg shadow-sm focus:border-primary-600 focus:ring-1 focus:ring-inset focus:ring-primary-600 disabled:opacity-70 dark:bg-gray-700 dark:text-white dark:focus:border-primary-600 border-gray-300 dark:border-gray-600">
+                                <input wire:model.defer="zip" type="text" id="zip" class="block w-full transition duration-75 rounded-lg shadow-sm focus:border-primary-600 focus:ring-1 focus:ring-inset focus:ring-primary-600 disabled:opacity-70 dark:bg-gray-700 dark:text-white dark:focus:border-primary-600 border-gray-300 dark:border-gray-600">
                             </div>
                         </div>
                     </div>

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\OriginEnums;
 use App\Enums\TypeEnums;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -44,7 +45,7 @@ class Production extends Model
     public function checkIfShipping()
     {
         foreach ($this->plates as $plate) {
-            if (! $plate->incoming_id) {
+            if (!$plate->incoming_id && $plate->origin === OriginEnums::INMOTIV) {
                 $this->have_shipping = true;
                 $this->save();
                 break;
