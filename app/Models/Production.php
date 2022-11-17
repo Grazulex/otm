@@ -45,7 +45,7 @@ class Production extends Model
     public function checkIfShipping()
     {
         foreach ($this->plates as $plate) {
-            if (!$plate->incoming_id && $plate->origin === OriginEnums::INMOTIV) {
+            if (! $plate->incoming_id && $plate->origin === OriginEnums::INMOTIV) {
                 $this->have_shipping = true;
                 $this->save();
                 break;
