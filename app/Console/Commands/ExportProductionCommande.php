@@ -88,7 +88,6 @@ class ExportProductionCommande extends Command
                 }
             }
 
-            
             $productionService = new ProductionService($production);
             $productionService->closeProduction();
 
@@ -99,7 +98,6 @@ class ExportProductionCommande extends Command
             //}
 
             //$productionService->deleteCSV();
-            
         }
     }
 }
