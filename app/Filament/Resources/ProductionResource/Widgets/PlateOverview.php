@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PlateOverview extends BaseWidget
 {
-    protected int | string | array $columnSpan = 'full';
+    protected int|string|array $columnSpan = 'full';
 
     public ?Model $record = null;
 
