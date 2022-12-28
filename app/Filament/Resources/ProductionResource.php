@@ -6,11 +6,11 @@ use App\Filament\Resources\ProductionResource\Pages;
 use App\Filament\Resources\ProductionResource\Widgets\PlateOverview;
 use App\Models\Production;
 use App\Services\ProductionService;
+use Carbon\Carbon;
 use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
-use Carbon\Carbon;
 
 class ProductionResource extends Resource
 {
@@ -153,5 +153,4 @@ class ProductionResource extends Resource
     {
         return [PlateOverview::class];
     }
-
 }

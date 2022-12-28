@@ -349,7 +349,6 @@ class ProductionService
             'portrait',
         );
 
-
         return $pdf->download('Ship_'.$this->getPartDateForFilename().'.pdf');
     }
 
