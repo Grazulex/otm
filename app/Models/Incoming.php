@@ -39,6 +39,5 @@ class Incoming extends Model
             set: fn ($value) => $value * 100,
             get: fn ($value) => $value / 100
         );
-
     }
 }
