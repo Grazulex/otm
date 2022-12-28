@@ -9,6 +9,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Illuminate\Support\Facades\Hash;
 
 class UserResource extends Resource
 {
@@ -38,8 +39,9 @@ class UserResource extends Resource
             Forms\Components\DateTimePicker::make('email_verified_at'),
             Forms\Components\TextInput::make('password')
                 ->password()
-                ->required()
-                ->maxLength(255),
+                ->dehydrateStateUsing(fn ($state) => Hash::make($state))
+                ->dehydrated(fn ($state) => filled($state))
+                ->required(fn (string $context): bool => $context === 'create')
         ]);
     }
 

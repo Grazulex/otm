@@ -38,8 +38,8 @@ class PlatesRelationManager extends RelationManager
                     ->searchable()
                     ->sortable()
                     ->url(fn (Plate $record): string => route('filament.resources.plates.edit', ['record' => $record])),
-                Tables\Columns\BooleanColumn::make('is_cod'),
-                Tables\Columns\BooleanColumn::make('is_rush'),
+                Tables\Columns\IconColumn::make('is_cod')->boolean(),
+                Tables\Columns\IconColumn::make('is_rush')->boolean(),
                 Tables\Columns\TextColumn::make('amount')->money('eur', true),
                 Tables\Columns\TextColumn::make('customer')->searchable()->sortable(),
             ])
