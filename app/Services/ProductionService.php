@@ -8,6 +8,7 @@ use App\Models\Item;
 use App\Models\Plate;
 use App\Models\Production;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Carbon\Carbon;
 
 class ProductionService
 {
@@ -119,7 +120,7 @@ class ProductionService
             'portrait',
         );
 
-        return $pdf->download('letter.pdf');
+        return $pdf->download('Cod_'.$this->getPartDateForFilename().'.pdf');
     }
 
     public function makeBpostFile(bool $needFirstLine = true)
@@ -324,7 +325,7 @@ class ProductionService
             'portrait',
         );
 
-        return $pdf->download('picking.pdf');
+        return $pdf->download('Pick_'.$this->getPartDateForFilename().'.pdf');
     }
 
     public function makeShipping()
@@ -348,7 +349,8 @@ class ProductionService
             'portrait',
         );
 
-        return $pdf->download('shipping.pdf');
+
+        return $pdf->download('Ship_'.$this->getPartDateForFilename().'.pdf');
     }
 
     public function array2csv(
@@ -369,5 +371,10 @@ class ProductionService
     public function deleteCSV()
     {
         unlink('prod_'.$this->production->id.'.csv');
+    }
+
+    public function getPartDateForFilename()
+    {
+        return Carbon::now()->format('Ymd_Hi');
     }
 }

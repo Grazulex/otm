@@ -10,6 +10,7 @@ use Filament\Resources\Form;
 use Filament\Resources\Resource;
 use Filament\Resources\Table;
 use Filament\Tables;
+use Carbon\Carbon;
 
 class ProductionResource extends Resource
 {
@@ -54,7 +55,7 @@ class ProductionResource extends Resource
                             $productionService = new ProductionService($record);
                             echo $productionService->makeBpostFile();
                         },
-                            'bpost.csv');
+                            'Bpost_'.Carbon::createFromDate($record->created_at)->format('Ymd_Hi').'.csv');
                     })
                     ->tooltip(__('Download'))
                     ->icon('heroicon-o-truck')
@@ -68,7 +69,7 @@ class ProductionResource extends Resource
                             $productionService = new ProductionService($record);
                             echo $productionService->makeLetterCod();
                         },
-                            'cod.pdf');
+                            'Cod_'.Carbon::createFromDate($record->created_at)->format('Ymd_Hi').'.pdf');
                     })
                     ->tooltip(__('Print COD Leter'))
                     ->visible(
@@ -85,7 +86,7 @@ class ProductionResource extends Resource
                             $productionService = new ProductionService($record);
                             echo $productionService->makePicking();
                         },
-                            'picking.pdf');
+                            'Pick_'.Carbon::createFromDate($record->created_at)->format('Ymd_Hi').'.pdf');
                     })
                     ->tooltip(__('Print Picking list'))
                     ->visible(
@@ -102,7 +103,7 @@ class ProductionResource extends Resource
                             $productionService = new ProductionService($record);
                             echo $productionService->makeShipping();
                         },
-                            'shipping.pdf');
+                            'Ship_'.Carbon::createFromDate($record->created_at)->format('Ymd_Hi').'.pdf');
                     })
                     ->tooltip(__('Print Shipping list'))
                     ->visible(
@@ -119,7 +120,7 @@ class ProductionResource extends Resource
                             $productionService = new ProductionService($record);
                             echo $productionService->makeCsv();
                         },
-                            'production.csv');
+                            'Prod_'.Carbon::createFromDate($record->created_at)->format('Ymd_Hi').'.csv');
                     })
                     ->tooltip(__('Export production file'))
                     ->visible(
@@ -152,4 +153,5 @@ class ProductionResource extends Resource
     {
         return [PlateOverview::class];
     }
+
 }
