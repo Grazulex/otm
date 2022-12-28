@@ -73,15 +73,15 @@
          </td>
          <td width="50%">
             <p>
-               @if (isset($plate->datas['owner_fullName']))
-                  {{ $plate->datas['owner_fullName'] }}</br>
+               @if (isset($plate->datas['destination_name']))
+                  {{ $plate->datas['destination_name'] }}</br>
                @endif
-               @if (isset($plate->datas['owner_street']) && isset($plate->datas['owner_house_number']))
-                  {{ $plate->datas['owner_street'] }} {{ $plate->datas['owner_house_number'] }}</br>
+               @if (isset($plate->datas['destination_street']) && isset($plate->datas['destination_house_number']))
+                  {{ $plate->datas['destination_street'] }} {{ $plate->datas['destination_house_number'] }}</br>
                @endif
                </br>
-               @if (isset($plate->datas['owner_postal_code']) && isset($plate->datas['owner_city']))
-                  {{ $plate->datas['owner_postal_code'] }} {{ $plate->datas['owner_city'] }}</br>
+               @if (isset($plate->datas['destination_postal_code']) && isset($plate->datas['destination_city']))
+                  {{ $plate->datas['destination_postal_code'] }} {{ $plate->datas['destination_city'] }}</br>
                @endif
             </p>
          </td>
