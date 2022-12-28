@@ -88,18 +88,18 @@ class ExportProductionCommande extends Command
                 }
             }
 
-            /*
+            
             $productionService = new ProductionService($production);
-            $productionService->makeCsvAttach();
+            $productionService->closeProduction();
 
-            $destinataires = explode(',', env('OTM_PRODUCTIONS_EMAILS'));
-            foreach ($destinataires as $recipient) {
-                $this->info('Mail send to  '.$recipient);
-                Mail::to($recipient)->send(new MailProduction($production));
-            }
+            //$destinataires = explode(',', env('OTM_PRODUCTIONS_EMAILS'));
+            //foreach ($destinataires as $recipient) {
+            //    $this->info('Mail send to  '.$recipient);
+            //    Mail::to($recipient)->send(new MailProduction($production));
+            //}
 
-            $productionService->deleteCSV();
-            */
+            //$productionService->deleteCSV();
+            
         }
     }
 }
