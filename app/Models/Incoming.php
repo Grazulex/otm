@@ -35,11 +35,10 @@ class Incoming extends Model
 
     protected function amount(): Attribute
     {
-        return $this->plates->amount->sum();
+        return Attribute::make(
+            set: fn ($value) => $value * 100,
+            get: fn ($value) => $value / 100
+        );
 
-        //return Attribute::make(
-        //    set: fn ($value) => $value * 100,
-        //    get: fn ($value) => $value / 100
-        //);
     }
 }
