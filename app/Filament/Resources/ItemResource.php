@@ -26,7 +26,7 @@ class ItemResource extends Resource
             Forms\Components\TextInput::make('name')
                 ->required()
                 ->maxLength(255),
-            Forms\Components\TextInput::make('reference_otm')->maxLength(255),
+            Forms\Components\TextInput::make('reference_otm')->required()->maxLength(255),
             Forms\Components\TextInput::make('reference_customer')->maxLength(
                 255,
             ),
