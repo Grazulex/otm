@@ -45,6 +45,7 @@ class IncomingResource extends Resource
                 Tables\Columns\BadgeColumn::make('plates_count')->counts(
                     'plates',
                 ),
+                Tables\Columns\TextColumn::make('amount')->money('eur', true),
                 Tables\Columns\TextColumn::make('close.created_at')
                     ->dateTime()
                     ->sortable()

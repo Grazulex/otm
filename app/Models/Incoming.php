@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use PhpParser\Node\Expr\Cast\Int_;
 
 class Incoming extends Model
 {
@@ -36,8 +37,8 @@ class Incoming extends Model
     protected function amount(): Attribute
     {
         return Attribute::make(
-            set: fn ($value) => $value * 100,
-            get: fn ($value) => $value / 100
+            set: fn ($value) => $this->plates()->sum('amount') * 100,
+            get: fn ($value) => $this->plates()->sum('amount') / 100
         );
     }
 }
