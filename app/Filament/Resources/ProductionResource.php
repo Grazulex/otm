@@ -130,7 +130,7 @@ class ProductionResource extends Resource
                     ->color('primary'),
             ])
             ->bulkActions([
-                
+
             ]);
     }
 

@@ -102,7 +102,7 @@ class ProductionService
         }
 
         $export = new DefaultExport($content);
-        
+
         return Excel::raw($export, \Maatwebsite\Excel\Excel::XLSX);
 
         //return $this->array2csv($content);
@@ -256,7 +256,7 @@ class ProductionService
         */
 
         $export = new DefaultExport($content);
-        
+
         return Excel::raw($export, \Maatwebsite\Excel\Excel::XLSX);
     }
 
