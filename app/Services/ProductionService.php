@@ -4,11 +4,13 @@ namespace App\Services;
 
 use App\Enums\OriginEnums;
 use App\Enums\TypeEnums;
+use App\Exports\DefaultExport;
 use App\Models\Item;
 use App\Models\Plate;
 use App\Models\Production;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ProductionService
 {
@@ -99,7 +101,11 @@ class ProductionService
             ];
         }
 
-        return $this->array2csv($content);
+        $export = new DefaultExport($content);
+        
+        return Excel::raw($export, \Maatwebsite\Excel\Excel::XLSX);
+
+        //return $this->array2csv($content);
     }
 
     public function makeLetterCod()
@@ -249,7 +255,9 @@ class ProductionService
         $this->production->checkIfShipping();
         */
 
-        return $this->array2csv($content);
+        $export = new DefaultExport($content);
+        
+        return Excel::raw($export, \Maatwebsite\Excel\Excel::XLSX);
     }
 
     private function saveBox(Plate $plate, $i)

@@ -55,7 +55,7 @@ class ProductionResource extends Resource
                             $productionService = new ProductionService($record);
                             echo $productionService->makeBpostFile();
                         },
-                            'Bpost_'.Carbon::createFromDate($record->created_at)->format('Ymd_Hi').'.csv');
+                            'Bpost_'.Carbon::createFromDate($record->created_at)->format('Ymd_Hi').'.xlsx');
                     })
                     ->tooltip(__('Download'))
                     ->icon('heroicon-o-truck')
@@ -120,7 +120,7 @@ class ProductionResource extends Resource
                             $productionService = new ProductionService($record);
                             echo $productionService->makeCsv();
                         },
-                            'Prod_'.Carbon::createFromDate($record->created_at)->format('Ymd_Hi').'.csv');
+                            'Prod_'.Carbon::createFromDate($record->created_at)->format('Ymd_Hi').'.xlsx');
                     })
                     ->tooltip(__('Export production file'))
                     ->visible(
@@ -130,7 +130,7 @@ class ProductionResource extends Resource
                     ->color('primary'),
             ])
             ->bulkActions([
-                //
+                
             ]);
     }
 
