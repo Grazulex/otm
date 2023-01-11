@@ -51,7 +51,7 @@ class Reports extends Page implements Forms\Contracts\HasForms
     public function submit()
     {
         if ($this->ReportType == 'customervsitems') {
-            $plates = Plate::select(DB::raw('origin, customer, product_type, type,  count(*) as total'))->whereBetween('created_at', [$this->StartDate, $this->StopDate])->groupBy('origin', 'customer', 'product_type', 'type')->orderBy('origin')->orderBy('customer')->get()->toArray();
+            $plates = Plate::select(DB::raw('created_at, origin, customer, product_type, type, is_cod, is_rush, amount'))->whereBetween('created_at', [$this->StartDate, $this->StopDate])->orderBy('created_at')->orderBy('origin')->orderBy('customer')->get()->toArray();
 
             $export = new DefaultExport($plates);
 
