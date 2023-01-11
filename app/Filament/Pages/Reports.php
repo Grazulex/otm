@@ -53,7 +53,16 @@ class Reports extends Page implements Forms\Contracts\HasForms
         if ($this->ReportType == 'customervsitems') {
             $plates = Plate::select(DB::raw('created_at, origin, customer, product_type, type, is_cod, is_rush, amount'))->whereBetween('created_at', [$this->StartDate, $this->StopDate])->orderBy('created_at')->orderBy('origin')->orderBy('customer')->get()->toArray();
 
-            $export = new DefaultExport($plates);
+            $export = new DefaultExport($plates, [
+                'Date',
+                'Origin',
+                'Customer',
+                'Product Type',
+                'Type',
+                'COD',
+                'Rush',
+                'Amount',
+            ]);
 
             return Excel::download($export, 'CustomerVsItems-'.Carbon::createFromDate($this->StartDate)->format('Ymd').'-'.Carbon::createFromDate($this->StopDate)->format('Ymd').'.xlsx', \Maatwebsite\Excel\Excel::XLSX);
         }
