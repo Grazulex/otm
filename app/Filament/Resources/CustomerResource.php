@@ -37,10 +37,12 @@ class CustomerResource extends Resource
                 ->schema([
                     Forms\Components\TextInput::make('name')
                         ->required()
-                        ->maxLength(255),
+                        ->maxLength(255)
+                        ->unique(),
                     Forms\Components\TextInput::make('enum_ref')->maxLength(
                         255,
-                    ),
+                    )
+                    ->unique(),
                 ])
                 ->columns(2),
             Forms\Components\Section::make('Configuration')
