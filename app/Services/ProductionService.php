@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Enums\OriginEnums;
 use App\Enums\TypeEnums;
 use App\Exports\DefaultExport;
+use App\Exports\DefaultExportHeading;
 use App\Models\Item;
 use App\Models\Plate;
 use App\Models\Production;
@@ -72,18 +73,6 @@ class ProductionService
 
     public function makeCsv()
     {
-        $content[] = [
-            'Plate nr.',
-            'Ref plaque',
-            'OwnerID',
-            'Order date',
-            'Nom Client',
-            'Rue Client',
-            'Nr. Client',
-            'Boite ClIENT',
-            'Commune',
-            'Code postal',
-        ];
         foreach ($this->plates as $plate) {
             //$datas = $plate->datas;
             $content[] = [
@@ -101,7 +90,18 @@ class ProductionService
             ];
         }
 
-        $export = new DefaultExport($content);
+        $export = new DefaultExportHeading($content, [
+            'Plate nr.',
+            'Ref plaque',
+            'OwnerID',
+            'Order date',
+            'Nom Client',
+            'Rue Client',
+            'Nr. Client',
+            'Boite ClIENT',
+            'Commune',
+            'Code postal',
+        ]);
 
         return Excel::raw($export, \Maatwebsite\Excel\Excel::XLSX);
 
@@ -170,8 +170,49 @@ class ProductionService
     public function makeBpostFile(bool $needFirstLine = true)
     {
         $quantity_max_grouped = env('OTM_PRODUCTIONS_QUANTITY_MAX_BOX');
+        $content = [];
+
+
+        $plates = Plate::where('production_id', $this->production->id)
+            ->OrderBy('origin', 'desc')
+            ->OrderBy('delivery_zip', 'asc')
+            ->OrderBy('customer_key', 'asc')
+            ->OrderBy('reference', 'asc')
+            ->with('incoming')
+            ->get();
+        $i = 1;
+        $group = 1;
+        $last_customer_key = null;
+        foreach ($plates as $plate) {
+            if ($plate->datas) {
+                //$this->saveBox($plate, $i);
+                if ($plate->customer_key != '' && $plate->customer_key === $last_customer_key) {
+                    $group++;
+                    if ($group >= $quantity_max_grouped) {
+                        $group = 1;
+                        $content[] = $this->addline($plate, $i, false);
+                        $i++;
+                    }
+                } else {
+                    $group = 1;
+                    $content[] = $this->addline($plate, $i, true);
+                    $i++;
+                }
+                $last_customer_key = $plate->customer_key;
+            }
+        }
+
+        /*
+        $this->production->is_bpost = true;
+        $this->production->save();
+
+        $this->production->checkIfCod();
+        $this->production->checkIfPicking();
+        $this->production->checkIfShipping();
+        */
+
         if ($needFirstLine) {
-            $content[] = [
+            $export = new DefaultExportHeading($content,[
                 'ProductId',
                 'Name',
                 'Contact Name',
@@ -212,50 +253,10 @@ class ProductionService
                 'Info Distributed Type',
                 'Info Distributed Contact Data',
                 'bic cod',
-            ];
+            ]);
         } else {
-            $content = [];
+            $export = new DefaultExport($content);
         }
-
-        $plates = Plate::where('production_id', $this->production->id)
-            ->OrderBy('origin', 'desc')
-            ->OrderBy('delivery_zip', 'asc')
-            ->OrderBy('customer_key', 'asc')
-            ->OrderBy('reference', 'asc')
-            ->with('incoming')
-            ->get();
-        $i = 1;
-        $group = 1;
-        $last_customer_key = null;
-        foreach ($plates as $plate) {
-            if ($plate->datas) {
-                //$this->saveBox($plate, $i);
-                if ($plate->customer_key != '' && $plate->customer_key === $last_customer_key) {
-                    $group++;
-                    if ($group >= $quantity_max_grouped) {
-                        $group = 1;
-                        $content[] = $this->addline($plate, $i, false);
-                        $i++;
-                    }
-                } else {
-                    $group = 1;
-                    $content[] = $this->addline($plate, $i, true);
-                    $i++;
-                }
-                $last_customer_key = $plate->customer_key;
-            }
-        }
-
-        /*
-        $this->production->is_bpost = true;
-        $this->production->save();
-
-        $this->production->checkIfCod();
-        $this->production->checkIfPicking();
-        $this->production->checkIfShipping();
-        */
-
-        $export = new DefaultExport($content);
 
         return Excel::raw($export, \Maatwebsite\Excel\Excel::XLSX);
     }
