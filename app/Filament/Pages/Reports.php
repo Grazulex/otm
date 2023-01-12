@@ -51,7 +51,7 @@ class Reports extends Page implements Forms\Contracts\HasForms
     public function submit()
     {
         if ($this->ReportType == 'customervsitems') {
-            $plates = Plate::select(DB::raw('created_at, origin, customer, product_type, type, is_cod, is_rush, amount, replace(json_extract(datas, "$.payment_method"),"\"","") as payment_method, replace(json_extract(datas, "$.price"),"\"","") as price'))->whereBetween('created_at', [$this->StartDate, $this->StopDate])->orderBy('created_at')->orderBy('origin')->orderBy('customer')->get()->toArray();
+            $plates = Plate::select(DB::raw('created_at, origin, customer, product_type, type, case when is_cod=1 then "cod" when is_rush=1 then "rush" else "" end, amount, replace(json_extract(datas, "$.payment_method"),"\"","") as payment_method, replace(json_extract(datas, "$.price"),"\"","") as price'))->whereBetween('created_at', [$this->StartDate, $this->StopDate])->orderBy('created_at')->orderBy('origin')->orderBy('customer')->get()->toArray();
 
             $export = new DefaultExportHeading($plates, [
                 'Date',
@@ -60,7 +60,6 @@ class Reports extends Page implements Forms\Contracts\HasForms
                 'Product Type',
                 'Type',
                 'COD',
-                'Rush',
                 'Amount',
                 'Payment Method',
                 'Price',
