@@ -172,7 +172,6 @@ class ProductionService
         $quantity_max_grouped = env('OTM_PRODUCTIONS_QUANTITY_MAX_BOX');
         $content = [];
 
-
         $plates = Plate::where('production_id', $this->production->id)
             ->OrderBy('origin', 'desc')
             ->OrderBy('delivery_zip', 'asc')
@@ -212,7 +211,7 @@ class ProductionService
         */
 
         if ($needFirstLine) {
-            $export = new DefaultExportHeading($content,[
+            $export = new DefaultExportHeading($content, [
                 'ProductId',
                 'Name',
                 'Contact Name',
