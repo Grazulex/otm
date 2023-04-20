@@ -11,6 +11,7 @@ composer:
     paths:
       - vendor/
   script:
+    - composer config http-basic.filament-notifications-pro.composer.sh ${NOTIF_USERNAME} ${NOTIF_LICENSE}
     - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
     - cp .env.gitlab .env
     - php artisan key:generate
