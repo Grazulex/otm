@@ -11,8 +11,6 @@ use Illuminate\Support\Facades\Hash;
 class AdminUserSeeder extends Seeder
 {
     /**
-     * @return void
-     *
      * @throws BindingResolutionException
      * @throws MassAssignmentException
      */

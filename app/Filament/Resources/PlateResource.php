@@ -80,6 +80,9 @@ class PlateResource extends Resource
                     Forms\Components\TextInput::make('product_type')->maxLength(
                         255,
                     ),
+                    Forms\Components\TextInput::make('tracking')->maxLength(
+                        255,
+                    ),
                 ])
                 ->columns(3),
             Forms\Components\Section::make('Datas')

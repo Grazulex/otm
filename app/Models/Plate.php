@@ -36,6 +36,7 @@ class Plate extends Model
         'back_id',
         'return_reason',
         'is_damaged',
+        'tracking',
     ];
 
     protected $casts = [

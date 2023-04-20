@@ -42,7 +42,7 @@ class CustomerResource extends Resource
                     Forms\Components\TextInput::make('enum_ref')->maxLength(
                         255,
                     )
-                    ->unique(),
+                        ->unique(),
                 ])
                 ->columns(2),
             Forms\Components\Section::make('Configuration')

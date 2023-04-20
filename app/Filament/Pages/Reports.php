@@ -44,7 +44,7 @@ class Reports extends Page implements Forms\Contracts\HasForms
             Forms\Components\Select::make('ReportType')->options([
                 'customervsitems' => 'Customer vs Items',
             ])
-            ->required(),
+                ->required(),
         ];
     }
 

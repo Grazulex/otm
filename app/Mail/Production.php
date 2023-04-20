@@ -31,6 +31,6 @@ class Production extends Mailable
     public function build()
     {
         return $this->markdown('mails.production', ['production_id' => $this->production->id])
-           ->attach('prod_'.$this->production->id.'.csv');
+            ->attach('prod_'.$this->production->id.'.csv');
     }
 }

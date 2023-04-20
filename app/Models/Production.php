@@ -57,12 +57,12 @@ class Production extends Model
     {
         foreach ($this->plates as $plate) {
             $otherItems = Plate::where('reference', $plate->reference)
-            ->where('created_at', $plate->created_at)
-            ->whereNotIn(
-                'type',
-                array_column(TypeEnums::cases(), 'name'),
-            )
-            ->exists();
+                ->where('created_at', $plate->created_at)
+                ->whereNotIn(
+                    'type',
+                    array_column(TypeEnums::cases(), 'name'),
+                )
+                ->exists();
             if ($otherItems) {
                 $this->have_picking = true;
                 $this->save();

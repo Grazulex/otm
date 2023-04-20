@@ -133,12 +133,12 @@ class ProductionService
     {
         $quantity_max_grouped = env('OTM_PRODUCTIONS_QUANTITY_MAX_BOX');
         $plates = Plate::where('production_id', $this->production->id)
-        ->OrderBy('origin', 'desc')
-        ->OrderBy('delivery_zip', 'asc')
-        ->OrderBy('customer_key', 'asc')
-        ->OrderBy('reference', 'asc')
-        ->with('incoming')
-        ->get();
+            ->OrderBy('origin', 'desc')
+            ->OrderBy('delivery_zip', 'asc')
+            ->OrderBy('customer_key', 'asc')
+            ->OrderBy('reference', 'asc')
+            ->with('incoming')
+            ->get();
         $i = 1;
         $group = 1;
         $last_customer_key = null;
@@ -269,7 +269,7 @@ class ProductionService
     private function addline(Plate $plate, $i, $needMessage = true)
     {
         if ($needMessage) {
-            $message = $i.'*** / '.$plate->reference;
+            $message = $i.' *** / '.$plate->reference;
             $otherItems = Plate::where('reference', $plate->reference)
                 ->whereNotIn(
                     'type',
@@ -347,12 +347,12 @@ class ProductionService
         $resumes = [];
         foreach ($allPlates as $plate) {
             $otherItems = Plate::where('reference', $plate->reference)
-            ->where('created_at', $plate->created_at)
-            ->whereNotIn(
-                'type',
-                array_column(TypeEnums::cases(), 'name'),
-            )
-            ->get();
+                ->where('created_at', $plate->created_at)
+                ->whereNotIn(
+                    'type',
+                    array_column(TypeEnums::cases(), 'name'),
+                )
+                ->get();
             if (count($otherItems) > 0) {
                 $items[] = [
                     'box' => $plate->box,

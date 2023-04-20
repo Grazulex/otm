@@ -249,18 +249,18 @@ class BackPlate extends Component implements Tables\Contracts\HasTable
     {
         return [
             Tables\Actions\Action::make('remove')
-            ->label(__('remove'))
-            ->action(function ($record) {
-                $record->back_id = null;
-                $record->save();
-                Notification::make()
-                    ->title('Plate removed successfully')
-                    ->warning()
-                    ->seconds(2)
-                    ->send();
-            })
-            ->tooltip(__('remove'))
-            ->color('primary'),
+                ->label(__('remove'))
+                ->action(function ($record) {
+                    $record->back_id = null;
+                    $record->save();
+                    Notification::make()
+                        ->title('Plate removed successfully')
+                        ->warning()
+                        ->seconds(2)
+                        ->send();
+                })
+                ->tooltip(__('remove'))
+                ->color('primary'),
         ];
     }
 

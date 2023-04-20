@@ -97,29 +97,29 @@ class IncomingResource extends Resource
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
                 Tables\Actions\BulkAction::make('bpost')
-                ->label(__('Bpost file'))
-                ->icon('heroicon-s-check-circle')
-                ->action(function (Collection $records) {
-                    return response()->streamDownload(function () use (
-                        $records,
-                    ) {
-                        $bpost = null;
-                        $i = 0;
-                        foreach ($records as $record) {
-                            $incomingService = new IncomingService($record);
-                            if ($i == 0) {
-                                $bpost = $incomingService->makeBpostFile();
-                            } else {
-                                $bpost .= $incomingService->makeBpostFile(false);
+                    ->label(__('Bpost file'))
+                    ->icon('heroicon-s-check-circle')
+                    ->action(function (Collection $records) {
+                        return response()->streamDownload(function () use (
+                            $records,
+                        ) {
+                            $bpost = null;
+                            $i = 0;
+                            foreach ($records as $record) {
+                                $incomingService = new IncomingService($record);
+                                if ($i == 0) {
+                                    $bpost = $incomingService->makeBpostFile();
+                                } else {
+                                    $bpost .= $incomingService->makeBpostFile(false);
+                                }
+                                $i++;
                             }
-                            $i++;
-                        }
-                        echo $bpost;
-                    },
+                            echo $bpost;
+                        },
 
-                        'bpost.csv');
-                })
-                ->deselectRecordsAfterCompletion(),
+                            'bpost.csv');
+                    })
+                    ->deselectRecordsAfterCompletion(),
 
             ]);
     }
